@@ -23,6 +23,10 @@
 		604D54E0255BE01C00B50268 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D54DF255BE01C00B50268 /* ComplicationController.swift */; };
 		604D54E2255BE01E00B50268 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 604D54E1255BE01E00B50268 /* Assets.xcassets */; };
 		604D54E5255BE01E00B50268 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 604D54E4255BE01E00B50268 /* Preview Assets.xcassets */; };
+		604D5501255BE0D600B50268 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D5500255BE0D600B50268 /* MainView.swift */; };
+		604D5508255BE0F000B50268 /* OverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D5507255BE0F000B50268 /* OverView.swift */; };
+		604D550F255BE10C00B50268 /* ControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D550E255BE10C00B50268 /* ControlsView.swift */; };
+		604D5516255BE13800B50268 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D5515255BE13800B50268 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +111,10 @@
 		604D54E4255BE01E00B50268 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		604D54E6255BE01E00B50268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		604D54E7255BE01E00B50268 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		604D5500255BE0D600B50268 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		604D5507255BE0F000B50268 /* OverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverView.swift; sourceTree = "<group>"; };
+		604D550E255BE10C00B50268 /* ControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsView.swift; sourceTree = "<group>"; };
+		604D5515255BE13800B50268 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,6 +232,10 @@
 				604D54E6255BE01E00B50268 /* Info.plist */,
 				604D54E7255BE01E00B50268 /* PushNotificationPayload.apns */,
 				604D54E3255BE01E00B50268 /* Preview Content */,
+				604D5500255BE0D600B50268 /* MainView.swift */,
+				604D5507255BE0F000B50268 /* OverView.swift */,
+				604D550E255BE10C00B50268 /* ControlsView.swift */,
+				604D5515255BE13800B50268 /* SettingsView.swift */,
 			);
 			path = "iAlti v2 WatchKit Extension";
 			sourceTree = "<group>";
@@ -452,9 +464,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				604D54DC255BE01C00B50268 /* NotificationController.swift in Sources */,
+				604D5501255BE0D600B50268 /* MainView.swift in Sources */,
 				604D54DA255BE01C00B50268 /* ContentView.swift in Sources */,
+				604D5516255BE13800B50268 /* SettingsView.swift in Sources */,
 				604D54E0255BE01C00B50268 /* ComplicationController.swift in Sources */,
+				604D550F255BE10C00B50268 /* ControlsView.swift in Sources */,
 				604D54D8255BE01C00B50268 /* iAlti_v2App.swift in Sources */,
+				604D5508255BE0F000B50268 /* OverView.swift in Sources */,
 				604D54DE255BE01C00B50268 /* NotificationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
