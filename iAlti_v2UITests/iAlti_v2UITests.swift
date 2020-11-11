@@ -1,6 +1,6 @@
 //
 //  iAlti_v2UITests.swift
-//  iAlti v2UITests
+//  iAlti_v2UITests
 //
 //  Created by Lukas Wheldon on 11.11.20.
 //

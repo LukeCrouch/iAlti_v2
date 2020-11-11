@@ -1,6 +1,6 @@
 //
 //  NotificationView.swift
-//  iAlti v2 WatchKit Extension
+//  iAlti_v2 WatchKit Extension
 //
 //  Created by Lukas Wheldon on 11.11.20.
 //

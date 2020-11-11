@@ -1,6 +1,6 @@
 //
 //  iAlti_v2App.swift
-//  iAlti v2 WatchKit Extension
+//  iAlti_v2 WatchKit Extension
 //
 //  Created by Lukas Wheldon on 11.11.20.
 //
@@ -100,6 +100,7 @@ public extension String {
     }
 }
 
+@main
 struct iAlti_v2App: App {
     @StateObject var globals = Globals()
     @StateObject var userSettings = UserSettings()

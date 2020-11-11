@@ -7,78 +7,79 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		604D54A5255BE01600B50268 /* iAlti_v2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D54A4255BE01600B50268 /* iAlti_v2App.swift */; };
-		604D54A7255BE01600B50268 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D54A6255BE01600B50268 /* ContentView.swift */; };
-		604D54A9255BE01900B50268 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 604D54A8255BE01900B50268 /* Assets.xcassets */; };
-		604D54AC255BE01900B50268 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 604D54AB255BE01900B50268 /* Preview Assets.xcassets */; };
-		604D54B7255BE01A00B50268 /* iAlti_v2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D54B6255BE01A00B50268 /* iAlti_v2Tests.swift */; };
-		604D54C2255BE01A00B50268 /* iAlti_v2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D54C1255BE01A00B50268 /* iAlti_v2UITests.swift */; };
-		604D54C7255BE01A00B50268 /* iAlti v2 WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 604D54C6255BE01A00B50268 /* iAlti v2 WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		604D54CC255BE01C00B50268 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 604D54CB255BE01C00B50268 /* Assets.xcassets */; };
-		604D54D3255BE01C00B50268 /* iAlti v2 WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 604D54D2255BE01C00B50268 /* iAlti v2 WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		604D54D8255BE01C00B50268 /* iAlti_v2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D54D7255BE01C00B50268 /* iAlti_v2App.swift */; };
-		604D54DA255BE01C00B50268 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D54D9255BE01C00B50268 /* ContentView.swift */; };
-		604D54DC255BE01C00B50268 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D54DB255BE01C00B50268 /* NotificationController.swift */; };
-		604D54DE255BE01C00B50268 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D54DD255BE01C00B50268 /* NotificationView.swift */; };
-		604D54E0255BE01C00B50268 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D54DF255BE01C00B50268 /* ComplicationController.swift */; };
-		604D54E2255BE01E00B50268 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 604D54E1255BE01E00B50268 /* Assets.xcassets */; };
-		604D54E5255BE01E00B50268 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 604D54E4255BE01E00B50268 /* Preview Assets.xcassets */; };
-		604D5501255BE0D600B50268 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D5500255BE0D600B50268 /* MainView.swift */; };
-		604D5508255BE0F000B50268 /* OverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D5507255BE0F000B50268 /* OverView.swift */; };
-		604D550F255BE10C00B50268 /* ControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D550E255BE10C00B50268 /* ControlsView.swift */; };
-		604D5516255BE13800B50268 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D5515255BE13800B50268 /* SettingsView.swift */; };
+		604D5538255C190A00B50268 /* iAlti_v2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D5537255C190A00B50268 /* iAlti_v2App.swift */; };
+		604D553A255C190A00B50268 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D5539255C190A00B50268 /* ContentView.swift */; };
+		604D553C255C190E00B50268 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 604D553B255C190E00B50268 /* Assets.xcassets */; };
+		604D553F255C190E00B50268 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 604D553E255C190E00B50268 /* Preview Assets.xcassets */; };
+		604D554A255C190E00B50268 /* iAlti_v2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D5549255C190E00B50268 /* iAlti_v2Tests.swift */; };
+		604D5555255C190E00B50268 /* iAlti_v2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D5554255C190E00B50268 /* iAlti_v2UITests.swift */; };
+		604D555A255C190E00B50268 /* iAlti_v2 WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 604D5559255C190E00B50268 /* iAlti_v2 WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		604D555F255C191200B50268 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 604D555E255C191200B50268 /* Assets.xcassets */; };
+		604D5566255C191200B50268 /* iAlti_v2 WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 604D5565255C191200B50268 /* iAlti_v2 WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		604D556B255C191200B50268 /* iAlti_v2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D556A255C191200B50268 /* iAlti_v2App.swift */; };
+		604D556D255C191200B50268 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D556C255C191200B50268 /* ContentView.swift */; };
+		604D556F255C191200B50268 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D556E255C191200B50268 /* NotificationController.swift */; };
+		604D5571255C191200B50268 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D5570255C191200B50268 /* NotificationView.swift */; };
+		604D5573255C191200B50268 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D5572255C191200B50268 /* ComplicationController.swift */; };
+		604D5575255C191500B50268 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 604D5574255C191500B50268 /* Assets.xcassets */; };
+		604D5578255C191500B50268 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 604D5577255C191500B50268 /* Preview Assets.xcassets */; };
+		604D559F255C1AE600B50268 /* ControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D5599255C1AE500B50268 /* ControlsView.swift */; };
+		604D55A0255C1AE600B50268 /* Preview Content in Resources */ = {isa = PBXBuildFile; fileRef = 604D559A255C1AE600B50268 /* Preview Content */; };
+		604D55A1255C1AE600B50268 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D559B255C1AE600B50268 /* MainView.swift */; };
+		604D55A2255C1AE600B50268 /* OverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D559C255C1AE600B50268 /* OverView.swift */; };
+		604D55A3255C1AE600B50268 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D559D255C1AE600B50268 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		604D54B3255BE01900B50268 /* PBXContainerItemProxy */ = {
+		604D5546255C190E00B50268 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 604D5499255BE01600B50268 /* Project object */;
+			containerPortal = 604D552C255C190A00B50268 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 604D54A0255BE01600B50268;
-			remoteInfo = "iAlti v2";
+			remoteGlobalIDString = 604D5533255C190A00B50268;
+			remoteInfo = iAlti_v2;
 		};
-		604D54BE255BE01A00B50268 /* PBXContainerItemProxy */ = {
+		604D5551255C190E00B50268 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 604D5499255BE01600B50268 /* Project object */;
+			containerPortal = 604D552C255C190A00B50268 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 604D54A0255BE01600B50268;
-			remoteInfo = "iAlti v2";
+			remoteGlobalIDString = 604D5533255C190A00B50268;
+			remoteInfo = iAlti_v2;
 		};
-		604D54C8255BE01A00B50268 /* PBXContainerItemProxy */ = {
+		604D555B255C190E00B50268 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 604D5499255BE01600B50268 /* Project object */;
+			containerPortal = 604D552C255C190A00B50268 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 604D54C5255BE01A00B50268;
-			remoteInfo = "iAlti v2 WatchKit App";
+			remoteGlobalIDString = 604D5558255C190E00B50268;
+			remoteInfo = "iAlti_v2 WatchKit App";
 		};
-		604D54D4255BE01C00B50268 /* PBXContainerItemProxy */ = {
+		604D5567255C191200B50268 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 604D5499255BE01600B50268 /* Project object */;
+			containerPortal = 604D552C255C190A00B50268 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 604D54D1255BE01C00B50268;
-			remoteInfo = "iAlti v2 WatchKit Extension";
+			remoteGlobalIDString = 604D5564255C191200B50268;
+			remoteInfo = "iAlti_v2 WatchKit Extension";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		604D54ED255BE01E00B50268 /* Embed App Extensions */ = {
+		604D5580255C191600B50268 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				604D54D3255BE01C00B50268 /* iAlti v2 WatchKit Extension.appex in Embed App Extensions */,
+				604D5566255C191200B50268 /* iAlti_v2 WatchKit Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		604D54F1255BE01E00B50268 /* Embed Watch Content */ = {
+		604D5584255C191600B50268 /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				604D54C7255BE01A00B50268 /* iAlti v2 WatchKit App.app in Embed Watch Content */,
+				604D555A255C190E00B50268 /* iAlti_v2 WatchKit App.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,60 +87,61 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		604D54A1255BE01600B50268 /* iAlti v2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iAlti v2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		604D54A4255BE01600B50268 /* iAlti_v2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iAlti_v2App.swift; sourceTree = "<group>"; };
-		604D54A6255BE01600B50268 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		604D54A8255BE01900B50268 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		604D54AB255BE01900B50268 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		604D54AD255BE01900B50268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		604D54B2255BE01900B50268 /* iAlti v2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iAlti v2Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		604D54B6255BE01A00B50268 /* iAlti_v2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iAlti_v2Tests.swift; sourceTree = "<group>"; };
-		604D54B8255BE01A00B50268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		604D54BD255BE01A00B50268 /* iAlti v2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iAlti v2UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		604D54C1255BE01A00B50268 /* iAlti_v2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iAlti_v2UITests.swift; sourceTree = "<group>"; };
-		604D54C3255BE01A00B50268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		604D54C6255BE01A00B50268 /* iAlti v2 WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iAlti v2 WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		604D54CB255BE01C00B50268 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		604D54CD255BE01C00B50268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		604D54D2255BE01C00B50268 /* iAlti v2 WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "iAlti v2 WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		604D54D7255BE01C00B50268 /* iAlti_v2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iAlti_v2App.swift; sourceTree = "<group>"; };
-		604D54D9255BE01C00B50268 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		604D54DB255BE01C00B50268 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
-		604D54DD255BE01C00B50268 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
-		604D54DF255BE01C00B50268 /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
-		604D54E1255BE01E00B50268 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		604D54E4255BE01E00B50268 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		604D54E6255BE01E00B50268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		604D54E7255BE01E00B50268 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
-		604D5500255BE0D600B50268 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		604D5507255BE0F000B50268 /* OverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverView.swift; sourceTree = "<group>"; };
-		604D550E255BE10C00B50268 /* ControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsView.swift; sourceTree = "<group>"; };
-		604D5515255BE13800B50268 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		604D5534255C190A00B50268 /* iAlti_v2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iAlti_v2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		604D5537255C190A00B50268 /* iAlti_v2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iAlti_v2App.swift; sourceTree = "<group>"; };
+		604D5539255C190A00B50268 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		604D553B255C190E00B50268 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		604D553E255C190E00B50268 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		604D5540255C190E00B50268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		604D5545255C190E00B50268 /* iAlti_v2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iAlti_v2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		604D5549255C190E00B50268 /* iAlti_v2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iAlti_v2Tests.swift; sourceTree = "<group>"; };
+		604D554B255C190E00B50268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		604D5550255C190E00B50268 /* iAlti_v2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iAlti_v2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		604D5554255C190E00B50268 /* iAlti_v2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iAlti_v2UITests.swift; sourceTree = "<group>"; };
+		604D5556255C190E00B50268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		604D5559255C190E00B50268 /* iAlti_v2 WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iAlti_v2 WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		604D555E255C191200B50268 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		604D5560255C191200B50268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		604D5565255C191200B50268 /* iAlti_v2 WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "iAlti_v2 WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		604D556A255C191200B50268 /* iAlti_v2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iAlti_v2App.swift; sourceTree = "<group>"; };
+		604D556C255C191200B50268 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		604D556E255C191200B50268 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		604D5570255C191200B50268 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
+		604D5572255C191200B50268 /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
+		604D5574255C191500B50268 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		604D5577255C191500B50268 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		604D5579255C191500B50268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		604D557A255C191600B50268 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		604D5599255C1AE500B50268 /* ControlsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlsView.swift; sourceTree = "<group>"; };
+		604D559A255C1AE600B50268 /* Preview Content */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Preview Content"; sourceTree = "<group>"; };
+		604D559B255C1AE600B50268 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		604D559C255C1AE600B50268 /* OverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverView.swift; sourceTree = "<group>"; };
+		604D559D255C1AE600B50268 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		604D549E255BE01600B50268 /* Frameworks */ = {
+		604D5531255C190A00B50268 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		604D54AF255BE01900B50268 /* Frameworks */ = {
+		604D5542255C190E00B50268 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		604D54BA255BE01A00B50268 /* Frameworks */ = {
+		604D554D255C190E00B50268 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		604D54CF255BE01C00B50268 /* Frameworks */ = {
+		604D5562255C191200B50268 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -149,101 +151,102 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		604D5498255BE01600B50268 = {
+		604D552B255C190A00B50268 = {
 			isa = PBXGroup;
 			children = (
-				604D54A3255BE01600B50268 /* iAlti v2 */,
-				604D54B5255BE01A00B50268 /* iAlti v2Tests */,
-				604D54C0255BE01A00B50268 /* iAlti v2UITests */,
-				604D54CA255BE01A00B50268 /* iAlti v2 WatchKit App */,
-				604D54D6255BE01C00B50268 /* iAlti v2 WatchKit Extension */,
-				604D54A2255BE01600B50268 /* Products */,
+				604D5536255C190A00B50268 /* iAlti_v2 */,
+				604D5548255C190E00B50268 /* iAlti_v2Tests */,
+				604D5553255C190E00B50268 /* iAlti_v2UITests */,
+				604D555D255C190E00B50268 /* iAlti_v2 WatchKit App */,
+				604D5569255C191200B50268 /* iAlti_v2 WatchKit Extension */,
+				604D5535255C190A00B50268 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		604D54A2255BE01600B50268 /* Products */ = {
+		604D5535255C190A00B50268 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				604D54A1255BE01600B50268 /* iAlti v2.app */,
-				604D54B2255BE01900B50268 /* iAlti v2Tests.xctest */,
-				604D54BD255BE01A00B50268 /* iAlti v2UITests.xctest */,
-				604D54C6255BE01A00B50268 /* iAlti v2 WatchKit App.app */,
-				604D54D2255BE01C00B50268 /* iAlti v2 WatchKit Extension.appex */,
+				604D5534255C190A00B50268 /* iAlti_v2.app */,
+				604D5545255C190E00B50268 /* iAlti_v2Tests.xctest */,
+				604D5550255C190E00B50268 /* iAlti_v2UITests.xctest */,
+				604D5559255C190E00B50268 /* iAlti_v2 WatchKit App.app */,
+				604D5565255C191200B50268 /* iAlti_v2 WatchKit Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		604D54A3255BE01600B50268 /* iAlti v2 */ = {
+		604D5536255C190A00B50268 /* iAlti_v2 */ = {
 			isa = PBXGroup;
 			children = (
-				604D54A4255BE01600B50268 /* iAlti_v2App.swift */,
-				604D54A6255BE01600B50268 /* ContentView.swift */,
-				604D54A8255BE01900B50268 /* Assets.xcassets */,
-				604D54AD255BE01900B50268 /* Info.plist */,
-				604D54AA255BE01900B50268 /* Preview Content */,
+				604D5537255C190A00B50268 /* iAlti_v2App.swift */,
+				604D5539255C190A00B50268 /* ContentView.swift */,
+				604D553B255C190E00B50268 /* Assets.xcassets */,
+				604D5540255C190E00B50268 /* Info.plist */,
+				604D553D255C190E00B50268 /* Preview Content */,
 			);
-			path = "iAlti v2";
+			path = iAlti_v2;
 			sourceTree = "<group>";
 		};
-		604D54AA255BE01900B50268 /* Preview Content */ = {
+		604D553D255C190E00B50268 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				604D54AB255BE01900B50268 /* Preview Assets.xcassets */,
+				604D553E255C190E00B50268 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		604D54B5255BE01A00B50268 /* iAlti v2Tests */ = {
+		604D5548255C190E00B50268 /* iAlti_v2Tests */ = {
 			isa = PBXGroup;
 			children = (
-				604D54B6255BE01A00B50268 /* iAlti_v2Tests.swift */,
-				604D54B8255BE01A00B50268 /* Info.plist */,
+				604D5549255C190E00B50268 /* iAlti_v2Tests.swift */,
+				604D554B255C190E00B50268 /* Info.plist */,
 			);
-			path = "iAlti v2Tests";
+			path = iAlti_v2Tests;
 			sourceTree = "<group>";
 		};
-		604D54C0255BE01A00B50268 /* iAlti v2UITests */ = {
+		604D5553255C190E00B50268 /* iAlti_v2UITests */ = {
 			isa = PBXGroup;
 			children = (
-				604D54C1255BE01A00B50268 /* iAlti_v2UITests.swift */,
-				604D54C3255BE01A00B50268 /* Info.plist */,
+				604D5554255C190E00B50268 /* iAlti_v2UITests.swift */,
+				604D5556255C190E00B50268 /* Info.plist */,
 			);
-			path = "iAlti v2UITests";
+			path = iAlti_v2UITests;
 			sourceTree = "<group>";
 		};
-		604D54CA255BE01A00B50268 /* iAlti v2 WatchKit App */ = {
+		604D555D255C190E00B50268 /* iAlti_v2 WatchKit App */ = {
 			isa = PBXGroup;
 			children = (
-				604D54CB255BE01C00B50268 /* Assets.xcassets */,
-				604D54CD255BE01C00B50268 /* Info.plist */,
+				604D555E255C191200B50268 /* Assets.xcassets */,
+				604D5560255C191200B50268 /* Info.plist */,
 			);
-			path = "iAlti v2 WatchKit App";
+			path = "iAlti_v2 WatchKit App";
 			sourceTree = "<group>";
 		};
-		604D54D6255BE01C00B50268 /* iAlti v2 WatchKit Extension */ = {
+		604D5569255C191200B50268 /* iAlti_v2 WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
-				604D54D7255BE01C00B50268 /* iAlti_v2App.swift */,
-				604D54D9255BE01C00B50268 /* ContentView.swift */,
-				604D54DB255BE01C00B50268 /* NotificationController.swift */,
-				604D54DD255BE01C00B50268 /* NotificationView.swift */,
-				604D54DF255BE01C00B50268 /* ComplicationController.swift */,
-				604D54E1255BE01E00B50268 /* Assets.xcassets */,
-				604D54E6255BE01E00B50268 /* Info.plist */,
-				604D54E7255BE01E00B50268 /* PushNotificationPayload.apns */,
-				604D54E3255BE01E00B50268 /* Preview Content */,
-				604D5500255BE0D600B50268 /* MainView.swift */,
-				604D5507255BE0F000B50268 /* OverView.swift */,
-				604D550E255BE10C00B50268 /* ControlsView.swift */,
-				604D5515255BE13800B50268 /* SettingsView.swift */,
+				604D5599255C1AE500B50268 /* ControlsView.swift */,
+				604D559B255C1AE600B50268 /* MainView.swift */,
+				604D559C255C1AE600B50268 /* OverView.swift */,
+				604D559A255C1AE600B50268 /* Preview Content */,
+				604D559D255C1AE600B50268 /* SettingsView.swift */,
+				604D556A255C191200B50268 /* iAlti_v2App.swift */,
+				604D556C255C191200B50268 /* ContentView.swift */,
+				604D556E255C191200B50268 /* NotificationController.swift */,
+				604D5570255C191200B50268 /* NotificationView.swift */,
+				604D5572255C191200B50268 /* ComplicationController.swift */,
+				604D5574255C191500B50268 /* Assets.xcassets */,
+				604D5579255C191500B50268 /* Info.plist */,
+				604D557A255C191600B50268 /* PushNotificationPayload.apns */,
+				604D5576255C191500B50268 /* Preview Content */,
 			);
-			path = "iAlti v2 WatchKit Extension";
+			path = "iAlti_v2 WatchKit Extension";
 			sourceTree = "<group>";
 		};
-		604D54E3255BE01E00B50268 /* Preview Content */ = {
+		604D5576255C191500B50268 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				604D54E4255BE01E00B50268 /* Preview Assets.xcassets */,
+				604D5577255C191500B50268 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -251,124 +254,124 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		604D54A0255BE01600B50268 /* iAlti v2 */ = {
+		604D5533255C190A00B50268 /* iAlti_v2 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 604D54F2255BE01E00B50268 /* Build configuration list for PBXNativeTarget "iAlti v2" */;
+			buildConfigurationList = 604D5585255C191600B50268 /* Build configuration list for PBXNativeTarget "iAlti_v2" */;
 			buildPhases = (
-				604D549D255BE01600B50268 /* Sources */,
-				604D549E255BE01600B50268 /* Frameworks */,
-				604D549F255BE01600B50268 /* Resources */,
-				604D54F1255BE01E00B50268 /* Embed Watch Content */,
+				604D5530255C190A00B50268 /* Sources */,
+				604D5531255C190A00B50268 /* Frameworks */,
+				604D5532255C190A00B50268 /* Resources */,
+				604D5584255C191600B50268 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				604D54C9255BE01A00B50268 /* PBXTargetDependency */,
+				604D555C255C190E00B50268 /* PBXTargetDependency */,
 			);
-			name = "iAlti v2";
-			productName = "iAlti v2";
-			productReference = 604D54A1255BE01600B50268 /* iAlti v2.app */;
+			name = iAlti_v2;
+			productName = iAlti_v2;
+			productReference = 604D5534255C190A00B50268 /* iAlti_v2.app */;
 			productType = "com.apple.product-type.application";
 		};
-		604D54B1255BE01900B50268 /* iAlti v2Tests */ = {
+		604D5544255C190E00B50268 /* iAlti_v2Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 604D54F5255BE01E00B50268 /* Build configuration list for PBXNativeTarget "iAlti v2Tests" */;
+			buildConfigurationList = 604D5588255C191600B50268 /* Build configuration list for PBXNativeTarget "iAlti_v2Tests" */;
 			buildPhases = (
-				604D54AE255BE01900B50268 /* Sources */,
-				604D54AF255BE01900B50268 /* Frameworks */,
-				604D54B0255BE01900B50268 /* Resources */,
+				604D5541255C190E00B50268 /* Sources */,
+				604D5542255C190E00B50268 /* Frameworks */,
+				604D5543255C190E00B50268 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				604D54B4255BE01900B50268 /* PBXTargetDependency */,
+				604D5547255C190E00B50268 /* PBXTargetDependency */,
 			);
-			name = "iAlti v2Tests";
-			productName = "iAlti v2Tests";
-			productReference = 604D54B2255BE01900B50268 /* iAlti v2Tests.xctest */;
+			name = iAlti_v2Tests;
+			productName = iAlti_v2Tests;
+			productReference = 604D5545255C190E00B50268 /* iAlti_v2Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		604D54BC255BE01A00B50268 /* iAlti v2UITests */ = {
+		604D554F255C190E00B50268 /* iAlti_v2UITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 604D54F8255BE01E00B50268 /* Build configuration list for PBXNativeTarget "iAlti v2UITests" */;
+			buildConfigurationList = 604D558B255C191600B50268 /* Build configuration list for PBXNativeTarget "iAlti_v2UITests" */;
 			buildPhases = (
-				604D54B9255BE01A00B50268 /* Sources */,
-				604D54BA255BE01A00B50268 /* Frameworks */,
-				604D54BB255BE01A00B50268 /* Resources */,
+				604D554C255C190E00B50268 /* Sources */,
+				604D554D255C190E00B50268 /* Frameworks */,
+				604D554E255C190E00B50268 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				604D54BF255BE01A00B50268 /* PBXTargetDependency */,
+				604D5552255C190E00B50268 /* PBXTargetDependency */,
 			);
-			name = "iAlti v2UITests";
-			productName = "iAlti v2UITests";
-			productReference = 604D54BD255BE01A00B50268 /* iAlti v2UITests.xctest */;
+			name = iAlti_v2UITests;
+			productName = iAlti_v2UITests;
+			productReference = 604D5550255C190E00B50268 /* iAlti_v2UITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		604D54C5255BE01A00B50268 /* iAlti v2 WatchKit App */ = {
+		604D5558255C190E00B50268 /* iAlti_v2 WatchKit App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 604D54EE255BE01E00B50268 /* Build configuration list for PBXNativeTarget "iAlti v2 WatchKit App" */;
+			buildConfigurationList = 604D5581255C191600B50268 /* Build configuration list for PBXNativeTarget "iAlti_v2 WatchKit App" */;
 			buildPhases = (
-				604D54C4255BE01A00B50268 /* Resources */,
-				604D54ED255BE01E00B50268 /* Embed App Extensions */,
+				604D5557255C190E00B50268 /* Resources */,
+				604D5580255C191600B50268 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				604D54D5255BE01C00B50268 /* PBXTargetDependency */,
+				604D5568255C191200B50268 /* PBXTargetDependency */,
 			);
-			name = "iAlti v2 WatchKit App";
-			productName = "iAlti v2 WatchKit App";
-			productReference = 604D54C6255BE01A00B50268 /* iAlti v2 WatchKit App.app */;
+			name = "iAlti_v2 WatchKit App";
+			productName = "iAlti_v2 WatchKit App";
+			productReference = 604D5559255C190E00B50268 /* iAlti_v2 WatchKit App.app */;
 			productType = "com.apple.product-type.application.watchapp2";
 		};
-		604D54D1255BE01C00B50268 /* iAlti v2 WatchKit Extension */ = {
+		604D5564255C191200B50268 /* iAlti_v2 WatchKit Extension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 604D54EA255BE01E00B50268 /* Build configuration list for PBXNativeTarget "iAlti v2 WatchKit Extension" */;
+			buildConfigurationList = 604D557D255C191600B50268 /* Build configuration list for PBXNativeTarget "iAlti_v2 WatchKit Extension" */;
 			buildPhases = (
-				604D54CE255BE01C00B50268 /* Sources */,
-				604D54CF255BE01C00B50268 /* Frameworks */,
-				604D54D0255BE01C00B50268 /* Resources */,
+				604D5561255C191200B50268 /* Sources */,
+				604D5562255C191200B50268 /* Frameworks */,
+				604D5563255C191200B50268 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "iAlti v2 WatchKit Extension";
-			productName = "iAlti v2 WatchKit Extension";
-			productReference = 604D54D2255BE01C00B50268 /* iAlti v2 WatchKit Extension.appex */;
+			name = "iAlti_v2 WatchKit Extension";
+			productName = "iAlti_v2 WatchKit Extension";
+			productReference = 604D5565255C191200B50268 /* iAlti_v2 WatchKit Extension.appex */;
 			productType = "com.apple.product-type.watchkit2-extension";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		604D5499255BE01600B50268 /* Project object */ = {
+		604D552C255C190A00B50268 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1220;
 				LastUpgradeCheck = 1220;
 				TargetAttributes = {
-					604D54A0255BE01600B50268 = {
+					604D5533255C190A00B50268 = {
 						CreatedOnToolsVersion = 12.2;
 					};
-					604D54B1255BE01900B50268 = {
+					604D5544255C190E00B50268 = {
 						CreatedOnToolsVersion = 12.2;
-						TestTargetID = 604D54A0255BE01600B50268;
+						TestTargetID = 604D5533255C190A00B50268;
 					};
-					604D54BC255BE01A00B50268 = {
+					604D554F255C190E00B50268 = {
 						CreatedOnToolsVersion = 12.2;
-						TestTargetID = 604D54A0255BE01600B50268;
+						TestTargetID = 604D5533255C190A00B50268;
 					};
-					604D54C5255BE01A00B50268 = {
+					604D5558255C190E00B50268 = {
 						CreatedOnToolsVersion = 12.2;
 					};
-					604D54D1255BE01C00B50268 = {
+					604D5564255C191200B50268 = {
 						CreatedOnToolsVersion = 12.2;
 					};
 				};
 			};
-			buildConfigurationList = 604D549C255BE01600B50268 /* Build configuration list for PBXProject "iAlti v2" */;
+			buildConfigurationList = 604D552F255C190A00B50268 /* Build configuration list for PBXProject "iAlti_v2" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -376,132 +379,133 @@
 				en,
 				Base,
 			);
-			mainGroup = 604D5498255BE01600B50268;
-			productRefGroup = 604D54A2255BE01600B50268 /* Products */;
+			mainGroup = 604D552B255C190A00B50268;
+			productRefGroup = 604D5535255C190A00B50268 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				604D54A0255BE01600B50268 /* iAlti v2 */,
-				604D54B1255BE01900B50268 /* iAlti v2Tests */,
-				604D54BC255BE01A00B50268 /* iAlti v2UITests */,
-				604D54C5255BE01A00B50268 /* iAlti v2 WatchKit App */,
-				604D54D1255BE01C00B50268 /* iAlti v2 WatchKit Extension */,
+				604D5533255C190A00B50268 /* iAlti_v2 */,
+				604D5544255C190E00B50268 /* iAlti_v2Tests */,
+				604D554F255C190E00B50268 /* iAlti_v2UITests */,
+				604D5558255C190E00B50268 /* iAlti_v2 WatchKit App */,
+				604D5564255C191200B50268 /* iAlti_v2 WatchKit Extension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		604D549F255BE01600B50268 /* Resources */ = {
+		604D5532255C190A00B50268 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				604D54AC255BE01900B50268 /* Preview Assets.xcassets in Resources */,
-				604D54A9255BE01900B50268 /* Assets.xcassets in Resources */,
+				604D553F255C190E00B50268 /* Preview Assets.xcassets in Resources */,
+				604D553C255C190E00B50268 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		604D54B0255BE01900B50268 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		604D54BB255BE01A00B50268 /* Resources */ = {
+		604D5543255C190E00B50268 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		604D54C4255BE01A00B50268 /* Resources */ = {
+		604D554E255C190E00B50268 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				604D54CC255BE01C00B50268 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		604D54D0255BE01C00B50268 /* Resources */ = {
+		604D5557255C190E00B50268 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				604D54E5255BE01E00B50268 /* Preview Assets.xcassets in Resources */,
-				604D54E2255BE01E00B50268 /* Assets.xcassets in Resources */,
+				604D555F255C191200B50268 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		604D5563255C191200B50268 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				604D55A0255C1AE600B50268 /* Preview Content in Resources */,
+				604D5578255C191500B50268 /* Preview Assets.xcassets in Resources */,
+				604D5575255C191500B50268 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		604D549D255BE01600B50268 /* Sources */ = {
+		604D5530255C190A00B50268 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				604D54A7255BE01600B50268 /* ContentView.swift in Sources */,
-				604D54A5255BE01600B50268 /* iAlti_v2App.swift in Sources */,
+				604D553A255C190A00B50268 /* ContentView.swift in Sources */,
+				604D5538255C190A00B50268 /* iAlti_v2App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		604D54AE255BE01900B50268 /* Sources */ = {
+		604D5541255C190E00B50268 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				604D54B7255BE01A00B50268 /* iAlti_v2Tests.swift in Sources */,
+				604D554A255C190E00B50268 /* iAlti_v2Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		604D54B9255BE01A00B50268 /* Sources */ = {
+		604D554C255C190E00B50268 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				604D54C2255BE01A00B50268 /* iAlti_v2UITests.swift in Sources */,
+				604D5555255C190E00B50268 /* iAlti_v2UITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		604D54CE255BE01C00B50268 /* Sources */ = {
+		604D5561255C191200B50268 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				604D54DC255BE01C00B50268 /* NotificationController.swift in Sources */,
-				604D5501255BE0D600B50268 /* MainView.swift in Sources */,
-				604D54DA255BE01C00B50268 /* ContentView.swift in Sources */,
-				604D5516255BE13800B50268 /* SettingsView.swift in Sources */,
-				604D54E0255BE01C00B50268 /* ComplicationController.swift in Sources */,
-				604D550F255BE10C00B50268 /* ControlsView.swift in Sources */,
-				604D54D8255BE01C00B50268 /* iAlti_v2App.swift in Sources */,
-				604D5508255BE0F000B50268 /* OverView.swift in Sources */,
-				604D54DE255BE01C00B50268 /* NotificationView.swift in Sources */,
+				604D55A2255C1AE600B50268 /* OverView.swift in Sources */,
+				604D556F255C191200B50268 /* NotificationController.swift in Sources */,
+				604D55A1255C1AE600B50268 /* MainView.swift in Sources */,
+				604D55A3255C1AE600B50268 /* SettingsView.swift in Sources */,
+				604D556D255C191200B50268 /* ContentView.swift in Sources */,
+				604D5573255C191200B50268 /* ComplicationController.swift in Sources */,
+				604D556B255C191200B50268 /* iAlti_v2App.swift in Sources */,
+				604D559F255C1AE600B50268 /* ControlsView.swift in Sources */,
+				604D5571255C191200B50268 /* NotificationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		604D54B4255BE01900B50268 /* PBXTargetDependency */ = {
+		604D5547255C190E00B50268 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 604D54A0255BE01600B50268 /* iAlti v2 */;
-			targetProxy = 604D54B3255BE01900B50268 /* PBXContainerItemProxy */;
+			target = 604D5533255C190A00B50268 /* iAlti_v2 */;
+			targetProxy = 604D5546255C190E00B50268 /* PBXContainerItemProxy */;
 		};
-		604D54BF255BE01A00B50268 /* PBXTargetDependency */ = {
+		604D5552255C190E00B50268 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 604D54A0255BE01600B50268 /* iAlti v2 */;
-			targetProxy = 604D54BE255BE01A00B50268 /* PBXContainerItemProxy */;
+			target = 604D5533255C190A00B50268 /* iAlti_v2 */;
+			targetProxy = 604D5551255C190E00B50268 /* PBXContainerItemProxy */;
 		};
-		604D54C9255BE01A00B50268 /* PBXTargetDependency */ = {
+		604D555C255C190E00B50268 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 604D54C5255BE01A00B50268 /* iAlti v2 WatchKit App */;
-			targetProxy = 604D54C8255BE01A00B50268 /* PBXContainerItemProxy */;
+			target = 604D5558255C190E00B50268 /* iAlti_v2 WatchKit App */;
+			targetProxy = 604D555B255C190E00B50268 /* PBXContainerItemProxy */;
 		};
-		604D54D5255BE01C00B50268 /* PBXTargetDependency */ = {
+		604D5568255C191200B50268 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 604D54D1255BE01C00B50268 /* iAlti v2 WatchKit Extension */;
-			targetProxy = 604D54D4255BE01C00B50268 /* PBXContainerItemProxy */;
+			target = 604D5564255C191200B50268 /* iAlti_v2 WatchKit Extension */;
+			targetProxy = 604D5567255C191200B50268 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		604D54E8255BE01E00B50268 /* Debug */ = {
+		604D557B255C191600B50268 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -560,7 +564,7 @@
 			};
 			name = Debug;
 		};
-		604D54E9255BE01E00B50268 /* Release */ = {
+		604D557C255C191600B50268 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -612,15 +616,15 @@
 			};
 			name = Release;
 		};
-		604D54EB255BE01E00B50268 /* Debug */ = {
+		604D557E255C191600B50268 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"iAlti v2 WatchKit Extension/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"iAlti_v2 WatchKit Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = 6C8S93GQ4Z;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "iAlti v2 WatchKit Extension/Info.plist";
+				INFOPLIST_FILE = "iAlti_v2 WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -636,15 +640,15 @@
 			};
 			name = Debug;
 		};
-		604D54EC255BE01E00B50268 /* Release */ = {
+		604D557F255C191600B50268 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"iAlti v2 WatchKit Extension/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"iAlti_v2 WatchKit Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = 6C8S93GQ4Z;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "iAlti v2 WatchKit Extension/Info.plist";
+				INFOPLIST_FILE = "iAlti_v2 WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -661,7 +665,7 @@
 			};
 			name = Release;
 		};
-		604D54EF255BE01E00B50268 /* Debug */ = {
+		604D5582255C191600B50268 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -670,7 +674,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6C8S93GQ4Z;
 				IBSC_MODULE = iAlti_v2_WatchKit_Extension;
-				INFOPLIST_FILE = "iAlti v2 WatchKit App/Info.plist";
+				INFOPLIST_FILE = "iAlti_v2 WatchKit App/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "SausageBrothers-Airsports.iAlti-v2.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -681,7 +685,7 @@
 			};
 			name = Debug;
 		};
-		604D54F0255BE01E00B50268 /* Release */ = {
+		604D5583255C191600B50268 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -690,7 +694,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6C8S93GQ4Z;
 				IBSC_MODULE = iAlti_v2_WatchKit_Extension;
-				INFOPLIST_FILE = "iAlti v2 WatchKit App/Info.plist";
+				INFOPLIST_FILE = "iAlti_v2 WatchKit App/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "SausageBrothers-Airsports.iAlti-v2.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -702,16 +706,16 @@
 			};
 			name = Release;
 		};
-		604D54F3255BE01E00B50268 /* Debug */ = {
+		604D5586255C191600B50268 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"iAlti v2/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"iAlti_v2/Preview Content\"";
 				DEVELOPMENT_TEAM = 6C8S93GQ4Z;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "iAlti v2/Info.plist";
+				INFOPLIST_FILE = iAlti_v2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -725,16 +729,16 @@
 			};
 			name = Debug;
 		};
-		604D54F4255BE01E00B50268 /* Release */ = {
+		604D5587255C191600B50268 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"iAlti v2/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"iAlti_v2/Preview Content\"";
 				DEVELOPMENT_TEAM = 6C8S93GQ4Z;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "iAlti v2/Info.plist";
+				INFOPLIST_FILE = iAlti_v2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -749,14 +753,14 @@
 			};
 			name = Release;
 		};
-		604D54F6255BE01E00B50268 /* Debug */ = {
+		604D5589255C191600B50268 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6C8S93GQ4Z;
-				INFOPLIST_FILE = "iAlti v2Tests/Info.plist";
+				INFOPLIST_FILE = iAlti_v2Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -768,18 +772,18 @@
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iAlti v2.app/iAlti v2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iAlti_v2.app/iAlti_v2";
 			};
 			name = Debug;
 		};
-		604D54F7255BE01E00B50268 /* Release */ = {
+		604D558A255C191600B50268 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6C8S93GQ4Z;
-				INFOPLIST_FILE = "iAlti v2Tests/Info.plist";
+				INFOPLIST_FILE = iAlti_v2Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -791,18 +795,18 @@
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iAlti v2.app/iAlti v2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iAlti_v2.app/iAlti_v2";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		604D54F9255BE01E00B50268 /* Debug */ = {
+		604D558C255C191600B50268 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6C8S93GQ4Z;
-				INFOPLIST_FILE = "iAlti v2UITests/Info.plist";
+				INFOPLIST_FILE = iAlti_v2UITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -814,17 +818,17 @@
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "iAlti v2";
+				TEST_TARGET_NAME = iAlti_v2;
 			};
 			name = Debug;
 		};
-		604D54FA255BE01E00B50268 /* Release */ = {
+		604D558D255C191600B50268 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6C8S93GQ4Z;
-				INFOPLIST_FILE = "iAlti v2UITests/Info.plist";
+				INFOPLIST_FILE = iAlti_v2UITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -836,7 +840,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "iAlti v2";
+				TEST_TARGET_NAME = iAlti_v2;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -844,61 +848,61 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		604D549C255BE01600B50268 /* Build configuration list for PBXProject "iAlti v2" */ = {
+		604D552F255C190A00B50268 /* Build configuration list for PBXProject "iAlti_v2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				604D54E8255BE01E00B50268 /* Debug */,
-				604D54E9255BE01E00B50268 /* Release */,
+				604D557B255C191600B50268 /* Debug */,
+				604D557C255C191600B50268 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		604D54EA255BE01E00B50268 /* Build configuration list for PBXNativeTarget "iAlti v2 WatchKit Extension" */ = {
+		604D557D255C191600B50268 /* Build configuration list for PBXNativeTarget "iAlti_v2 WatchKit Extension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				604D54EB255BE01E00B50268 /* Debug */,
-				604D54EC255BE01E00B50268 /* Release */,
+				604D557E255C191600B50268 /* Debug */,
+				604D557F255C191600B50268 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		604D54EE255BE01E00B50268 /* Build configuration list for PBXNativeTarget "iAlti v2 WatchKit App" */ = {
+		604D5581255C191600B50268 /* Build configuration list for PBXNativeTarget "iAlti_v2 WatchKit App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				604D54EF255BE01E00B50268 /* Debug */,
-				604D54F0255BE01E00B50268 /* Release */,
+				604D5582255C191600B50268 /* Debug */,
+				604D5583255C191600B50268 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		604D54F2255BE01E00B50268 /* Build configuration list for PBXNativeTarget "iAlti v2" */ = {
+		604D5585255C191600B50268 /* Build configuration list for PBXNativeTarget "iAlti_v2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				604D54F3255BE01E00B50268 /* Debug */,
-				604D54F4255BE01E00B50268 /* Release */,
+				604D5586255C191600B50268 /* Debug */,
+				604D5587255C191600B50268 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		604D54F5255BE01E00B50268 /* Build configuration list for PBXNativeTarget "iAlti v2Tests" */ = {
+		604D5588255C191600B50268 /* Build configuration list for PBXNativeTarget "iAlti_v2Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				604D54F6255BE01E00B50268 /* Debug */,
-				604D54F7255BE01E00B50268 /* Release */,
+				604D5589255C191600B50268 /* Debug */,
+				604D558A255C191600B50268 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		604D54F8255BE01E00B50268 /* Build configuration list for PBXNativeTarget "iAlti v2UITests" */ = {
+		604D558B255C191600B50268 /* Build configuration list for PBXNativeTarget "iAlti_v2UITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				604D54F9255BE01E00B50268 /* Debug */,
-				604D54FA255BE01E00B50268 /* Release */,
+				604D558C255C191600B50268 /* Debug */,
+				604D558D255C191600B50268 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 604D5499255BE01600B50268 /* Project object */;
+	rootObject = 604D552C255C190A00B50268 /* Project object */;
 }

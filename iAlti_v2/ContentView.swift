@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  iAlti v2
+//  iAlti_v2
 //
 //  Created by Lukas Wheldon on 11.11.20.
 //
@@ -9,9 +9,6 @@ import SwiftUI
 import MapKit
 
 struct ContentView: View {
-    @EnvironmentObject var globals: Globals
-    @EnvironmentObject var userSettings: UserSettings
-    
     var body: some View {
         Text("Hello, world!")
             .padding()

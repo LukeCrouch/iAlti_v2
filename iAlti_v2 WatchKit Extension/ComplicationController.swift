@@ -1,6 +1,6 @@
 //
 //  ComplicationController.swift
-//  iAlti v2 WatchKit Extension
+//  iAlti_v2 WatchKit Extension
 //
 //  Created by Lukas Wheldon on 11.11.20.
 //
@@ -14,7 +14,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 
     func getComplicationDescriptors(handler: @escaping ([CLKComplicationDescriptor]) -> Void) {
         let descriptors = [
-            CLKComplicationDescriptor(identifier: "complication", displayName: "iAlti v2", supportedFamilies: CLKComplicationFamily.allCases)
+            CLKComplicationDescriptor(identifier: "complication", displayName: "iAlti_v2", supportedFamilies: CLKComplicationFamily.allCases)
             // Multiple complication support can be added here with more descriptors
         ]
         
