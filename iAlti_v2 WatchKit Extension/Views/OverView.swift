@@ -53,7 +53,7 @@ struct OverView: View {
                 }
             }
             OverViewLine(name: "Pressure [hPa]", value: globals.pressure, decimals: 2)
-            OverViewLine(name: "Altitude MSL [m]", value: globals.barometricAltitude, decimals: 0)
+            OverViewLine(name: "Elevation [m]", value: globals.barometricAltitude, decimals: 0)
             OverViewLine(name: "Vertical Speed [m/s]", value: globals.speedV, decimals: 1)
             Divider()
             HStack {
@@ -77,14 +77,11 @@ struct OverView: View {
             OverViewLine(name: "Altitude MSL [m]", value: LocationManager.shared.lastLocation?.altitude ?? 0.0, decimals: 0)
             OverViewLine(name: "Horizontal Speed [m/s]", value: LocationManager.shared.lastLocation?.speed ?? 0.0, decimals: 1)
         }
-        .navigationBarTitle("iAlti")
     }
 }
 
 struct OverView_Previews: PreviewProvider {
     static var previews: some View {
         OverView()
-            .environmentObject(UserSettings())
-            .environmentObject(Globals())
     }
 }

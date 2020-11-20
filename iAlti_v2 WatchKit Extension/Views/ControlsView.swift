@@ -12,8 +12,6 @@ struct ControlsView: View {
     @EnvironmentObject var userSettings: UserSettings
     @Binding var view: Int
     @State private var showModal = false
-    private let activityType = CLActivityType.airborne
-    var altimeterTimestamp = 0.0
     
     func startLocation() {
         switch LocationManager.shared.locationStatus {
@@ -133,8 +131,6 @@ struct ControlsView: View {
                     Text("Settings")
                 }.sheet(isPresented: $showModal) {
                     SettingsView()
-                        .environmentObject(globals)
-                        .environmentObject(userSettings)
                         .toolbar(content: {
                             ToolbarItem(placement: .cancellationAction) {
                                 Button("Done") { self.showModal = false }
@@ -142,7 +138,7 @@ struct ControlsView: View {
                         })
                 }
             }
-        }.navigationBarTitle("Controls")
+        }.navigationBarTitle("iAlti v2")
     }
 }
 

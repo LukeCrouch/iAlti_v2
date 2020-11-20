@@ -19,15 +19,21 @@ struct MainView: View {
                     .fontWeight(.bold)
                     .foregroundColor(userSettings.colors[userSettings.colorSelection])
                     .transition(.opacity)
-                Text("Relative Altitude [km]")
+                Text("Altitude [km]")
                     .font(.system(size: 15))
+            } else if globals.glideRatio.isNaN || globals.glideRatio == 0 {
+                Text("0")
+                    .font(.system(size: 100))
+                    .fontWeight(.bold)
+                    .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                    .transition(.opacity)
             } else {
                 Text("\(globals.relativeAltitude + userSettings.offset, specifier: "%.0f")")
                     .font(.system(size: 60))
                     .fontWeight(.bold)
                     .foregroundColor(userSettings.colors[userSettings.colorSelection])
                     .transition(.opacity)
-                Text("Relative Altitude [m]")
+                Text("Altitude [m]")
                     .font(.system(size: 15))
             }
             Divider()
@@ -37,7 +43,7 @@ struct MainView: View {
                     .foregroundColor(userSettings.colors[userSettings.colorSelection])
                     .transition(.opacity)
             } else {
-                Text("\(globals.glideRatio, specifier: "%.0f")")
+                Text("\(globals.glideRatio, specifier: "%.1f")")
                     .font(.system(size: 60))
                     .fontWeight(.bold)
                     .foregroundColor(userSettings.colors[userSettings.colorSelection])
@@ -46,7 +52,6 @@ struct MainView: View {
             Text("Glide Ratio")
                 .font(.system(size: 15))
         }
-        .navigationBarTitle("iAlti")
     }
 }
 
@@ -54,8 +59,6 @@ struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             MainView()
-                .environmentObject(UserSettings())
-                .environmentObject(Globals())
         }
     }
 }

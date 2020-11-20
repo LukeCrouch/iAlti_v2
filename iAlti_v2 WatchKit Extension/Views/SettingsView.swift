@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Combine
 
 struct Weather: Codable {
     var main: Main?
@@ -16,14 +15,14 @@ struct Main: Codable {
     var pressure: Double?
 }
 
+
 struct SettingsView: View {
     @EnvironmentObject var globals: Globals
     @EnvironmentObject var userSettings: UserSettings
     @State private var results = [Weather]()
     @State private var showingAlert = false
     @State private var selection: Int = 0
-
-    let colors = ["Green", "White", "Red", "Blue", "Orange", "Yellow", "Pink", "Purple"]
+    private let colors = ["Green", "White", "Red", "Blue", "Orange", "Yellow", "Pink", "Purple"]
     
     func autoCalib() {
         let pressureCall = "ZmY1N2FmZThkOGY2N2U2MzIwNmVmZmQ2MTM3NmMzZDc="
@@ -113,8 +112,6 @@ struct SettingsView: View {
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
-            .environmentObject(UserSettings())
-            .environmentObject(Globals())
     }
 }
 
