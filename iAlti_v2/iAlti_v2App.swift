@@ -21,7 +21,7 @@ struct iAlti_v2App: App {
             ContentView()
                 .environmentObject(userSettings)
                 .environmentObject(globals)
-                .environment(\.managedObjectContext, persistence.persistentContainer.viewContext)
+                .environment(\.managedObjectContext, persistence.context)
         }
     }
 }

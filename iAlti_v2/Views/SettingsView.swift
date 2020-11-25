@@ -14,7 +14,7 @@ struct SettingsView: View {
     @EnvironmentObject var userSettings: UserSettings
     @Environment(\.managedObjectContext) var context
     
-    let connectivityProvider = WatchConnectivityProvider(persistentContainer: NSPersistentContainer())
+    let connectivityProvider = WatchConnectivityProvider()
     
     @State private var results = [Weather]()
     
@@ -26,11 +26,9 @@ struct SettingsView: View {
     @State private var toggleLoc = false
     private let colors = ["Green", "White", "Red", "Blue", "Orange", "Yellow", "Pink", "Purple", "Black"]
     
-    @State var locations = [CLLocation]()
-    @State var startDate = Date()
+    @State var startTime = Date()
     @State var duration: Double = 0
     @State var takeOff: String = "Unknown"
-    @State var maxAltitude: Double = 0
     @State var distance: CLLocationDistance = 0
     
     private func geocode() {
@@ -38,16 +36,16 @@ struct SettingsView: View {
         var placemark: CLPlacemark?
         DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
             guard let currentLocation = LocationManager.shared.lastLocation else { return }
-            print("Starting Geocoding for location: \(currentLocation)")
+            debugPrint("Starting Geocoding for location: \(currentLocation)")
             
             geocoder.reverseGeocodeLocation(currentLocation, completionHandler: { (placemarks, error) in
                 if error == nil {
                     placemark = placemarks?[0]
                     takeOff = placemark?.locality ?? "Unknown"
-                    print("Geocoded Take Off: \(takeOff)")
+                    debugPrint("Geocoded Take Off: \(takeOff)")
                 } else {
                     placemark = nil
-                    print("Error geocoding location: \(error?.localizedDescription ?? "Unknown Error")")
+                    debugPrint("Error geocoding location: \(error?.localizedDescription ?? "Unknown Error")")
                 }
             })
         }
@@ -55,32 +53,49 @@ struct SettingsView: View {
     }
     
     private func saveLog() {
-        print("Saving Log")
+        var accuracy: Double = 0
+        var i: Int = 0
+        
+        debugPrint("Saving Log")
         let newLog = Log(context: context)
         newLog.date = Date()
         newLog.glider = userSettings.glider
         newLog.pilot = userSettings.pilot
         newLog.flightTime = duration
         newLog.takeoff = takeOff
-        newLog.maxAltitude = maxAltitude
+        newLog.latitude = LocationManager.shared.latitudeArray
+        newLog.longitude = LocationManager.shared.longitudeArray
+        newLog.altitude = LocationManager.shared.altitudeArray
+        newLog.speed = LocationManager.shared.speedArray
+        newLog.glideRatio = LocationManager.shared.glideRatioArray
+        newLog.accuracy = LocationManager.shared.accuracyArray
+        while accuracy < 15 {
+            accuracy = newLog.accuracy[i]
+            if newLog.accuracy[i] > 15 {
+                newLog.latitude.removeFirst()
+                newLog.longitude.removeFirst()
+                newLog.altitude.removeFirst()
+                newLog.speed.removeFirst()
+                newLog.glideRatio.removeFirst()
+            }
+            i += 1
+        }
+        debugPrint("Deleted \(i) entries with horizontal accuracy over +/- 15m.")
+        newLog.maxAltitude = newLog.altitude.max() ?? 0
         newLog.distance = distance
         newLog.speedAvg = distance / duration
-        locations = LocationManager.shared.locationArray
-        print("Saved \(locations.count) Log Points.")
-        locations.forEach { location in
-            newLog.addLogPoint(with: location, context: context) }
         do {
             try context.save()
         } catch{
-            fatalError("Error Saving to persistence")
+            debugPrint("Error Saving to persistence")
         }
-        LocationManager.shared.locationArray.removeAll()
-        locations.removeAll()
+        debugPrint("Saved Log with \(newLog.altitude.count) entries.")
+        LocationManager.shared.resetArrays()
     }
     
     private func startButton() {
-        print("Start Button pressed")
-        startDate = Date()
+        debugPrint("Start Button pressed")
+        startTime = Date()
         startAltimeter()
         LocationManager.shared.start()
         view = 0
@@ -89,14 +104,14 @@ struct SettingsView: View {
     }
     
     private func stopButton() {
-        print("Stop Button pressed")
+        debugPrint("Stop Button pressed")
         Altimeter.shared.stopRelativeAltitudeUpdates()
         LocationManager.shared.stop()
         globals.isLocationStarted = false
         toggleLoc = false
         toggleAlti = false
         globals.isAltimeterStarted = false
-        duration = DateInterval(start: startDate, end: Date()).duration
+        duration = DateInterval(start: startTime, end: Date()).duration
         saveLog()
         view = 1
     }
@@ -107,32 +122,36 @@ struct SettingsView: View {
         if Altimeter.isRelativeAltitudeAvailable() {
             switch Altimeter.authorizationStatus() {
             case .notDetermined: // Handle state before user prompt
-                print("CM: Awaiting user prompt...")
+                debugPrint("CM: Awaiting user prompt...")
             //fatalError("Awaiting CM user prompt...")
             case .restricted: // Handle system-wide restriction
                 fatalError("CM Authorization restricted!")
             case .denied: // Handle user denied state
                 fatalError("CM Authorization denied!")
             case .authorized: // Ready to go!
-                print("CM Authorized!")
+                debugPrint("CM Authorized!")
             @unknown default:
                 fatalError("Unknown CM Authorization Status!")
             }
             Altimeter.shared.startRelativeAltitudeUpdates(to: OperationQueue.main) { data, error in
                 if let trueData = data {
-                    print(#function, trueData)
+                    //debugPrint(#function, trueData)
                     globals.pressure = trueData.pressure.doubleValue * 10
                     globals.barometricAltitude =  8400 * (userSettings.qnh - globals.pressure) / userSettings.qnh
                     globals.speedV = (trueData.relativeAltitude.doubleValue - globals.relativeAltitude) / (trueData.timestamp - timestamp)
+                    
                     globals.glideRatio = (LocationManager.shared.lastLocation?.speed ?? 0) / (-1 * globals.speedV)
+                    
                     globals.speedH = LocationManager.shared.lastLocation?.speed ?? 0
-                    timestamp = trueData.timestamp
+                    
                     globals.relativeAltitude = trueData.relativeAltitude.doubleValue
-                    if globals.barometricAltitude > maxAltitude {
-                        maxAltitude = globals.barometricAltitude
-                    }
+                    
+                    LocationManager.shared.altitude = globals.barometricAltitude
+                    LocationManager.shared.glideRatio = globals.glideRatio
+                    
+                    timestamp = trueData.timestamp
                 } else {
-                    print("Error starting relative Altitude Updates: \(error?.localizedDescription ?? "Unknown Error")")
+                    debugPrint("Error starting relative Altitude Updates: \(error?.localizedDescription ?? "Unknown Error")")
                 }
             }
         }
@@ -144,29 +163,29 @@ struct SettingsView: View {
         let pressureCallNew: String = pressureCall.model!
         
         guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(LocationManager.shared.lastLocation!.coordinate.latitude)&lon=\(LocationManager.shared.lastLocation!.coordinate.longitude)&appid=\(pressureCallNew)") else {
-            print("Invalid Openweathermap URL")
+            debugPrint("Invalid Openweathermap URL")
             return
         }
         
         let request = URLRequest(url: url)
-        print("Request ", request)
+        debugPrint("Request ", request)
         
         URLSession.shared.dataTask(with: request) { data, decodedResponse, error in
-            print("URLSession started")
+            debugPrint("URLSession started")
             if let data = data {
-                print("URLSession data received", data)
+                debugPrint("URLSession data received", data)
                 if let decodedResponse = try? JSONDecoder().decode(Weather.self, from: data) {
-                    print("URLSession response decoded", decodedResponse)
+                    debugPrint("URLSession response decoded", decodedResponse)
                     DispatchQueue.main.async {
                         userSettings.qnh = decodedResponse.main?.pressure ?? 0
-                        print("Calibrated with a pulled pressure of", decodedResponse.main?.pressure ?? 0)
+                        debugPrint("Calibrated with a pulled pressure of", decodedResponse.main?.pressure ?? 0)
                         userSettings.offset = 8400 * (userSettings.qnh - globals.pressure) / userSettings.qnh
                     }
                     return
                 }
             }
-            print("Fetch failed: \(error?.localizedDescription ?? "Unknown error"):")
-            print("Error", error ?? "nil")
+            debugPrint("Fetch failed: \(error?.localizedDescription ?? "Unknown error"):")
+            debugPrint("Error", error ?? "nil")
         }.resume()
     }
     
@@ -218,9 +237,14 @@ struct SettingsView: View {
                     Text("GPS")
                 }
                 HStack {
-                    Text("\(LocationManager.shared.lastLocation?.altitude ?? 0, specifier: "%.2f")")
+                    Text("\(LocationManager.shared.lastLocation?.horizontalAccuracy ?? 0, specifier: "%.2f")")
                         .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    Text("Elevation MSL [m]")
+                    Text("Horizontal Accuracy [+/- m]")
+                }
+                HStack {
+                    Text("\(LocationManager.shared.lastLocation?.verticalAccuracy ?? 0, specifier: "%.2f")")
+                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                    Text("Vertical Accuracy [+/- m]")
                 }
             }
             Section(header: Text("Controls")) {
@@ -240,7 +264,7 @@ struct SettingsView: View {
                         .foregroundColor(userSettings.colors[userSettings.colorSelection])
                 })
                 Button(action: {
-                    print("Reset Button pressed")
+                    debugPrint("Reset Button pressed")
                     Altimeter.shared.stopRelativeAltitudeUpdates()
                     startAltimeter()
                     userSettings.offset = 0
@@ -251,7 +275,7 @@ struct SettingsView: View {
                 })
                 Button(action: {
                     if globals.isLocationStarted {
-                        print("Auto Calibration started")
+                        debugPrint("Auto Calibration started")
                         autoCalib()
                     } else {
                         showAlert = true
@@ -302,7 +326,7 @@ struct SettingsView: View {
                     }.foregroundColor(userSettings.colors[userSettings.colorSelection])
                 }
             }
-        }
+        }.onAppear(perform: connectivityProvider.connect)
     }
 }
 

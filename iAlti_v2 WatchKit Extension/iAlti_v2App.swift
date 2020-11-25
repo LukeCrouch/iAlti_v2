@@ -30,8 +30,6 @@ struct iAlti_v2App: App {
     @StateObject var globals = Globals()
     @StateObject var userSettings = UserSettings()
     
-    let connectivityProvider = 
-    
     @SceneBuilder var body: some Scene {
         WindowGroup {
             NavigationView {
@@ -40,7 +38,6 @@ struct iAlti_v2App: App {
                     .environmentObject(userSettings)
             }
         }
-
         WKNotificationScene(controller: NotificationController.self, category: "myCategory")
     }
 }

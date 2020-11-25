@@ -41,6 +41,14 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
         }
     }
     
+    @Published var locationArray: [CLLocation] = []
+    
+    func sendLog() {
+        debugPrint("Sending Log to phone with \(locationArray.count) log points.")
+        //
+        locationArray.removeAll()
+    }
+    
     var statusString: String {
         guard let status = locationStatus else {
             return "unknown"
@@ -58,13 +66,15 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         self.locationStatus = status
-        print(#function, statusString)
+        debugPrint(#function, statusString)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         self.lastLocation = location
-        print(#function, location)
+        debugPrint(#function, location)
+        locationArray.append(lastLocation ?? CLLocation())
+        debugPrint("Location Array size: \(locationArray.count)")
     }
     
     func stop() {
@@ -75,6 +85,3 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
         locationManager.startUpdatingLocation()
     }
 }
-
-
-

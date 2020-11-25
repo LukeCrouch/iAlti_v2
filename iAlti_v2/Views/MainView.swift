@@ -11,6 +11,7 @@ import MapKit
 struct MainView: View {
     @EnvironmentObject var globals: Globals
     @EnvironmentObject var userSettings: UserSettings
+    
     @State private var userTrackingMode: MapUserTrackingMode = .follow
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(

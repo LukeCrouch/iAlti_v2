@@ -10,24 +10,27 @@ import SwiftUI
 struct ControlsView: View {
     @EnvironmentObject var globals: Globals
     @EnvironmentObject var userSettings: UserSettings
+    
     @Binding var view: Int
     @State private var showModal = false
     
-    func startLocation() {
+    let connectivityProvider = PhoneConnectivityProvider()
+    
+    private func startLocation() {
         switch LocationManager.shared.locationStatus {
         case .notDetermined:
-            print("CL: Awaiting user prompt...")
+            debugPrint("CL: Awaiting user prompt...")
         //fatalError("Awaiting CL user prompt...")
         case .restricted:
             fatalError("CL Authorization restricted!")
         case .denied:
             fatalError("CL Authorization denied!")
         case .authorizedAlways:
-            print("CL Authorized!")
+            debugPrint("CL Authorized!")
         case .authorizedWhenInUse:
-            print("CL Authorized when in use!")
+            debugPrint("CL Authorized when in use!")
         case .none:
-            print("CL Authorization None!")
+            debugPrint("CL Authorization None!")
         @unknown default:
             fatalError("Unknown CL Authorization Status!")
         }
@@ -35,31 +38,31 @@ struct ControlsView: View {
         globals.isLocationStarted = true
     }
     
-    func stopAltimeter() {
+    private func stopAltimeter() {
         Altimeter.shared.stopRelativeAltitudeUpdates()
         globals.isAltimeterStarted = false
     }
     
-    func startAltimeter() {
+    private func startAltimeter() {
         var timestamp = 0.0
         
         if Altimeter.isRelativeAltitudeAvailable() {
             switch Altimeter.authorizationStatus() {
             case .notDetermined: // Handle state before user prompt
-                print("CM: Awaiting user prompt...")
+                debugPrint("CM: Awaiting user prompt...")
             //fatalError("Awaiting CM user prompt...")
             case .restricted: // Handle system-wide restriction
                 fatalError("CM Authorization restricted!")
             case .denied: // Handle user denied state
                 fatalError("CM Authorization denied!")
             case .authorized: // Ready to go!
-                print("CM Authorized!")
+                debugPrint("CM Authorized!")
             @unknown default:
                 fatalError("Unknown CM Authorization Status!")
             }
             Altimeter.shared.startRelativeAltitudeUpdates(to: OperationQueue.main) { data, error in
                 if let trueData = data {
-                    print(trueData)
+                    debugPrint(trueData)
                     globals.pressure = trueData.pressure.doubleValue * 10
                     globals.barometricAltitude =  8400 * (userSettings.qnh - globals.pressure) / userSettings.qnh
                     globals.speedV = (trueData.relativeAltitude.doubleValue - globals.relativeAltitude) / (trueData.timestamp - timestamp)
@@ -67,7 +70,7 @@ struct ControlsView: View {
                     timestamp = trueData.timestamp
                     globals.relativeAltitude = trueData.relativeAltitude.doubleValue
                 } else {
-                    print("Error starting relative Altitude Updates: \(error?.localizedDescription ?? "Unknown Error")")
+                    debugPrint("Error starting relative Altitude Updates: \(error?.localizedDescription ?? "Unknown Error")")
                 }
             }
         }
@@ -79,7 +82,7 @@ struct ControlsView: View {
             HStack {
                 VStack {
                     Button(action: {
-                        print("Start Button pressed")
+                        debugPrint("Start Button pressed")
                         startAltimeter()
                         startLocation()
                         view = (view + 1) % 1
@@ -92,10 +95,11 @@ struct ControlsView: View {
                 }
                 VStack {
                     Button(action: {
-                        print("Stop Button pressed")
+                        debugPrint("Stop Button pressed")
                         stopAltimeter()
                         LocationManager.shared.stop()
                         globals.isLocationStarted = false
+                        LocationManager.shared.sendLog()
                     }, label: {
                         Image(systemName: "stop.fill")
                             .foregroundColor(.red)
@@ -107,7 +111,7 @@ struct ControlsView: View {
             HStack {
                 VStack {
                     Button(action: {
-                        print("Reset Button pressed")
+                        debugPrint("Reset Button pressed")
                         stopAltimeter()
                         startAltimeter()
                         userSettings.offset = 0
@@ -121,7 +125,7 @@ struct ControlsView: View {
                 }
                 VStack {
                     Button(action: {
-                        print("Settings Button pressed")
+                        debugPrint("Settings Button pressed")
                         showModal.toggle()
                     }, label: {
                         Image(systemName: "gearshape.fill")
@@ -138,7 +142,9 @@ struct ControlsView: View {
                         })
                 }
             }
-        }.navigationBarTitle("iAlti v2")
+        }
+        .navigationBarTitle("iAlti v2")
+        .onAppear(perform: connectivityProvider.connect)
     }
 }
 

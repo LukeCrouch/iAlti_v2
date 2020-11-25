@@ -29,10 +29,24 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     static let shared = LocationManager()
     let objectWillChange = PassthroughSubject<Void, Never>()
     
-    @Published var locationArray = [CLLocation]() {
-        willSet {
-            objectWillChange.send()
-        }
+    @Published var longitudeArray: [Double] = []
+    @Published var latitudeArray: [Double] = []
+    @Published var speedArray: [Double] = []
+    @Published var glideRatioArray: [Double] = []
+    @Published var glideRatio: Double = 0
+    @Published var altitudeArray: [Double] = []
+    @Published var altitude: Double = 0
+    @Published var accuracyArray: [Double] = []
+    func resetArrays() {
+        longitudeArray = []
+        latitudeArray = []
+        speedArray = []
+        glideRatioArray = []
+        glideRatio = 0
+        altitudeArray = []
+        altitude = 0
+        accuracyArray = []
+        debugPrint("Location Manager Arrays resetted!")
     }
     
     @Published var locationStatus: CLAuthorizationStatus? {
@@ -64,16 +78,22 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         self.locationStatus = status
-        print(#function, statusString)
+        debugPrint(#function, statusString)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         self.lastLocation = location
-        print(#function, location)
+        //debugPrint(#function, location)
+        
         NotificationCenter.default.post(name: .didReceiveLocation, object: nil)
-        locationArray.append(lastLocation ?? CLLocation())
-        print("Location Array size: \(locationArray.count)")
+        
+        longitudeArray.append(lastLocation?.coordinate.longitude ?? 0)
+        latitudeArray.append(lastLocation?.coordinate.latitude ?? 0)
+        speedArray.append(lastLocation?.speed ?? 0)
+        glideRatioArray.append(glideRatio)
+        altitudeArray.append(altitude)
+        accuracyArray.append(lastLocation?.horizontalAccuracy ?? 0)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -82,26 +102,28 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     
     func stop() {
         locationManager.stopUpdatingLocation()
+        locationManager.stopUpdatingHeading()
     }
     
     func start() {
         switch LocationManager.shared.locationStatus {
         case .notDetermined:
-            print("CL: Awaiting user prompt...")
+            debugPrint("CL: Awaiting user prompt...")
         //fatalError("Awaiting CL user prompt...")
         case .restricted:
             fatalError("CL Authorization restricted!")
         case .denied:
             fatalError("CL Authorization denied!")
         case .authorizedAlways:
-            print("CL Authorized!")
+            debugPrint("CL Authorized!")
         case .authorizedWhenInUse:
-            print("CL Authorized when in use!")
+            debugPrint("CL Authorized when in use!")
         case .none:
-            print("CL Authorization None!")
+            debugPrint("CL Authorization None!")
         @unknown default:
             fatalError("Unknown CL Authorization Status!")
         }
         locationManager.startUpdatingLocation()
+        locationManager.startUpdatingHeading()
     }
 }

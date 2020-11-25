@@ -29,29 +29,29 @@ struct SettingsView: View {
         let pressureCallNew: String = pressureCall.model!
         
         guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(LocationManager.shared.lastLocation!.coordinate.latitude)&lon=\(LocationManager.shared.lastLocation!.coordinate.longitude)&appid=\(pressureCallNew)") else {
-            print("Invalid Openweathermap URL")
+            debugPrint("Invalid Openweathermap URL")
             return
         }
         
         let request = URLRequest(url: url)
-        print("Request ", request)
+        debugPrint("Request ", request)
         
         URLSession.shared.dataTask(with: request) { data, decodedResponse, error in
-            print("URLSession started")
+            debugPrint("URLSession started")
             if let data = data {
-                print("URLSession data received", data)
+                debugPrint("URLSession data received", data)
                 if let decodedResponse = try? JSONDecoder().decode(Weather.self, from: data) {
-                    print("URLSession response decoded", decodedResponse)
+                    debugPrint("URLSession response decoded", decodedResponse)
                     DispatchQueue.main.async {
                         userSettings.qnh = decodedResponse.main?.pressure ?? 0
-                        print("Calibrated with a pulled pressure of", decodedResponse.main?.pressure ?? 0)
+                        debugPrint("Calibrated with a pulled pressure of", decodedResponse.main?.pressure ?? 0)
                         userSettings.offset = 8400 * (userSettings.qnh - globals.pressure) / userSettings.qnh
                     }
                     return
                 }
             }
-            print("Fetch failed: \(error?.localizedDescription ?? "Unknown error"):")
-            print("Error", error ?? "nil")
+            debugPrint("Fetch failed: \(error?.localizedDescription ?? "Unknown error"):")
+            debugPrint("Error", error ?? "nil")
         }.resume()
     }
     
@@ -80,7 +80,7 @@ struct SettingsView: View {
                     Spacer()
                     Button(action: {
                         if globals.isLocationStarted {
-                            print("Auto Calibration started")
+                            debugPrint("Auto Calibration started")
                             autoCalib()
                         } else {
                             self.showingAlert = true

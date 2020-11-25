@@ -5,7 +5,7 @@
 //  Created by Lukas Wheldon on 20.11.20.
 //
 
-import Foundation
+import SwiftUI
 import WatchConnectivity
 
 final class PhoneConnectivityProvider: NSObject, WCSessionDelegate {
@@ -18,15 +18,24 @@ final class PhoneConnectivityProvider: NSObject, WCSessionDelegate {
     }
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        print("Error activating WCSession: \(error?.localizedDescription ?? "none")")
+        debugPrint("Activated WCSession with Error: \(error?.localizedDescription ?? "none")")
     }
     
     func connect() {
         guard WCSession.isSupported() else {
-            print("WCSession not supported!")
+            debugPrint("WCSession not supported!")
             return
         }
-        print("Activating WCSession.")
+        debugPrint("Activating WCSession.")
         session.activate()
+    }
+}
+
+struct WatchCommunication {
+    static let requestKey = "request"
+    static let responseKey = "response"
+    
+    enum Content: String {
+        case locations
     }
 }

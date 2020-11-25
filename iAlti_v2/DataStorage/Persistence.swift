@@ -9,28 +9,33 @@ import SwiftUI
 import CoreData
 
 class PersistenceManager {
-    let persistentContainer: NSPersistentContainer = {
+    
+    private static var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Logs")
         container.loadPersistentStores { description, error in
             if let error = error {
-                print("Error loading persistent stores:", error.localizedDescription)
+                debugPrint("Unable to load persistent stores: \(error)")
             }
         }
         return container
     }()
+    
+    var context: NSManagedObjectContext {
+        return Self.persistentContainer.viewContext
+    }
     
     init() {
         let center = NotificationCenter.default
         let notification = UIApplication.willResignActiveNotification
         
         center.addObserver(forName: notification, object: nil, queue: nil) { [weak self] _ in
-            guard let self = self else { return }
+            guard self != nil else { return }
             
-            if self.persistentContainer.viewContext.hasChanges {
+            if PersistenceManager.persistentContainer.viewContext.hasChanges {
                 do {
-                    try self.persistentContainer.viewContext.save()
+                    try PersistenceManager.persistentContainer.viewContext.save()
                 } catch {
-                    print("Error saving Changes to Persistence:", error.localizedDescription)
+                    debugPrint("Error saving Changes to Persistence:", error.localizedDescription)
                 }
             }
         }
