@@ -13,8 +13,34 @@ struct ControlsView: View {
     
     @Binding var view: Int
     @State private var showModal = false
+    @State private var startTime = Date()
     
-    let connectivityProvider = PhoneConnectivityProvider()
+    private let connectivityProvider = PhoneConnectivityProvider()
+    
+    private func stopButton() {
+        debugPrint("Stop Button pressed")
+        var logDict: Dictionary = [String: Any]()
+        
+        Altimeter.shared.stopRelativeAltitudeUpdates()
+        globals.isAltimeterStarted = false
+        LocationManager.shared.stop()
+        globals.isLocationStarted = false
+        
+        if LocationManager.shared.altitudeArray.count > 0 {
+            logDict["date"] = Date()
+            logDict["duration"] = DateInterval(start: startTime, end: Date()).duration
+            logDict["altitude"] = LocationManager.shared.altitudeArray
+            logDict["accuracy"] = LocationManager.shared.accuracyArray
+            logDict["glider"] = ""
+            logDict["pilot"] = "Jerry"
+            logDict["glideRatio"] = LocationManager.shared.glideRatioArray
+            logDict["latitude"] = LocationManager.shared.latitudeArray
+            logDict["longitude"] = LocationManager.shared.longitudeArray
+            logDict["speed"] = LocationManager.shared.speedArray
+            logDict["takeOff"] = "From Watch"
+            connectivityProvider.send(dict: logDict)
+        } else { debugPrint("Dropped Log because it is empty.") }
+    }
     
     private func startLocation() {
         switch LocationManager.shared.locationStatus {
@@ -36,11 +62,6 @@ struct ControlsView: View {
         }
         LocationManager.shared.start()
         globals.isLocationStarted = true
-    }
-    
-    private func stopAltimeter() {
-        Altimeter.shared.stopRelativeAltitudeUpdates()
-        globals.isAltimeterStarted = false
     }
     
     private func startAltimeter() {
@@ -83,6 +104,7 @@ struct ControlsView: View {
                 VStack {
                     Button(action: {
                         debugPrint("Start Button pressed")
+                        startTime = Date()
                         startAltimeter()
                         startLocation()
                         view = (view + 1) % 1
@@ -94,12 +116,7 @@ struct ControlsView: View {
                     Text("Start")
                 }
                 VStack {
-                    Button(action: {
-                        debugPrint("Stop Button pressed")
-                        stopAltimeter()
-                        LocationManager.shared.stop()
-                        globals.isLocationStarted = false
-                        LocationManager.shared.sendLog()
+                    Button(action: {stopButton()
                     }, label: {
                         Image(systemName: "stop.fill")
                             .foregroundColor(.red)
@@ -112,7 +129,7 @@ struct ControlsView: View {
                 VStack {
                     Button(action: {
                         debugPrint("Reset Button pressed")
-                        stopAltimeter()
+                        Altimeter.shared.stopRelativeAltitudeUpdates()
                         startAltimeter()
                         userSettings.offset = 0
                         view = (view + 1) % 1

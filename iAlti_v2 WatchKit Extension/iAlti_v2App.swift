@@ -8,6 +8,8 @@
 import SwiftUI
 
 class Globals: ObservableObject {
+    static var shared = Globals()
+    
     @Published var pressure: Double = 0
     @Published var isAltimeterStarted = false
     @Published var isLocationStarted = false

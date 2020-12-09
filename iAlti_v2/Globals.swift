@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import CoreLocation
 
 final class Globals: ObservableObject {
+    static var shared = Globals()
+    
     @Published var pressure: Double = 0
     @Published var isAltimeterStarted = false
     @Published var isLocationStarted = false
@@ -18,6 +21,7 @@ final class Globals: ObservableObject {
     @Published var glideRatio: Double = 0
     @Published var lat: Double = 48
     @Published var lon: Double = 12
+    @Published var geocodedLocation: String = "Unknown"
 }
 
 struct Weather: Codable {
@@ -49,4 +53,21 @@ public extension Double {
         guard let formattedString = formatter.string(from: self) else { return "" }
         return formattedString
     }
+}
+
+public func geocode(location: CLLocation) {
+    let geocoder = CLGeocoder()
+    var placemark: CLPlacemark?
+    
+    debugPrint("Starting Geocoding for location: \(location)")
+    geocoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) in
+        if error == nil {
+            placemark = placemarks?[0]
+            Globals.shared.geocodedLocation = placemark?.locality ?? "Unknown"
+            debugPrint("Geocoded Take Off: \(Globals.shared.geocodedLocation)")
+        } else {
+            placemark = nil
+            debugPrint("Error geocoding location: \(error?.localizedDescription ?? "Unknown Error")")
+        }
+    })
 }

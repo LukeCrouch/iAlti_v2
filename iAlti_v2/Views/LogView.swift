@@ -46,7 +46,7 @@ struct LogView: View {
                                 })) {
                     HStack {
                         Text("\(log.date, formatter: formatter)")
-                        Text(log.takeoff)
+                        Text(log.takeOff)
                         Text(log.flightTime.asString(style: .positional))
                     }
                 }

@@ -55,7 +55,7 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
         }
     }
     
-    @Published var lastLocation: CLLocation? {
+    @Published var lastLocation = CLLocation() {
         willSet {
             objectWillChange.send()
         }
@@ -86,14 +86,14 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
         self.lastLocation = location
         //debugPrint(#function, location)
         
-        NotificationCenter.default.post(name: .didReceiveLocation, object: nil)
-        
-        longitudeArray.append(lastLocation?.coordinate.longitude ?? 0)
-        latitudeArray.append(lastLocation?.coordinate.latitude ?? 0)
-        speedArray.append(lastLocation?.speed ?? 0)
-        glideRatioArray.append(glideRatio)
-        altitudeArray.append(altitude)
-        accuracyArray.append(lastLocation?.horizontalAccuracy ?? 0)
+        if lastLocation.horizontalAccuracy < 15 {
+            longitudeArray.append(lastLocation.coordinate.longitude)
+            latitudeArray.append(lastLocation.coordinate.latitude)
+            speedArray.append(lastLocation.speed)
+            glideRatioArray.append(glideRatio)
+            altitudeArray.append(altitude)
+            accuracyArray.append(lastLocation.horizontalAccuracy)
+        } else { debugPrint("Dropped location because accuracy was over 15m.") }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -109,7 +109,6 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
         switch LocationManager.shared.locationStatus {
         case .notDetermined:
             debugPrint("CL: Awaiting user prompt...")
-        //fatalError("Awaiting CL user prompt...")
         case .restricted:
             fatalError("CL Authorization restricted!")
         case .denied:

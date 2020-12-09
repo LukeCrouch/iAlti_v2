@@ -41,12 +41,21 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
         }
     }
     
-    @Published var locationArray: [CLLocation] = []
+    @Published var longitudeArray: [Double] = []
+    @Published var latitudeArray: [Double] = []
+    @Published var speedArray: [Double] = []
+    @Published var glideRatioArray: [Double] = []
+    @Published var altitudeArray: [Double] = []
+    @Published var accuracyArray: [Double] = []
     
-    func sendLog() {
-        debugPrint("Sending Log to phone with \(locationArray.count) log points.")
-        //
-        locationArray.removeAll()
+    func resetArrays() {
+        longitudeArray = []
+        latitudeArray = []
+        speedArray = []
+        glideRatioArray = []
+        altitudeArray = []
+        accuracyArray = []
+        debugPrint("Location Manager Arrays resetted!")
     }
     
     var statusString: String {
@@ -72,9 +81,16 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         self.lastLocation = location
-        debugPrint(#function, location)
-        locationArray.append(lastLocation ?? CLLocation())
-        debugPrint("Location Array size: \(locationArray.count)")
+        //debugPrint(#function, location)
+        
+        if location.horizontalAccuracy < 15 {
+            accuracyArray.append(location.horizontalAccuracy)
+            longitudeArray.append(location.coordinate.longitude)
+            latitudeArray.append(location.coordinate.latitude)
+            speedArray.append(location.speed)
+            glideRatioArray.append(Globals.shared.glideRatio)
+            altitudeArray.append(Globals.shared.barometricAltitude)
+        } else { debugPrint("Dropped location because accuracy was over 15m.") }
     }
     
     func stop() {

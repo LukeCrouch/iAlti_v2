@@ -28,59 +28,22 @@ struct SettingsView: View {
     
     @State var startTime = Date()
     @State var duration: Double = 0
-    @State var takeOff: String = "Unknown"
     @State var distance: CLLocationDistance = 0
     
-    private func geocode() {
-        let geocoder = CLGeocoder()
-        var placemark: CLPlacemark?
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-            guard let currentLocation = LocationManager.shared.lastLocation else { return }
-            debugPrint("Starting Geocoding for location: \(currentLocation)")
-            
-            geocoder.reverseGeocodeLocation(currentLocation, completionHandler: { (placemarks, error) in
-                if error == nil {
-                    placemark = placemarks?[0]
-                    takeOff = placemark?.locality ?? "Unknown"
-                    debugPrint("Geocoded Take Off: \(takeOff)")
-                } else {
-                    placemark = nil
-                    debugPrint("Error geocoding location: \(error?.localizedDescription ?? "Unknown Error")")
-                }
-            })
-        }
-        return
-    }
-    
     private func saveLog() {
-        var accuracy: Double = 0
-        var i: Int = 0
-        
         debugPrint("Saving Log")
         let newLog = Log(context: context)
         newLog.date = Date()
         newLog.glider = userSettings.glider
         newLog.pilot = userSettings.pilot
         newLog.flightTime = duration
-        newLog.takeoff = takeOff
+        newLog.takeOff = Globals.shared.geocodedLocation
         newLog.latitude = LocationManager.shared.latitudeArray
         newLog.longitude = LocationManager.shared.longitudeArray
         newLog.altitude = LocationManager.shared.altitudeArray
         newLog.speed = LocationManager.shared.speedArray
         newLog.glideRatio = LocationManager.shared.glideRatioArray
         newLog.accuracy = LocationManager.shared.accuracyArray
-        while accuracy < 15 {
-            accuracy = newLog.accuracy[i]
-            if newLog.accuracy[i] > 15 {
-                newLog.latitude.removeFirst()
-                newLog.longitude.removeFirst()
-                newLog.altitude.removeFirst()
-                newLog.speed.removeFirst()
-                newLog.glideRatio.removeFirst()
-            }
-            i += 1
-        }
-        debugPrint("Deleted \(i) entries with horizontal accuracy over +/- 15m.")
         newLog.maxAltitude = newLog.altitude.max() ?? 0
         newLog.distance = distance
         newLog.speedAvg = distance / duration
@@ -94,13 +57,21 @@ struct SettingsView: View {
     }
     
     private func startButton() {
-        debugPrint("Start Button pressed")
-        startTime = Date()
-        startAltimeter()
-        LocationManager.shared.start()
-        view = 0
-        globals.isLocationStarted = true
-        geocode()
+        if globals.isLocationStarted {
+            debugPrint("Tracking already started.")
+        } else {
+            debugPrint("Start Button pressed.")
+            Globals.shared.geocodedLocation = "Unknown"
+            startTime = Date()
+            startAltimeter()
+            LocationManager.shared.start()
+            view = 0
+            globals.isLocationStarted = true
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                geocode(location: LocationManager.shared.lastLocation)
+            }
+        }
     }
     
     private func stopButton() {
@@ -140,9 +111,9 @@ struct SettingsView: View {
                     globals.barometricAltitude =  8400 * (userSettings.qnh - globals.pressure) / userSettings.qnh
                     globals.speedV = (trueData.relativeAltitude.doubleValue - globals.relativeAltitude) / (trueData.timestamp - timestamp)
                     
-                    globals.glideRatio = (LocationManager.shared.lastLocation?.speed ?? 0) / (-1 * globals.speedV)
+                    globals.glideRatio = (LocationManager.shared.lastLocation.speed) / (-1 * globals.speedV)
                     
-                    globals.speedH = LocationManager.shared.lastLocation?.speed ?? 0
+                    globals.speedH = LocationManager.shared.lastLocation.speed
                     
                     globals.relativeAltitude = trueData.relativeAltitude.doubleValue
                     
@@ -162,7 +133,7 @@ struct SettingsView: View {
         let pressureCall = "ZmY1N2FmZThkOGY2N2U2MzIwNmVmZmQ2MTM3NmMzZDc="
         let pressureCallNew: String = pressureCall.model!
         
-        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(LocationManager.shared.lastLocation!.coordinate.latitude)&lon=\(LocationManager.shared.lastLocation!.coordinate.longitude)&appid=\(pressureCallNew)") else {
+        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(LocationManager.shared.lastLocation.coordinate.latitude)&lon=\(LocationManager.shared.lastLocation.coordinate.longitude)&appid=\(pressureCallNew)") else {
             debugPrint("Invalid Openweathermap URL")
             return
         }
@@ -237,14 +208,14 @@ struct SettingsView: View {
                     Text("GPS")
                 }
                 HStack {
-                    Text("\(LocationManager.shared.lastLocation?.horizontalAccuracy ?? 0, specifier: "%.2f")")
+                    Text("\(LocationManager.shared.lastLocation.horizontalAccuracy, specifier: "%.2f")")
                         .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    Text("Horizontal Accuracy [+/- m]")
+                    Text("Horizontal Accuracy [m]")
                 }
                 HStack {
-                    Text("\(LocationManager.shared.lastLocation?.verticalAccuracy ?? 0, specifier: "%.2f")")
+                    Text("\(LocationManager.shared.lastLocation.verticalAccuracy, specifier: "%.2f")")
                         .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    Text("Vertical Accuracy [+/- m]")
+                    Text("Vertical Accuracy [m]")
                 }
             }
             Section(header: Text("Controls")) {

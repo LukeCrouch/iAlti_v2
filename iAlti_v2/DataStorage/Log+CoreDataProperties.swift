@@ -23,7 +23,7 @@ extension Log {
     @NSManaged public var maxAltitude: Double
     @NSManaged public var pilot: String
     @NSManaged public var speedAvg: Double
-    @NSManaged public var takeoff: String
+    @NSManaged public var takeOff: String
     @NSManaged public var altitude: [Double]
     @NSManaged public var speed: [Double]
     @NSManaged public var glideRatio: [Double]

@@ -8,6 +8,13 @@
 import SwiftUI
 import MapKit
 
+extension Map {
+    func mapStyle(_ mapType: MKMapType) -> some View {
+        MKMapView.appearance().mapType = mapType
+        return self
+    }
+}
+
 struct MainView: View {
     @EnvironmentObject var globals: Globals
     @EnvironmentObject var userSettings: UserSettings
@@ -15,15 +22,15 @@ struct MainView: View {
     @State private var userTrackingMode: MapUserTrackingMode = .follow
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(
-            latitude: LocationManager.shared.lastLocation?.coordinate.latitude ?? 47,
-            longitude: LocationManager.shared.lastLocation?.coordinate.longitude ?? 11
+            latitude: LocationManager.shared.lastLocation.coordinate.latitude,
+            longitude: LocationManager.shared.lastLocation.coordinate.longitude
         ),
         span: MKCoordinateSpan(
-            latitudeDelta: 2,
-            longitudeDelta: 2
+            latitudeDelta: 0.5,
+            longitudeDelta: 0.5
         )
     )
-    
+
     var body: some View {
         VStack {
             VStack {
@@ -83,9 +90,10 @@ struct MainView: View {
             }
             Map(
                 coordinateRegion: $region,
-                interactionModes: MapInteractionModes.all,
+                interactionModes: MapInteractionModes.zoom,
                 showsUserLocation: true,
                 userTrackingMode: $userTrackingMode)
+                .mapStyle(.satellite)
         }
     }
 }

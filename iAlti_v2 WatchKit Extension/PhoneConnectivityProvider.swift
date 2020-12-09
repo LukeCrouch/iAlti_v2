@@ -21,6 +21,12 @@ final class PhoneConnectivityProvider: NSObject, WCSessionDelegate {
         debugPrint("Activated WCSession with Error: \(error?.localizedDescription ?? "none")")
     }
     
+    func session(_ session: WCSession, didFinish userInfoTransfer: WCSessionUserInfoTransfer, error: Error?) {
+        if error == nil {
+            debugPrint("Finished transferring Log to iPhone.")
+        }
+    }
+    
     func connect() {
         guard WCSession.isSupported() else {
             debugPrint("WCSession not supported!")
@@ -29,13 +35,10 @@ final class PhoneConnectivityProvider: NSObject, WCSessionDelegate {
         debugPrint("Activating WCSession.")
         session.activate()
     }
-}
-
-struct WatchCommunication {
-    static let requestKey = "request"
-    static let responseKey = "response"
     
-    enum Content: String {
-        case locations
+    func send(dict: Dictionary<String, Any>) {
+        debugPrint("Sending dictionary to iPhone: ", dict)
+        let logTransfer = WCSession.default.transferUserInfo(dict)
+        debugPrint("Callback:", logTransfer)
     }
 }

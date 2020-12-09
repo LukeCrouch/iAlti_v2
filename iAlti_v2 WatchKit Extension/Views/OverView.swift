@@ -74,8 +74,8 @@ struct OverView: View {
                         .foregroundColor(.gray)
                 }
             }
-            OverViewLine(name: "Altitude MSL [m]", value: LocationManager.shared.lastLocation?.altitude ?? 0.0, decimals: 0)
-            OverViewLine(name: "Horizontal Speed [m/s]", value: LocationManager.shared.lastLocation?.speed ?? 0.0, decimals: 1)
+            OverViewLine(name: "Horizontal Accuracy [m]", value: LocationManager.shared.lastLocation?.horizontalAccuracy ?? 0.0, decimals: 0)
+            OverViewLine(name: "Vertical Accuracy [m]", value: LocationManager.shared.lastLocation?.verticalAccuracy ?? 0.0, decimals: 0)
         }
     }
 }

@@ -18,7 +18,7 @@ struct LogDetailView: View {
             LogDetailOverView(log: log)
                 .tabItem {}
                 .tag(0)
-            LogDeteailGraphView(log: log)
+            LogDetailGraphView(log: log)
                 .tabItem {}
                 .tag(1)
         }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))

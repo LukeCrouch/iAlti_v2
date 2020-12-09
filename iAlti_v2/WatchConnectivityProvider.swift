@@ -5,22 +5,15 @@
 //  Created by Lukas Wheldon on 20.11.20.
 //
 
-import Foundation
+import SwiftUI
 import WatchConnectivity
-import CoreData
-import CoreLocation.CLLocation
 
 final class WatchConnectivityProvider: NSObject, WCSessionDelegate {
-    private let session: WCSession
-    
-    init(session: WCSession = .default) {
-        self.session = session
-        super.init()
-        session.delegate = self
-    }
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        debugPrint("Activated WCSession with Error: \(error?.localizedDescription ?? "none")")
+        if error == nil {
+            debugPrint("Activated WCSession.")
+        } else { debugPrint("Activated WCSession with Error: \(error?.localizedDescription ?? "none")") }
     }
     
     func sessionDidBecomeInactive(_ session: WCSession) {
@@ -31,21 +24,21 @@ final class WatchConnectivityProvider: NSObject, WCSessionDelegate {
         debugPrint("WCSession deactivated.")
     }
     
+    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any]) {
+        debugPrint("Received data from Watch:", userInfo["date"]!, "Size: ", (userInfo["altitude"] as! [Double]).count)
+        PersistenceManager.shared.receiveFromWatch(userInfo: userInfo)
+    }
+    
     func connect() {
         guard WCSession.isSupported() else {
             debugPrint("WCSession not supported!")
             return
         }
+        
+        let session = WCSession.default
+        
         debugPrint("Activating WCSession.")
+        session.delegate = self
         session.activate()
-    }
-}
-
-struct WatchCommunication {
-    static let requestKey = "request"
-    static let responseKey = "response"
-    
-    enum Content: String {
-        case locations
     }
 }

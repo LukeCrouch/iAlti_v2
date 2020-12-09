@@ -20,7 +20,7 @@ struct LogSummaryText: View {
                 .font(.title)
                 .foregroundColor(userSettings.colors[userSettings.colorSelection])
             Text(details)
-                .font(.headline)
+                .font(.subheadline)
         }
     }
 }
@@ -47,7 +47,7 @@ struct LogDetailOverView: View {
                     Text("Date")
                         .font(.subheadline)
                 }.padding(.horizontal)
-                LogSummaryText(text: "\(log.takeoff)", details: "Take Off").padding(.horizontal)
+                LogSummaryText(text: "\(log.takeOff)", details: "Take Off").padding(.horizontal)
                 VStack {
                     Text(log.flightTime.asString(style: .positional))
                         .font(.title2)
@@ -55,8 +55,7 @@ struct LogDetailOverView: View {
                     Text("Flight Time")
                         .font(.subheadline)
                 }.padding(.horizontal)
-                }
-            Divider().padding(.bottom)
+                }.padding(.bottom)
             HStack {
                 VStack {
                     TextField("Enter pilot name...", text: $log.pilot)
@@ -76,7 +75,7 @@ struct LogDetailOverView: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.horizontal)
                     Text("Glider")
-                        .font(.subheadline)
+                        .font(.headline)
                 }
             }
             Divider()

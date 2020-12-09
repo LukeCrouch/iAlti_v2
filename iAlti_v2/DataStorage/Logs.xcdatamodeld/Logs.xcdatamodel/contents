@@ -14,7 +14,7 @@
         <attribute name="pilot" optional="YES" attributeType="String"/>
         <attribute name="speed" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer"/>
         <attribute name="speedAvg" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="takeoff" optional="YES" attributeType="String"/>
+        <attribute name="takeOff" optional="YES" attributeType="String"/>
     </entity>
     <elements>
         <element name="Log" positionX="-63" positionY="-18" width="128" height="253"/>

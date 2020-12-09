@@ -19,27 +19,27 @@ struct MainView: View {
                     .fontWeight(.bold)
                     .foregroundColor(userSettings.colors[userSettings.colorSelection])
                     .transition(.opacity)
-                Text("Altitude [km]")
-                    .font(.system(size: 15))
-            } else if globals.glideRatio.isNaN || globals.glideRatio == 0 {
-                Text("0")
-                    .font(.system(size: 100))
-                    .fontWeight(.bold)
-                    .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    .transition(.opacity)
+                    .padding(.top)
             } else {
                 Text("\(globals.relativeAltitude + userSettings.offset, specifier: "%.0f")")
                     .font(.system(size: 60))
                     .fontWeight(.bold)
                     .foregroundColor(userSettings.colors[userSettings.colorSelection])
                     .transition(.opacity)
-                Text("Altitude [m]")
-                    .font(.system(size: 15))
+                    .padding(.top)
             }
+            Text("Altitude [m]")
+                .font(.system(size: 15))
             Divider()
             if globals.glideRatio > 99 || globals.glideRatio < 0 {
                 Image(systemName: "face.smiling")
                     .font(.system(size: 60))
+                    .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                    .transition(.opacity)
+            } else if globals.glideRatio.isNaN || globals.glideRatio == 0 {
+                Text("0")
+                    .font(.system(size: 60))
+                    .fontWeight(.bold)
                     .foregroundColor(userSettings.colors[userSettings.colorSelection])
                     .transition(.opacity)
             } else {

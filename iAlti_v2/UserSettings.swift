@@ -8,6 +8,7 @@
 import SwiftUI
 
 final class UserSettings: ObservableObject {
+    static var shared = UserSettings()
     
     @Published var colorSelection: Int {
         didSet {
