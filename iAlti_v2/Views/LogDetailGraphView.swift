@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct LogDetailGraphView: View {
-    @EnvironmentObject var globals: Globals
-    @EnvironmentObject var userSettings: UserSettings
-    
     @ObservedObject var log: Log
     
     var body: some View {

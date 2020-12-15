@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct OverViewLine: View {
-    @EnvironmentObject var globals: Globals
-    @EnvironmentObject var userSettings: UserSettings
     var name: String
     var value: Double
     var decimals: Int
@@ -21,14 +19,12 @@ struct OverViewLine: View {
             Spacer()
             Text("\(value, specifier: "%.\(decimals)f")")
                 .font(.system(size: 20))
-                .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                .foregroundColor(UserSettings.shared.colors[UserSettings.shared.colorSelection])
         }
     }
 }
 
 struct OverView: View {
-    @EnvironmentObject var globals: Globals
-    @EnvironmentObject var userSettings: UserSettings
     @State private var toggleAlti = false
     @State private var toggleLoc = false
     
@@ -37,7 +33,7 @@ struct OverView: View {
             HStack {
                 Text("Barometer")
                     .font(.system(size: 15))
-                if globals.isAltimeterStarted {
+                if Altimeter.shared.isAltimeterStarted {
                     Image(systemName: "circle.fill")
                         .imageScale(.small)
                         .scaleEffect(0.5)
@@ -52,14 +48,14 @@ struct OverView: View {
                         .foregroundColor(.gray)
                 }
             }
-            OverViewLine(name: "Pressure [hPa]", value: globals.pressure, decimals: 2)
-            OverViewLine(name: "Elevation [m]", value: globals.barometricAltitude, decimals: 0)
-            OverViewLine(name: "Vertical Speed [m/s]", value: globals.speedV, decimals: 1)
+            OverViewLine(name: "Pressure [hPa]", value: Altimeter.shared.pressure, decimals: 2)
+            OverViewLine(name: "Elevation [m]", value: Altimeter.shared.barometricAltitude, decimals: 0)
+            OverViewLine(name: "Vertical Speed [m/s]", value: Altimeter.shared.speedVertical, decimals: 1)
             Divider()
             HStack {
                 Text("GPS")
                     .font(.system(size: 15))
-                if globals.isLocationStarted {
+                if LocationManager.shared.isLocationStarted {
                     Image(systemName: "circle.fill")
                         .imageScale(.small)
                         .scaleEffect(0.5)

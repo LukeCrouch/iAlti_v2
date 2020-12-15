@@ -8,7 +8,22 @@
 import SwiftUI
 
 struct LogSummaryText: View {
-    @EnvironmentObject var globals: Globals
+    let text: String
+    let details: String
+    
+    var body: some View {
+        HStack {
+            Text(details)
+                .font(.subheadline)
+            Spacer()
+            Text(text)
+                .font(.title)
+                .foregroundColor(UserSettings.shared.colors[UserSettings.shared.colorSelection])
+        }
+    }
+}
+
+struct LogSummaryTitle: View {
     @EnvironmentObject var userSettings: UserSettings
     
     let text: String
@@ -18,71 +33,78 @@ struct LogSummaryText: View {
         VStack {
             Text(text)
                 .font(.title)
-                .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                .foregroundColor(UserSettings.shared.colors[UserSettings.shared.colorSelection])
             Text(details)
                 .font(.subheadline)
+                .padding(.bottom)
         }
     }
 }
 
 struct LogDetailOverView: View {
-    @EnvironmentObject var globals: Globals
-    @EnvironmentObject var userSettings: UserSettings
-    
     @ObservedObject var log: Log
     
-    let formatter: DateFormatter = {
+    private var averageGlideRatio: Double {
+        return arithmeticMean(numbers: log.glideRatio)
+    }
+    
+    private var averageSpeedHorizontal: Double {
+        return arithmeticMean(numbers: log.speedHorizontal)
+    }
+    
+    private var averageSpedVertical: Double {
+        return arithmeticMean(numbers: log.speedVertical)
+    }
+    
+    private var stringDate: String {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
-        return formatter
-    }()
+        let formattedDate = formatter.string(from: log.date)
+        return formattedDate
+    }
     
     var body: some View {
         VStack {
-            HStack {
-                VStack {
-                    Text("\(log.date, formatter: formatter)")
-                        .font(.title2)
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    Text("Date")
-                        .font(.subheadline)
-                }.padding(.horizontal)
-                LogSummaryText(text: "\(log.takeOff)", details: "Take Off").padding(.horizontal)
-                VStack {
-                    Text(log.flightTime.asString(style: .positional))
-                        .font(.title2)
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    Text("Flight Time")
-                        .font(.subheadline)
-                }.padding(.horizontal)
-                }.padding(.bottom)
-            HStack {
-                VStack {
-                    TextField("Enter pilot name...", text: $log.pilot)
-                        .font(.title)
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                        .multilineTextAlignment(.center)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal)
-                    Text("Pilot")
-                        .font(.headline)
+            VStack {
+                HStack {
+                    LogSummaryTitle(text: stringDate, details: "Date").padding(.horizontal)
+                    LogSummaryTitle(text: "\(log.takeOff)", details: "Take Off").padding(.horizontal)
+                    LogSummaryTitle(text: log.flightTime.asString(style: .positional), details: "Flight Time").padding(.horizontal)
                 }
-                VStack {
-                    TextField("Enter glider...", text: $log.glider)
-                        .font(.title)
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                        .multilineTextAlignment(.center)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal)
-                    Text("Glider")
-                        .font(.headline)
+                HStack {
+                    VStack {
+                        TextField("Enter pilot name...", text: $log.pilot)
+                            .font(.title)
+                            .foregroundColor(UserSettings.shared.colors[UserSettings.shared.colorSelection])
+                            .multilineTextAlignment(.center)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                    }.padding(.all)
+                    VStack {
+                        TextField("Enter glider...", text: $log.glider)
+                            .font(.title)
+                            .foregroundColor(UserSettings.shared.colors[UserSettings.shared.colorSelection])
+                            .multilineTextAlignment(.center)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                    }.padding(.all)
                 }
             }
             Divider()
             HStack {
-                LogSummaryText(text: "\(Int(log.maxAltitude))", details: "Max. Altitude [m MSL]").padding(.horizontal)
-                LogSummaryText(text: "\(Int(log.distance))", details: "Distance [km]").padding(.horizontal)
-                LogSummaryText(text: "\(Int(log.speedAvg))", details: "Average Speed [km/h]")
+                Spacer(minLength: 30)
+                VStack {
+                    LogSummaryText(text: "\(Int(log.distance / 1000))", details: "Distance [km]")
+                    LogSummaryText(text: "\(Int(log.altitude.max() ?? 0))", details: "Max. Altitude [m MSL]")
+                    LogSummaryText(text: "\(Int(averageGlideRatio))", details: "Average Glide Ratio")
+                    LogSummaryText(text: "\(Int(log.glideRatio.max() ?? 0))", details: "Max. Glide Ratio")
+                }
+                Spacer(minLength: 100)
+                VStack {
+                    LogSummaryText(text: "\(Int(averageSpeedHorizontal))", details: "Average horizontal Speed [km/h]")
+                    LogSummaryText(text: "\(Int(log.speedHorizontal.max() ?? 0))", details: "Max. horizontal Speed [km/h]")
+                    LogSummaryText(text: "\(Int(averageSpedVertical))", details: "Average vertical Speed [km/h]")
+                    LogSummaryText(text: "\(Int(log.speedVertical.max() ?? 0))", details: "Max. vertical Speed [km/h]")
+                }
+                Spacer(minLength: 30)
             }
         }
     }

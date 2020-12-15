@@ -8,10 +8,18 @@
 import SwiftUI
 
 final class UserSettings: ObservableObject {
+    static var shared = UserSettings()
+    
+    @Published var selectedColor: Color {
+        didSet {
+            UserDefaults.standard.setValue(selectedColor, forKey: "selectedColor")
+        }
+    }
     
     @Published var colorSelection: Int {
         didSet {
             UserDefaults.standard.set(colorSelection, forKey: "colorSelection")
+            selectedColor = colors[colorSelection]
         }
     }
     
@@ -38,5 +46,6 @@ final class UserSettings: ObservableObject {
         self.qnh = UserDefaults.standard.object(forKey: "qnh") as? Double ?? 1013.25
         self.offset = UserDefaults.standard.object(forKey: "offset") as? Double ?? 0
         self.colors = UserDefaults.standard.object(forKey: "colors") as? Array ?? [Color.green, Color.white, Color.red, Color.blue, Color.orange, Color.yellow, Color.pink, Color.purple, Color.black]
+        self.selectedColor = UserDefaults.standard.object(forKey: "selectedColor") as? Color ?? .blue
     }
 }

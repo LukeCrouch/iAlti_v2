@@ -7,18 +7,6 @@
 
 import SwiftUI
 
-class Globals: ObservableObject {
-    static var shared = Globals()
-    
-    @Published var pressure: Double = 0
-    @Published var isAltimeterStarted = false
-    @Published var isLocationStarted = false
-    @Published var barometricAltitude: Double = 0
-    @Published var relativeAltitude: Double = 0
-    @Published var speedV: Double = 0
-    @Published var glideRatio: Double = 0
-}
-
 public extension String {
     var model: String? {
         guard let base64 = Data(base64Encoded: self) else { return nil }
@@ -29,14 +17,12 @@ public extension String {
 
 @main
 struct iAlti_v2App: App {
-    @StateObject var globals = Globals()
     @StateObject var userSettings = UserSettings()
     
     @SceneBuilder var body: some Scene {
         WindowGroup {
             NavigationView {
                 ContentView()
-                    .environmentObject(globals)
                     .environmentObject(userSettings)
             }
         }

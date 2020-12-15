@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var globals: Globals
-    @EnvironmentObject var userSettings: UserSettings
-    
     @State var view = 2
     
     var body: some View {
@@ -22,6 +19,12 @@ struct ContentView: View {
                 LogView()
                     .navigationTitle("Logs")
             }
+            .onDisappear(perform: {
+                            DispatchQueue.main.async {
+                                AppDelegate.orientationLock = UIInterfaceOrientationMask.portrait
+                                UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+                                UINavigationController.attemptRotationToDeviceOrientation()
+                            }})
             .tabItem {Image(systemName: "list.dash")}
             .tag(1)
             NavigationView {
@@ -30,7 +33,7 @@ struct ContentView: View {
             }
             .tabItem {Image(systemName: "gearshape")}
             .tag(2)
-        }.accentColor(userSettings.colors[userSettings.colorSelection])
+        }.accentColor(UserSettings.shared.colors[UserSettings.shared.colorSelection])
     }
 }
 

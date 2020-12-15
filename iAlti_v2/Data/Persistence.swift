@@ -42,32 +42,65 @@ class PersistenceManager {
         }
     }
     
+    func saveLog(duration: Double) {
+        if LocationManager.shared.altitudeArray.count == 0 {
+            debugPrint("Dropping Log because it is empty.")
+        } else {
+            debugPrint("Saving Log")
+            let newLog = Log(context: context)
+            newLog.date = Date()
+            newLog.glider = UserSettings.shared.glider
+            newLog.pilot = UserSettings.shared.pilot
+            newLog.flightTime = duration
+            newLog.takeOff = LocationManager.shared.geocodedLocation
+            newLog.latitude = LocationManager.shared.latitudeArray
+            newLog.longitude = LocationManager.shared.longitudeArray
+            newLog.altitude = LocationManager.shared.altitudeArray
+            newLog.speedHorizontal = LocationManager.shared.speedHorizontalArray
+            newLog.glideRatio = LocationManager.shared.glideRatioArray
+            newLog.accuracy = LocationManager.shared.accuracyArray
+            newLog.distance = LocationManager.shared.distance
+            newLog.speedVertical = LocationManager.shared.speedVerticalArray
+            do {
+                try context.save()
+            } catch{
+                debugPrint("Error Saving to persistence")
+            }
+            debugPrint("Saved Log with \(newLog.altitude.count) entries.")
+            LocationManager.shared.resetArrays()
+        }
+    }
+    
+    func removeLog(log: Log) {
+        debugPrint("Deleting single Log")
+        context.delete(log)
+    }
+    
     func receiveFromWatch(userInfo: [String : Any]) {
         let newLog = Log(context: context)
         
-        Globals.shared.geocodedLocation = "Unknown"
+        LocationManager.shared.geocodedLocation = "Unknown"
         
         debugPrint("Saving New Log from Watch.")
         newLog.date = userInfo["date"] as! Date
         newLog.glider = UserSettings.shared.glider
         newLog.pilot = UserSettings.shared.pilot
+        newLog.distance = userInfo["distance"] as! Double
         newLog.flightTime = userInfo["duration"] as! Double
         newLog.latitude = userInfo["latitude"] as! [Double]
         newLog.longitude = userInfo["longitude"] as! [Double]
         newLog.altitude = userInfo["altitude"] as! [Double]
-        newLog.speed = userInfo["speed"] as! [Double]
+        newLog.speedHorizontal = userInfo["speedHorizontal"] as! [Double]
         newLog.glideRatio = userInfo["glideRatio"] as! [Double]
         newLog.accuracy = userInfo["accuracy"] as! [Double]
+        newLog.speedVertical = userInfo["speedVertical"] as! [Double]
         
         geocode(location: CLLocation(latitude: newLog.latitude[0], longitude: newLog.longitude[0]))
-        newLog.maxAltitude = newLog.altitude.max() ?? 0
-        newLog.distance = 0
-        newLog.speedAvg = 0 // distance / duration
         
         let timer = Date()
         while true {
-            if Globals.shared.geocodedLocation != "Unknown" {
-                newLog.takeOff = Globals.shared.geocodedLocation
+            if LocationManager.shared.geocodedLocation != "Unknown" {
+                newLog.takeOff = LocationManager.shared.geocodedLocation
                 do {
                     try context.save()
                     debugPrint("Saved Log with \(newLog.altitude.count) entries.")

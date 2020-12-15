@@ -16,8 +16,8 @@ extension Map {
 }
 
 struct MainView: View {
-    @EnvironmentObject var globals: Globals
-    @EnvironmentObject var userSettings: UserSettings
+    @ObservedObject private var altimeter = Altimeter.shared
+    @ObservedObject private var locationManager = LocationManager.shared
     
     @State private var userTrackingMode: MapUserTrackingMode = .follow
     @State private var region = MKCoordinateRegion(
@@ -34,19 +34,19 @@ struct MainView: View {
     var body: some View {
         VStack {
             VStack {
-                if (globals.relativeAltitude + userSettings.offset) > 999 || (globals.relativeAltitude + userSettings.offset) < -999 {
-                    Text("\((globals.relativeAltitude + userSettings.offset) / 1000, specifier: "%.2f")")
+                if (Altimeter.shared.relativeAltitude + UserSettings.shared.offset) > 999 || (Altimeter.shared.relativeAltitude + UserSettings.shared.offset) < -999 {
+                    Text("\((Altimeter.shared.relativeAltitude + UserSettings.shared.offset) / 1000, specifier: "%.2f")")
                         .font(.system(size: 100))
                         .fontWeight(.bold)
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        .foregroundColor(UserSettings.shared.colors[UserSettings.shared.colorSelection])
                         .transition(.opacity)
                     Text("Altitude [km]")
                         .font(.system(size: 20))
                 } else {
-                    Text("\(globals.relativeAltitude + userSettings.offset, specifier: "%.0f")")
+                    Text("\(Altimeter.shared.relativeAltitude + UserSettings.shared.offset, specifier: "%.0f")")
                         .font(.system(size: 100))
                         .fontWeight(.bold)
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        .foregroundColor(UserSettings.shared.colors[UserSettings.shared.colorSelection])
                         .transition(.opacity)
                     Text("Altitude [m]")
                         .font(.system(size: 20))
@@ -55,32 +55,32 @@ struct MainView: View {
             HStack {
                 Spacer()
                 VStack {
-                    Text("\(globals.speedH, specifier: "%.0f")")
+                    Text("\(LocationManager.shared.lastLocation.speed, specifier: "%.0f")")
                         .font(.system(size: 100))
                         .fontWeight(.bold)
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        .foregroundColor(UserSettings.shared.colors[UserSettings.shared.colorSelection])
                         .transition(.opacity)
                     Text("Speed [km/h]")
                         .font(.system(size: 20))
                 }
                 Spacer()
                 VStack {
-                    if globals.glideRatio > 99 || globals.glideRatio < 0 {
+                    if Altimeter.shared.glideRatio > 99 || Altimeter.shared.glideRatio < 0 {
                         Image(systemName: "face.smiling")
                             .font(.system(size: 100))
-                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                            .foregroundColor(UserSettings.shared.colors[UserSettings.shared.colorSelection])
                             .transition(.opacity)
-                    } else if globals.glideRatio.isNaN || globals.glideRatio == 0 {
+                    } else if Altimeter.shared.glideRatio.isNaN || Altimeter.shared.glideRatio == 0 {
                         Text("--")
                             .font(.system(size: 100))
                             .fontWeight(.bold)
-                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                            .foregroundColor(UserSettings.shared.colors[UserSettings.shared.colorSelection])
                             .transition(.opacity)
                     } else {
-                        Text("\(globals.glideRatio, specifier: "%.1f")")
+                        Text("\(Altimeter.shared.glideRatio, specifier: "%.1f")")
                             .font(.system(size: 100))
                             .fontWeight(.bold)
-                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                            .foregroundColor(UserSettings.shared.colors[UserSettings.shared.colorSelection])
                             .transition(.opacity)
                     }
                     Text("Glide Ratio")

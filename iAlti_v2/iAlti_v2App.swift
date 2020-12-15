@@ -9,9 +9,6 @@ import SwiftUI
 
 @main
 struct iAlti_v2App: App {
-    @StateObject var globals = Globals()
-    @StateObject var userSettings = UserSettings()
-    
     let persistence = PersistenceManager()
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -19,8 +16,6 @@ struct iAlti_v2App: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(userSettings)
-                .environmentObject(globals)
                 .environment(\.managedObjectContext, persistence.context)
         }
     }

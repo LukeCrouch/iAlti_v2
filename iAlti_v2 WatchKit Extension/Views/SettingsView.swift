@@ -7,53 +7,12 @@
 
 import SwiftUI
 
-struct Weather: Codable {
-    var main: Main?
-}
-
-struct Main: Codable {
-    var pressure: Double?
-}
-
-
 struct SettingsView: View {
-    @EnvironmentObject var globals: Globals
     @EnvironmentObject var userSettings: UserSettings
-    @State private var results = [Weather]()
     @State private var showingAlert = false
     @State private var selection: Int = 0
-    private let colors = ["Green", "White", "Red", "Blue", "Orange", "Yellow", "Pink", "Purple"]
     
-    func autoCalib() {
-        let pressureCall = "ZmY1N2FmZThkOGY2N2U2MzIwNmVmZmQ2MTM3NmMzZDc="
-        let pressureCallNew: String = pressureCall.model!
-        
-        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(LocationManager.shared.lastLocation!.coordinate.latitude)&lon=\(LocationManager.shared.lastLocation!.coordinate.longitude)&appid=\(pressureCallNew)") else {
-            debugPrint("Invalid Openweathermap URL")
-            return
-        }
-        
-        let request = URLRequest(url: url)
-        debugPrint("Request ", request)
-        
-        URLSession.shared.dataTask(with: request) { data, decodedResponse, error in
-            debugPrint("URLSession started")
-            if let data = data {
-                debugPrint("URLSession data received", data)
-                if let decodedResponse = try? JSONDecoder().decode(Weather.self, from: data) {
-                    debugPrint("URLSession response decoded", decodedResponse)
-                    DispatchQueue.main.async {
-                        userSettings.qnh = decodedResponse.main?.pressure ?? 0
-                        debugPrint("Calibrated with a pulled pressure of", decodedResponse.main?.pressure ?? 0)
-                        userSettings.offset = 8400 * (userSettings.qnh - globals.pressure) / userSettings.qnh
-                    }
-                    return
-                }
-            }
-            debugPrint("Fetch failed: \(error?.localizedDescription ?? "Unknown error"):")
-            debugPrint("Error", error ?? "nil")
-        }.resume()
-    }
+    private let colors = ["Green", "White", "Red", "Blue", "Orange", "Yellow", "Pink", "Purple"]
     
     var body: some View {
         VStack {
@@ -63,7 +22,7 @@ struct SettingsView: View {
                         .multilineTextAlignment(.center)
                         .frame(width: 90, height: 50)
                         .font(.system(size: 20))
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        .foregroundColor(UserSettings.shared.colors[UserSettings.shared.colorSelection])
                     Text("QNH [hPa]")
                 }
                 VStack {
@@ -71,7 +30,7 @@ struct SettingsView: View {
                         .multilineTextAlignment(.center)
                         .frame(width: 90, height: 50)
                         .font(.system(size: 20))
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        .foregroundColor(UserSettings.shared.colors[UserSettings.shared.colorSelection])
                     Text("Offset [m]")
                 }
             }
@@ -79,15 +38,15 @@ struct SettingsView: View {
                 VStack {
                     Spacer()
                     Button(action: {
-                        if globals.isLocationStarted {
+                        if LocationManager.shared.isLocationStarted {
                             debugPrint("Auto Calibration started")
-                            autoCalib()
+                            LocationManager.shared.autoCalib()
                         } else {
                             self.showingAlert = true
                         }
                     }, label: {
                         Image(systemName: "icloud.and.arrow.down")
-                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                            .foregroundColor(UserSettings.shared.colors[UserSettings.shared.colorSelection])
                             .font(.title2)
                     })
                     .alert(isPresented: $showingAlert) {
@@ -100,10 +59,10 @@ struct SettingsView: View {
                     Picker("", selection: $selection, content: {
                         ForEach(0 ..< colors.count) {index in Text(colors[index]).tag(index)}
                     })
-                    .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                    .foregroundColor(UserSettings.shared.colors[UserSettings.shared.colorSelection])
                 }
-                .onAppear(perform: {selection = userSettings.colorSelection})
-                .onDisappear(perform: {userSettings.colorSelection = selection})
+                .onAppear(perform: {selection = UserSettings.shared.colorSelection})
+                .onDisappear(perform: {UserSettings.shared.colorSelection = selection})
             }
         }
     }

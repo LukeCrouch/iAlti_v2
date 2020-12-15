@@ -8,15 +8,15 @@
 import SwiftUI
 import CoreLocation
 import CoreData
+import Combine
 
 struct SettingsView: View {
-    @EnvironmentObject var globals: Globals
-    @EnvironmentObject var userSettings: UserSettings
     @Environment(\.managedObjectContext) var context
+    @ObservedObject private var userSettings = UserSettings.shared
+    @ObservedObject private var altimeter = Altimeter.shared
+    @ObservedObject private var locationManager = LocationManager.shared
     
     let connectivityProvider = WatchConnectivityProvider()
-    
-    @State private var results = [Weather]()
     
     @Binding var view: Int
     @State private var showAlert = false
@@ -27,46 +27,18 @@ struct SettingsView: View {
     private let colors = ["Green", "White", "Red", "Blue", "Orange", "Yellow", "Pink", "Purple", "Black"]
     
     @State var startTime = Date()
-    @State var duration: Double = 0
-    @State var distance: CLLocationDistance = 0
-    
-    private func saveLog() {
-        debugPrint("Saving Log")
-        let newLog = Log(context: context)
-        newLog.date = Date()
-        newLog.glider = userSettings.glider
-        newLog.pilot = userSettings.pilot
-        newLog.flightTime = duration
-        newLog.takeOff = Globals.shared.geocodedLocation
-        newLog.latitude = LocationManager.shared.latitudeArray
-        newLog.longitude = LocationManager.shared.longitudeArray
-        newLog.altitude = LocationManager.shared.altitudeArray
-        newLog.speed = LocationManager.shared.speedArray
-        newLog.glideRatio = LocationManager.shared.glideRatioArray
-        newLog.accuracy = LocationManager.shared.accuracyArray
-        newLog.maxAltitude = newLog.altitude.max() ?? 0
-        newLog.distance = distance
-        newLog.speedAvg = distance / duration
-        do {
-            try context.save()
-        } catch{
-            debugPrint("Error Saving to persistence")
-        }
-        debugPrint("Saved Log with \(newLog.altitude.count) entries.")
-        LocationManager.shared.resetArrays()
-    }
     
     private func startButton() {
-        if globals.isLocationStarted {
+        if LocationManager.shared.isLocationStarted {
             debugPrint("Tracking already started.")
         } else {
             debugPrint("Start Button pressed.")
-            Globals.shared.geocodedLocation = "Unknown"
+            LocationManager.shared.geocodedLocation = "Unknown"
             startTime = Date()
-            startAltimeter()
+            Altimeter.shared.start()
             LocationManager.shared.start()
             view = 0
-            globals.isLocationStarted = true
+            LocationManager.shared.isLocationStarted = true
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
                 geocode(location: LocationManager.shared.lastLocation)
@@ -78,93 +50,19 @@ struct SettingsView: View {
         debugPrint("Stop Button pressed")
         Altimeter.shared.stopRelativeAltitudeUpdates()
         LocationManager.shared.stop()
-        globals.isLocationStarted = false
+        LocationManager.shared.isLocationStarted = false
         toggleLoc = false
         toggleAlti = false
-        globals.isAltimeterStarted = false
-        duration = DateInterval(start: startTime, end: Date()).duration
-        saveLog()
+        Altimeter.shared.isAltimeterStarted = false
+        PersistenceManager.shared.saveLog(duration: DateInterval(start: startTime, end: Date()).duration)
         view = 1
-    }
-    
-    private func startAltimeter() {
-        var timestamp = 0.0
-        
-        if Altimeter.isRelativeAltitudeAvailable() {
-            switch Altimeter.authorizationStatus() {
-            case .notDetermined: // Handle state before user prompt
-                debugPrint("CM: Awaiting user prompt...")
-            //fatalError("Awaiting CM user prompt...")
-            case .restricted: // Handle system-wide restriction
-                fatalError("CM Authorization restricted!")
-            case .denied: // Handle user denied state
-                fatalError("CM Authorization denied!")
-            case .authorized: // Ready to go!
-                debugPrint("CM Authorized!")
-            @unknown default:
-                fatalError("Unknown CM Authorization Status!")
-            }
-            Altimeter.shared.startRelativeAltitudeUpdates(to: OperationQueue.main) { data, error in
-                if let trueData = data {
-                    //debugPrint(#function, trueData)
-                    globals.pressure = trueData.pressure.doubleValue * 10
-                    globals.barometricAltitude =  8400 * (userSettings.qnh - globals.pressure) / userSettings.qnh
-                    globals.speedV = (trueData.relativeAltitude.doubleValue - globals.relativeAltitude) / (trueData.timestamp - timestamp)
-                    
-                    globals.glideRatio = (LocationManager.shared.lastLocation.speed) / (-1 * globals.speedV)
-                    
-                    globals.speedH = LocationManager.shared.lastLocation.speed
-                    
-                    globals.relativeAltitude = trueData.relativeAltitude.doubleValue
-                    
-                    LocationManager.shared.altitude = globals.barometricAltitude
-                    LocationManager.shared.glideRatio = globals.glideRatio
-                    
-                    timestamp = trueData.timestamp
-                } else {
-                    debugPrint("Error starting relative Altitude Updates: \(error?.localizedDescription ?? "Unknown Error")")
-                }
-            }
-        }
-        globals.isAltimeterStarted = true
-    }
-    
-    private func autoCalib() {
-        let pressureCall = "ZmY1N2FmZThkOGY2N2U2MzIwNmVmZmQ2MTM3NmMzZDc="
-        let pressureCallNew: String = pressureCall.model!
-        
-        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(LocationManager.shared.lastLocation.coordinate.latitude)&lon=\(LocationManager.shared.lastLocation.coordinate.longitude)&appid=\(pressureCallNew)") else {
-            debugPrint("Invalid Openweathermap URL")
-            return
-        }
-        
-        let request = URLRequest(url: url)
-        debugPrint("Request ", request)
-        
-        URLSession.shared.dataTask(with: request) { data, decodedResponse, error in
-            debugPrint("URLSession started")
-            if let data = data {
-                debugPrint("URLSession data received", data)
-                if let decodedResponse = try? JSONDecoder().decode(Weather.self, from: data) {
-                    debugPrint("URLSession response decoded", decodedResponse)
-                    DispatchQueue.main.async {
-                        userSettings.qnh = decodedResponse.main?.pressure ?? 0
-                        debugPrint("Calibrated with a pulled pressure of", decodedResponse.main?.pressure ?? 0)
-                        userSettings.offset = 8400 * (userSettings.qnh - globals.pressure) / userSettings.qnh
-                    }
-                    return
-                }
-            }
-            debugPrint("Fetch failed: \(error?.localizedDescription ?? "Unknown error"):")
-            debugPrint("Error", error ?? "nil")
-        }.resume()
     }
     
     var body: some View {
         Form {
             Section(header: Text("Dashboard")) {
                 HStack {
-                    if globals.isAltimeterStarted {
+                    if Altimeter.shared.isAltimeterStarted {
                         Image(systemName: "circle.fill")
                             .imageScale(.small)
                             .scaleEffect(0.5)
@@ -181,17 +79,17 @@ struct SettingsView: View {
                     Text("Barometer")
                 }
                 HStack {
-                    Text("\(globals.pressure, specifier: "%.2f")")
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                    Text("\(Altimeter.shared.pressure, specifier: "%.2f")")
+                        .foregroundColor(UserSettings.shared.colors[UserSettings.shared.colorSelection])
                     Text("Pressure [hPa]")
                 }
                 HStack {
-                    Text("\(globals.barometricAltitude, specifier: "%.2f")")
+                    Text("\(Altimeter.shared.barometricAltitude, specifier: "%.2f")")
                         .foregroundColor(userSettings.colors[userSettings.colorSelection])
                     Text("Altitude MSL [m]")
                 }
                 HStack {
-                    if globals.isLocationStarted {
+                    if LocationManager.shared.isLocationStarted {
                         Image(systemName: "circle.fill")
                             .imageScale(.small)
                             .scaleEffect(0.5)
@@ -237,7 +135,7 @@ struct SettingsView: View {
                 Button(action: {
                     debugPrint("Reset Button pressed")
                     Altimeter.shared.stopRelativeAltitudeUpdates()
-                    startAltimeter()
+                    Altimeter.shared.start()
                     userSettings.offset = 0
                 }, label: {HStack {
                     Image(systemName: "arrow.counterclockwise.circle.fill")
@@ -245,9 +143,9 @@ struct SettingsView: View {
                     .foregroundColor(userSettings.colors[userSettings.colorSelection])
                 })
                 Button(action: {
-                    if globals.isLocationStarted {
+                    if LocationManager.shared.isLocationStarted {
                         debugPrint("Auto Calibration started")
-                        autoCalib()
+                        LocationManager.shared.autoCalib()
                     } else {
                         showAlert = true
                     }

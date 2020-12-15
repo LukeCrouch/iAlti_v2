@@ -5,15 +5,9 @@
 //  Created by Lukas Wheldon on 16.11.20.
 //
 
-import Foundation
 import SwiftUI
 import CoreLocation
 import Combine
-import CoreMotion
-
-final class Altimeter: CMAltimeter {
-    static let shared = Altimeter()
-}
 
 final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     override init() {
@@ -29,6 +23,12 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     static let shared = LocationManager()
     let objectWillChange = PassthroughSubject<Void, Never>()
     
+    @Published var isLocationStarted = false {
+        willSet {
+            objectWillChange.send()
+        }
+    }
+    
     @Published var locationStatus: CLAuthorizationStatus? {
         willSet {
             objectWillChange.send()
@@ -43,18 +43,20 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     
     @Published var longitudeArray: [Double] = []
     @Published var latitudeArray: [Double] = []
-    @Published var speedArray: [Double] = []
+    @Published var speedHorizontalArray: [Double] = []
     @Published var glideRatioArray: [Double] = []
     @Published var altitudeArray: [Double] = []
     @Published var accuracyArray: [Double] = []
+    @Published var speedVerticalArray: [Double] = []
     
     func resetArrays() {
         longitudeArray = []
         latitudeArray = []
-        speedArray = []
+        speedHorizontalArray = []
         glideRatioArray = []
         altitudeArray = []
         accuracyArray = []
+        speedVerticalArray = []
         debugPrint("Location Manager Arrays resetted!")
     }
     
@@ -87,9 +89,10 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
             accuracyArray.append(location.horizontalAccuracy)
             longitudeArray.append(location.coordinate.longitude)
             latitudeArray.append(location.coordinate.latitude)
-            speedArray.append(location.speed)
-            glideRatioArray.append(Globals.shared.glideRatio)
-            altitudeArray.append(Globals.shared.barometricAltitude)
+            speedHorizontalArray.append(location.speed)
+            glideRatioArray.append(Altimeter.shared.glideRatio)
+            altitudeArray.append(Altimeter.shared.barometricAltitude)
+            speedVerticalArray.append(Altimeter.shared.speedVertical)
         } else { debugPrint("Dropped location because accuracy was over 15m.") }
     }
     
@@ -98,6 +101,63 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     }
     
     func start() {
+        switch locationStatus {
+        case .notDetermined:
+            debugPrint("CL: Awaiting user prompt...")
+            //fatalError("Awaiting CL user prompt...")
+        case .restricted:
+            fatalError("CL Authorization restricted!")
+        case .denied:
+            fatalError("CL Authorization denied!")
+        case .authorizedAlways:
+            debugPrint("CL Authorized!")
+        case .authorizedWhenInUse:
+            debugPrint("CL Authorized when in use!")
+        case .none:
+            debugPrint("CL Authorization None!")
+        @unknown default:
+            fatalError("Unknown CL Authorization Status!")
+        }
         locationManager.startUpdatingLocation()
+        isLocationStarted = true
+    }
+    
+    struct Weather: Codable {
+        var main: Main?
+    }
+
+    struct Main: Codable {
+        var pressure: Double?
+    }
+    
+    func autoCalib() {
+        let pressureCall = "ZmY1N2FmZThkOGY2N2U2MzIwNmVmZmQ2MTM3NmMzZDc="
+        let pressureCallNew: String = pressureCall.model!
+        
+        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(LocationManager.shared.lastLocation!.coordinate.latitude)&lon=\(LocationManager.shared.lastLocation!.coordinate.longitude)&appid=\(pressureCallNew)") else {
+            debugPrint("Invalid Openweathermap URL")
+            return
+        }
+        
+        let request = URLRequest(url: url)
+        debugPrint("Request ", request)
+        
+        URLSession.shared.dataTask(with: request) { data, decodedResponse, error in
+            debugPrint("URLSession started")
+            if let data = data {
+                debugPrint("URLSession data received", data)
+                if let decodedResponse = try? JSONDecoder().decode(Weather.self, from: data) {
+                    debugPrint("URLSession response decoded", decodedResponse)
+                    DispatchQueue.main.async {
+                        UserSettings.shared.qnh = decodedResponse.main?.pressure ?? 0
+                        debugPrint("Calibrated with a pulled pressure of", decodedResponse.main?.pressure ?? 0)
+                        UserSettings.shared.offset = 8400 * (UserSettings.shared.qnh - Altimeter.shared.pressure) / UserSettings.shared.qnh
+                    }
+                    return
+                }
+            }
+            debugPrint("Fetch failed: \(error?.localizedDescription ?? "Unknown error"):")
+            debugPrint("Error", error ?? "nil")
+        }.resume()
     }
 }

@@ -36,9 +36,31 @@ final class PhoneConnectivityProvider: NSObject, WCSessionDelegate {
         session.activate()
     }
     
-    func send(dict: Dictionary<String, Any>) {
-        debugPrint("Sending dictionary to iPhone: ", dict)
-        let logTransfer = WCSession.default.transferUserInfo(dict)
+    func send(duration: Double) {
+        var logDict: Dictionary = [String: Any]()
+        debugPrint("Sending dictionary to iPhone: ", logDict)
+        
+        Altimeter.shared.stopRelativeAltitudeUpdates()
+        Altimeter.shared.isAltimeterStarted = false
+        LocationManager.shared.stop()
+        LocationManager.shared.isLocationStarted = false
+        
+        if LocationManager.shared.altitudeArray.count > 0 {
+            logDict["date"] = Date()
+            logDict["duration"] = duration
+            logDict["altitude"] = LocationManager.shared.altitudeArray
+            logDict["accuracy"] = LocationManager.shared.accuracyArray
+            logDict["glider"] = ""
+            logDict["pilot"] = "Jerry"
+            logDict["glideRatio"] = LocationManager.shared.glideRatioArray
+            logDict["latitude"] = LocationManager.shared.latitudeArray
+            logDict["longitude"] = LocationManager.shared.longitudeArray
+            logDict["speedHorizontal"] = LocationManager.shared.speedHorizontalArray
+            logDict["takeOff"] = "From Watch"
+            logDict["speedVertical"] = LocationManager.shared.speedVerticalArray
+        } else { debugPrint("Dropped Log because it is empty.") }
+        
+        let logTransfer = WCSession.default.transferUserInfo(logDict)
         debugPrint("Callback:", logTransfer)
     }
 }

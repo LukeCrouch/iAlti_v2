@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6024AE7525817E7B0092BEEF /* GPXExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6024AE7425817E7B0092BEEF /* GPXExporter.swift */; };
+		6024AE7C25817EAB0092BEEF /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6024AE7B25817EAB0092BEEF /* Extensions.swift */; };
+		6024AE8825824F410092BEEF /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6024AE8725824F410092BEEF /* ShareSheet.swift */; };
 		604D5538255C190A00B50268 /* iAlti_v2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D5537255C190A00B50268 /* iAlti_v2App.swift */; };
 		604D553A255C190A00B50268 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D5539255C190A00B50268 /* ContentView.swift */; };
 		604D553C255C190E00B50268 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 604D553B255C190E00B50268 /* Assets.xcassets */; };
@@ -40,7 +43,8 @@
 		60C576752562C3D5001E6D17 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C576742562C3D5001E6D17 /* Location.swift */; };
 		60C576AF2562D20D001E6D17 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C576AE2562D20D001E6D17 /* MainView.swift */; };
 		60C576C02562D37B001E6D17 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C576BF2562D37B001E6D17 /* SettingsView.swift */; };
-		60DC9AAA25658E7000B1D43D /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DC9AA925658E7000B1D43D /* Globals.swift */; };
+		60D77D3F2588092F00A3C979 /* Altimeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D77D3E2588092F00A3C979 /* Altimeter.swift */; };
+		60D77D4B2588098300A3C979 /* Altimeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D77D4A2588098300A3C979 /* Altimeter.swift */; };
 		60ED09722562AAC30062045D /* Logs.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 60ED09702562AAC30062045D /* Logs.xcdatamodeld */; };
 		60F2CCC825681A12003E1285 /* LogDetailOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F2CCC725681A12003E1285 /* LogDetailOverView.swift */; };
 		60F2CCCF25681A3A003E1285 /* LogDetailGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F2CCCE25681A3A003E1285 /* LogDetailGraphView.swift */; };
@@ -103,6 +107,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6024AE7425817E7B0092BEEF /* GPXExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPXExporter.swift; sourceTree = "<group>"; };
+		6024AE7B25817EAB0092BEEF /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		6024AE8725824F410092BEEF /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		604D5534255C190A00B50268 /* iAlti_v2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iAlti_v2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		604D5537255C190A00B50268 /* iAlti_v2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iAlti_v2App.swift; sourceTree = "<group>"; };
 		604D5539255C190A00B50268 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -145,7 +152,8 @@
 		60C576742562C3D5001E6D17 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		60C576AE2562D20D001E6D17 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		60C576BF2562D37B001E6D17 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		60DC9AA925658E7000B1D43D /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		60D77D3E2588092F00A3C979 /* Altimeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Altimeter.swift; sourceTree = "<group>"; };
+		60D77D4A2588098300A3C979 /* Altimeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Altimeter.swift; sourceTree = "<group>"; };
 		60ED09712562AAC30062045D /* Logs.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Logs.xcdatamodel; sourceTree = "<group>"; };
 		60F2CCC725681A12003E1285 /* LogDetailOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDetailOverView.swift; sourceTree = "<group>"; };
 		60F2CCCE25681A3A003E1285 /* LogDetailGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDetailGraphView.swift; sourceTree = "<group>"; };
@@ -211,15 +219,12 @@
 			isa = PBXGroup;
 			children = (
 				604D5537255C190A00B50268 /* iAlti_v2App.swift */,
-				60DC9AA925658E7000B1D43D /* Globals.swift */,
-				606034AE2563160C007170EB /* UserSettings.swift */,
-				60DC9A9D25658DF600B1D43D /* Views */,
-				60DC9A9E25658E0500B1D43D /* DataStorage */,
-				60C5766D2562C249001E6D17 /* Location.swift */,
-				60B4B145256804F7000690CE /* WatchConnectivityProvider.swift */,
-				604D553B255C190E00B50268 /* Assets.xcassets */,
 				604D5540255C190E00B50268 /* Info.plist */,
+				60D77D6D2588237B00A3C979 /* Helper */,
+				60DC9A9D25658DF600B1D43D /* Views */,
+				60DC9A9E25658E0500B1D43D /* Data */,
 				604D553D255C190E00B50268 /* Preview Content */,
+				604D553B255C190E00B50268 /* Assets.xcassets */,
 			);
 			path = iAlti_v2;
 			sourceTree = "<group>";
@@ -267,6 +272,7 @@
 				604D5579255C191500B50268 /* Info.plist */,
 				60B4B15B2568095D000690CE /* PhoneConnectivityProvider.swift */,
 				60C576742562C3D5001E6D17 /* Location.swift */,
+				60D77D3E2588092F00A3C979 /* Altimeter.swift */,
 				6060352C25642862007170EB /* UserSettings.swift */,
 				60B4B0FC2567D086000690CE /* Views */,
 				60B4B1072567D0D3000690CE /* Ressources */,
@@ -306,6 +312,18 @@
 			path = Ressources;
 			sourceTree = "<group>";
 		};
+		60D77D6D2588237B00A3C979 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				60B4B145256804F7000690CE /* WatchConnectivityProvider.swift */,
+				60D77D4A2588098300A3C979 /* Altimeter.swift */,
+				60C5766D2562C249001E6D17 /* Location.swift */,
+				6024AE7B25817EAB0092BEEF /* Extensions.swift */,
+				606034AE2563160C007170EB /* UserSettings.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		60DC9A9D25658DF600B1D43D /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -316,19 +334,21 @@
 				6060353825643279007170EB /* LogDetailView.swift */,
 				60F2CCC725681A12003E1285 /* LogDetailOverView.swift */,
 				60F2CCCE25681A3A003E1285 /* LogDetailGraphView.swift */,
+				6024AE8725824F410092BEEF /* ShareSheet.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
 		};
-		60DC9A9E25658E0500B1D43D /* DataStorage */ = {
+		60DC9A9E25658E0500B1D43D /* Data */ = {
 			isa = PBXGroup;
 			children = (
 				60ED09702562AAC30062045D /* Logs.xcdatamodeld */,
 				60C576662562C1FA001E6D17 /* Persistence.swift */,
 				608381782564776E00D1F204 /* Log+CoreDataClass.swift */,
 				608381792564776E00D1F204 /* Log+CoreDataProperties.swift */,
+				6024AE7425817E7B0092BEEF /* GPXExporter.swift */,
 			);
-			path = DataStorage;
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -523,6 +543,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6083817B2564776E00D1F204 /* Log+CoreDataProperties.swift in Sources */,
+				6024AE7C25817EAB0092BEEF /* Extensions.swift in Sources */,
 				604D553A255C190A00B50268 /* ContentView.swift in Sources */,
 				60F2CCC825681A12003E1285 /* LogDetailOverView.swift in Sources */,
 				606034AF2563160C007170EB /* UserSettings.swift in Sources */,
@@ -532,11 +553,13 @@
 				60B4B146256804F7000690CE /* WatchConnectivityProvider.swift in Sources */,
 				6060353925643279007170EB /* LogDetailView.swift in Sources */,
 				6083817A2564776E00D1F204 /* Log+CoreDataClass.swift in Sources */,
-				60DC9AAA25658E7000B1D43D /* Globals.swift in Sources */,
+				6024AE7525817E7B0092BEEF /* GPXExporter.swift in Sources */,
 				60C576AF2562D20D001E6D17 /* MainView.swift in Sources */,
 				60C576672562C1FA001E6D17 /* Persistence.swift in Sources */,
 				60ED09722562AAC30062045D /* Logs.xcdatamodeld in Sources */,
+				6024AE8825824F410092BEEF /* ShareSheet.swift in Sources */,
 				60C5766E2562C249001E6D17 /* Location.swift in Sources */,
+				60D77D4B2588098300A3C979 /* Altimeter.swift in Sources */,
 				60C576C02562D37B001E6D17 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -572,6 +595,7 @@
 				604D559F255C1AE600B50268 /* ControlsView.swift in Sources */,
 				60B4B15C2568095D000690CE /* PhoneConnectivityProvider.swift in Sources */,
 				604D5571255C191200B50268 /* NotificationView.swift in Sources */,
+				60D77D3F2588092F00A3C979 /* Altimeter.swift in Sources */,
 				6060352D25642862007170EB /* UserSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
