@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "altimeter.48x48.jpg",
       "idiom" : "watch",
       "role" : "notificationCenter",
       "scale" : "2x",
@@ -8,6 +9,7 @@
       "subtype" : "38mm"
     },
     {
+      "filename" : "altimeter.55x55.jpg",
       "idiom" : "watch",
       "role" : "notificationCenter",
       "scale" : "2x",
@@ -34,6 +36,7 @@
       "subtype" : "38mm"
     },
     {
+      "filename" : "altimeter.88x88.jpg",
       "idiom" : "watch",
       "role" : "appLauncher",
       "scale" : "2x",
@@ -41,6 +44,7 @@
       "subtype" : "40mm"
     },
     {
+      "filename" : "altimeter.100x100.jpg",
       "idiom" : "watch",
       "role" : "appLauncher",
       "scale" : "2x",
@@ -69,6 +73,7 @@
       "subtype" : "44mm"
     },
     {
+      "filename" : "altimeter.1024x1024.jpg",
       "idiom" : "watch-marketing",
       "scale" : "1x",
       "size" : "1024x1024"

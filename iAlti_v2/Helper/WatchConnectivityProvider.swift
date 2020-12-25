@@ -5,10 +5,25 @@
 //  Created by Lukas Wheldon on 20.11.20.
 //
 
-import SwiftUI
+import Foundation
 import WatchConnectivity
+import CoreLocation.CLLocation
 
 final class WatchConnectivityProvider: NSObject, WCSessionDelegate {
+    var session: WCSession
+    
+    init(session: WCSession = .default) {
+        self.session = session
+        guard WCSession.isSupported() else {
+            debugPrint("WCSession not supported!")
+            super.init()
+            return
+        }
+        debugPrint("Activating WCSession.")
+        super.init()
+        session.delegate = self
+        session.activate()
+    }
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         if error == nil {
@@ -25,20 +40,7 @@ final class WatchConnectivityProvider: NSObject, WCSessionDelegate {
     }
     
     func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any]) {
-        debugPrint("Received data from Watch:", userInfo["date"]!, "Size: ", (userInfo["altitude"] as! [Double]).count)
+        debugPrint("Received data from Watch:", (userInfo["timestamps"] as! [String])[0], "Size: ", (userInfo["timestamps"] as! [String]).count)
         PersistenceManager.shared.receiveFromWatch(userInfo: userInfo)
-    }
-    
-    func connect() {
-        guard WCSession.isSupported() else {
-            debugPrint("WCSession not supported!")
-            return
-        }
-        
-        let session = WCSession.default
-        
-        debugPrint("Activating WCSession.")
-        session.delegate = self
-        session.activate()
     }
 }

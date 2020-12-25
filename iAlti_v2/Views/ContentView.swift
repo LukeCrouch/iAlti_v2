@@ -15,30 +15,12 @@ struct ContentView: View {
             MainView()
                 .tabItem {Image(systemName: "location")}
                 .tag(0)
-            NavigationView {
-                LogView()
-                    .navigationTitle("Logs")
-            }
-            .onDisappear(perform: {
-                            DispatchQueue.main.async {
-                                AppDelegate.orientationLock = UIInterfaceOrientationMask.portrait
-                                UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
-                                UINavigationController.attemptRotationToDeviceOrientation()
-                            }})
-            .tabItem {Image(systemName: "list.dash")}
-            .tag(1)
-            NavigationView {
-                SettingsView(view: $view)
-                    .navigationTitle("Settings")
-            }
-            .tabItem {Image(systemName: "gearshape")}
-            .tag(2)
-        }.accentColor(UserSettings.shared.colors[UserSettings.shared.colorSelection])
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+            NavigationView { LogView().navigationTitle("Logs") }
+                .tabItem {Image(systemName: "list.dash")}
+                .tag(1)
+            NavigationView { SettingsView(view: $view).navigationTitle("Settings") }
+                .tabItem {Image(systemName: "gearshape")}
+                .tag(2)
+        }
     }
 }

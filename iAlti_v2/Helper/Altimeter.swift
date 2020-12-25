@@ -19,6 +19,15 @@ class Altimeter: CMAltimeter, ObservableObject {
     @Published var pressure: Double = 0
     @Published var glideRatio: Double = 0
     
+    func setOffset() {
+        UserSettings.shared.offset = 8400 * (UserSettings.shared.qnh - Altimeter.shared.pressure) / UserSettings.shared.qnh
+    }
+    
+    func stop() {
+        self.stopRelativeAltitudeUpdates()
+        self.isAltimeterStarted = false
+    }
+    
     func start() {
         var timestamp = 0.0
         
@@ -26,7 +35,7 @@ class Altimeter: CMAltimeter, ObservableObject {
             switch Altimeter.authorizationStatus() {
             case .notDetermined: // Handle state before user prompt
                 debugPrint("CM: Awaiting user prompt...")
-            //fatalError("Awaiting CM user prompt...")
+                //fatalError("Awaiting CM user prompt...")
             case .restricted: // Handle system-wide restriction
                 fatalError("CM Authorization restricted!")
             case .denied: // Handle user denied state
@@ -36,15 +45,15 @@ class Altimeter: CMAltimeter, ObservableObject {
             @unknown default:
                 fatalError("Unknown CM Authorization Status!")
             }
-            Altimeter.shared.startRelativeAltitudeUpdates(to: OperationQueue.main) { data, error in
+            self.startRelativeAltitudeUpdates(to: OperationQueue.main) { data, error in
                 if let trueData = data {
                     //debugPrint(#function, trueData)
                     
-                    Altimeter.shared.pressure = trueData.pressure.doubleValue * 10
-                    Altimeter.shared.barometricAltitude =  8400 * (UserSettings.shared.qnh - Altimeter.shared.pressure) / UserSettings.shared.qnh
-                    Altimeter.shared.speedVertical = (trueData.relativeAltitude.doubleValue - Altimeter.shared.relativeAltitude) / (trueData.timestamp - timestamp)
-                    Altimeter.shared.glideRatio = (LocationManager.shared.lastLocation.speed) / (-1 * Altimeter.shared.speedVertical)
-                    Altimeter.shared.relativeAltitude = trueData.relativeAltitude.doubleValue
+                    self.pressure = trueData.pressure.doubleValue * 10
+                    self.barometricAltitude =  8400 * (UserSettings.shared.qnh - Altimeter.shared.pressure) / UserSettings.shared.qnh
+                    self.speedVertical = (trueData.relativeAltitude.doubleValue - Altimeter.shared.relativeAltitude) / (trueData.timestamp - timestamp)
+                    self.glideRatio = (LocationManager.shared.lastLocation?.speed ?? 0) / (-1 * Altimeter.shared.speedVertical)
+                    self.relativeAltitude = trueData.relativeAltitude.doubleValue
                     
                     timestamp = trueData.timestamp
                 } else {
@@ -52,6 +61,7 @@ class Altimeter: CMAltimeter, ObservableObject {
                 }
             }
         }
-        Altimeter.shared.isAltimeterStarted = true
+        self.isAltimeterStarted = true
+        UserSettings.shared.offset = 0
     }
 }

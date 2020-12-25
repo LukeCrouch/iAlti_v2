@@ -9,64 +9,89 @@ import SwiftUI
 
 struct ControlsView: View {
     @Binding var view: Int
+    @ObservedObject private var altimeter = Altimeter.shared
+    @ObservedObject private var locationManager = LocationManager.shared
+    @ObservedObject private var userSettings = UserSettings.shared
+    
+    @State private var showingAlert = false
     @State private var showModal = false
-    @State private var startTime = Date()
     
     private let connectivityProvider = PhoneConnectivityProvider()
+    
+    @State var startDate = Date()
+    @State var duration: Double = 0
     
     var body: some View {
         VStack {
             HStack {
                 VStack {
-                    Button(action: {
-                        debugPrint("Start Button pressed")
-                        startTime = Date()
-                        Altimeter.shared.start()
-                        LocationManager.shared.start()
-                        view = (view + 1) % 1
-                    }, label: {
-                        Image(systemName: "play.fill")
-                            .foregroundColor(.green)
-                            .font(.title)
-                    })
-                    Text("Start")
+                    if locationManager.isLocationStarted {
+                        Button(action: {
+                            debugPrint("Stop Logging Button pressed")
+                            duration = DateInterval(start: startDate, end: Date()).duration
+                            locationManager.stop()
+                            altimeter.stop()
+                            connectivityProvider.send(duration: duration)
+                        },
+                        label: {
+                            Image(systemName: "stop.fill")
+                                .foregroundColor(.red)
+                                .font(.title)
+                        })
+                    } else {
+                        Button(action: {
+                            debugPrint("Start Logging Button pressed")
+                            startDate = Date()
+                            altimeter.start()
+                            locationManager.start()
+                            view = (view + 1) % 1
+                        }, label: {
+                            Image(systemName: "play.fill")
+                                .foregroundColor(.green)
+                                .font(.title)
+                        })
+                    }
+                    Text("Logging")
                 }
-                VStack {
-                    Button(action: { connectivityProvider.send(duration: DateInterval(start: startTime, end: Date()).duration) },
-                           label: {
-                        Image(systemName: "stop.fill")
-                            .foregroundColor(.red)
-                            .font(.title)
-                    })
-                    Text("Stop")
+                if !(locationManager.isLocationStarted) {
+                    VStack {
+                        if altimeter.isAltimeterStarted {
+                            Button(action: {
+                                debugPrint("Altimeter Stop Button pressed")
+                                altimeter.stop()
+                            }, label: {
+                                Image(systemName: "stop.fill")
+                                    .foregroundColor(.blue)
+                                    .font(.title)
+                            })
+                        } else {
+                            Button(action: {
+                                debugPrint("Altimeter Start Button pressed")
+                                altimeter.start()
+                                view = (view + 1) % 1
+                            }, label: {
+                                Image(systemName: "play.fill")
+                                    .foregroundColor(.blue)
+                                    .font(.title)
+                            })
+                        }
+                        Text("Altimeter")
+                    }
                 }
             }
             HStack {
-                VStack {
-                    Button(action: {
-                        debugPrint("Reset Button pressed")
-                        Altimeter.shared.stopRelativeAltitudeUpdates()
-                        Altimeter.shared.start()
-                        UserSettings.shared.offset = 0
-                        view = (view + 1) % 1
-                    }, label: {
-                        Image(systemName: "arrow.counterclockwise.circle.fill")
-                            .foregroundColor(.blue)
-                            .font(.title)
-                    })
-                    Text("Reset")
-                }
                 VStack {
                     Button(action: {
                         debugPrint("Settings Button pressed")
                         showModal.toggle()
                     }, label: {
                         Image(systemName: "gearshape.fill")
-                            .foregroundColor(.yellow)
+                            .foregroundColor(.orange)
                             .font(.title)
                     })
                     Text("Settings")
-                }.sheet(isPresented: $showModal) {
+                }
+                .sheet(isPresented: $showModal) {
                     SettingsView()
                         .toolbar(content: {
                             ToolbarItem(placement: .cancellationAction) {
@@ -74,15 +99,28 @@ struct ControlsView: View {
                             }
                         })
                 }
+                VStack {
+                    Spacer()
+                    Button(action: {
+                        if locationManager.isLocationStarted {
+                            debugPrint("Auto Calibration started")
+                            LocationManager.shared.autoCalib()
+                        } else {
+                            WKInterfaceDevice().play(.failure)
+                            self.showingAlert = true
+                        }
+                    }, label: {
+                        Image(systemName: "icloud.and.arrow.down")
+                            .foregroundColor(.yellow)
+                            .font(.title2)
+                    })
+                    .alert(isPresented: $showingAlert) {
+                        Alert(title: Text("Warning"), message: Text("Start GPS services before calibrating."), dismissButton: .default(Text("OK")))
+                    }
+                    .frame(width: 90.0, height: 50.0)
+                    Text("Calibration")
+                }
             }
-        }
-        .navigationBarTitle("iAlti v2")
-        .onAppear(perform: connectivityProvider.connect)
-    }
-}
-
-struct ControlsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ControlsView(view: .constant(0))
+        }.navigationBarTitle("iAlti")
     }
 }

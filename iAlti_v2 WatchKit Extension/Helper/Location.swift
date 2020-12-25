@@ -19,6 +19,7 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
         self.locationManager.allowsBackgroundLocationUpdates = true
     }
     
+    // MARK: Variables
     private let locationManager = CLLocationManager()
     static let shared = LocationManager()
     let objectWillChange = PassthroughSubject<Void, Never>()
@@ -41,26 +42,7 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
         }
     }
     
-    @Published var longitudeArray: [Double] = []
-    @Published var latitudeArray: [Double] = []
-    @Published var speedHorizontalArray: [Double] = []
-    @Published var glideRatioArray: [Double] = []
-    @Published var altitudeArray: [Double] = []
-    @Published var accuracyArray: [Double] = []
-    @Published var speedVerticalArray: [Double] = []
-    
-    func resetArrays() {
-        longitudeArray = []
-        latitudeArray = []
-        speedHorizontalArray = []
-        glideRatioArray = []
-        altitudeArray = []
-        accuracyArray = []
-        speedVerticalArray = []
-        debugPrint("Location Manager Arrays resetted!")
-    }
-    
-    var statusString: String {
+    private var statusString: String {
         guard let status = locationStatus else {
             return "unknown"
         }
@@ -75,6 +57,18 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
         }
     }
     
+    @Published var locationArray: [CLLocation] = []
+    @Published var altitudeArray: [Double] = []
+    @Published var speedVerticalArray: [Double] = []
+    
+    // MARK: Functions
+    func resetArrays() {
+        locationArray = []
+        altitudeArray = []
+        speedVerticalArray = []
+        debugPrint("Location Manager Arrays resetted!")
+    }
+    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         self.locationStatus = status
         debugPrint(#function, statusString)
@@ -83,28 +77,25 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         self.lastLocation = location
-        //debugPrint(#function, location)
         
         if location.horizontalAccuracy < 15 {
-            accuracyArray.append(location.horizontalAccuracy)
-            longitudeArray.append(location.coordinate.longitude)
-            latitudeArray.append(location.coordinate.latitude)
-            speedHorizontalArray.append(location.speed)
-            glideRatioArray.append(Altimeter.shared.glideRatio)
+            locationArray.append(location)
             altitudeArray.append(Altimeter.shared.barometricAltitude)
             speedVerticalArray.append(Altimeter.shared.speedVertical)
         } else { debugPrint("Dropped location because accuracy was over 15m.") }
     }
     
+    // MARK: Start & Stop
     func stop() {
         locationManager.stopUpdatingLocation()
+        isLocationStarted = false
     }
     
     func start() {
         switch locationStatus {
         case .notDetermined:
             debugPrint("CL: Awaiting user prompt...")
-            //fatalError("Awaiting CL user prompt...")
+        //fatalError("Awaiting CL user prompt...")
         case .restricted:
             fatalError("CL Authorization restricted!")
         case .denied:
@@ -125,16 +116,17 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     struct Weather: Codable {
         var main: Main?
     }
-
+    
     struct Main: Codable {
         var pressure: Double?
     }
     
+    // MARK: Auto Calibration
     func autoCalib() {
         let pressureCall = "ZmY1N2FmZThkOGY2N2U2MzIwNmVmZmQ2MTM3NmMzZDc="
         let pressureCallNew: String = pressureCall.model!
         
-        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(LocationManager.shared.lastLocation!.coordinate.latitude)&lon=\(LocationManager.shared.lastLocation!.coordinate.longitude)&appid=\(pressureCallNew)") else {
+        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(self.lastLocation!.coordinate.latitude)&lon=\(self.lastLocation!.coordinate.longitude)&appid=\(pressureCallNew)") else {
             debugPrint("Invalid Openweathermap URL")
             return
         }
@@ -151,7 +143,7 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
                     DispatchQueue.main.async {
                         UserSettings.shared.qnh = decodedResponse.main?.pressure ?? 0
                         debugPrint("Calibrated with a pulled pressure of", decodedResponse.main?.pressure ?? 0)
-                        UserSettings.shared.offset = 8400 * (UserSettings.shared.qnh - Altimeter.shared.pressure) / UserSettings.shared.qnh
+                        Altimeter.shared.setOffset()
                     }
                     return
                 }

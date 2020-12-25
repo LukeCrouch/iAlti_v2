@@ -9,11 +9,11 @@ import SwiftUI
 
 struct ContentView: View {
     @State var view = 0
-
+    
     var body: some View {
         TabView(selection: $view) {
             ControlsView(view: $view)
-            .tabItem {}
+                .tabItem {}
                 .tag(1)
             MainView()
                 .tabItem {}
@@ -23,11 +23,4 @@ struct ContentView: View {
                 .tag(2)
         }
     }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-    
 }

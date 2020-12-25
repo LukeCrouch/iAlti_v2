@@ -12,9 +12,3 @@ struct NotificationView: View {
         Text("Hello, World!")
     }
 }
-
-struct NotificationView_Previews: PreviewProvider {
-    static var previews: some View {
-        NotificationView()
-    }
-}

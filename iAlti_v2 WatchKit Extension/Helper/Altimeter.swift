@@ -49,6 +49,16 @@ final class Altimeter: CMAltimeter, ObservableObject {
         }
     }
     
+    func setOffset() {
+        UserSettings.shared.offset = 8400 * (UserSettings.shared.qnh - Altimeter.shared.pressure) / UserSettings.shared.qnh
+    }
+    
+    // MARK: Start & Stop
+    func stop() {
+        self.stopRelativeAltitudeUpdates()
+        isAltimeterStarted = false
+    }
+    
     func start() {
         var timestamp = 0.0
         
@@ -66,20 +76,21 @@ final class Altimeter: CMAltimeter, ObservableObject {
             @unknown default:
                 fatalError("Unknown CM Authorization Status!")
             }
-            Altimeter.shared.startRelativeAltitudeUpdates(to: OperationQueue.main) { data, error in
+            self.startRelativeAltitudeUpdates(to: OperationQueue.main) { data, error in
                 if let trueData = data {
-                    debugPrint(trueData)
-                    Altimeter.shared.pressure = trueData.pressure.doubleValue * 10
-                    Altimeter.shared.barometricAltitude =  8400 * (UserSettings.shared.qnh - Altimeter.shared.pressure) / UserSettings.shared.qnh
-                    Altimeter.shared.speedVertical = (trueData.relativeAltitude.doubleValue - Altimeter.shared.relativeAltitude) / (trueData.timestamp - timestamp)
-                    Altimeter.shared.glideRatio = (LocationManager.shared.lastLocation?.speed ?? 0.0) / (-1 * Altimeter.shared.speedVertical)
+                    //debugPrint(#function, trueData)
+                    self.pressure = trueData.pressure.doubleValue * 10
+                    self.barometricAltitude =  8400 * (UserSettings.shared.qnh - Altimeter.shared.pressure) / UserSettings.shared.qnh
+                    self.speedVertical = (trueData.relativeAltitude.doubleValue - Altimeter.shared.relativeAltitude) / (trueData.timestamp - timestamp)
+                    self.glideRatio = (LocationManager.shared.lastLocation?.speed ?? 0) / (-1 * Altimeter.shared.speedVertical)
                     timestamp = trueData.timestamp
-                    Altimeter.shared.relativeAltitude = trueData.relativeAltitude.doubleValue
+                    self.relativeAltitude = trueData.relativeAltitude.doubleValue
                 } else {
                     debugPrint("Error starting relative Altitude Updates: \(error?.localizedDescription ?? "Unknown Error")")
                 }
             }
         }
-        Altimeter.shared.isAltimeterStarted = true
+        isAltimeterStarted = true
+        UserSettings.shared.offset = 0
     }
 }

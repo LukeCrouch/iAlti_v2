@@ -42,68 +42,123 @@ class PersistenceManager {
         }
     }
     
+    /// Save a new Log to persistent storage with CoreData
+    ///
+    /// - Parameters:
+    ///     - UserSettings: Pilot and Glider name
+    ///     - LocationManager: Track points
+    ///     - Duration: Flight time
+    ///
     func saveLog(duration: Double) {
+        let dateFormatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
+            return formatter
+        }()
+        
         if LocationManager.shared.altitudeArray.count == 0 {
             debugPrint("Dropping Log because it is empty.")
         } else {
             debugPrint("Saving Log")
             let newLog = Log(context: context)
-            newLog.date = Date()
+            newLog.id = UUID()
+            newLog.fromWatch = false
             newLog.glider = UserSettings.shared.glider
             newLog.pilot = UserSettings.shared.pilot
-            newLog.flightTime = duration
             newLog.takeOff = LocationManager.shared.geocodedLocation
-            newLog.latitude = LocationManager.shared.latitudeArray
-            newLog.longitude = LocationManager.shared.longitudeArray
-            newLog.altitude = LocationManager.shared.altitudeArray
-            newLog.speedHorizontal = LocationManager.shared.speedHorizontalArray
-            newLog.glideRatio = LocationManager.shared.glideRatioArray
-            newLog.accuracy = LocationManager.shared.accuracyArray
-            newLog.distance = LocationManager.shared.distance
+            LocationManager.shared.geocodedLocation = "Unknown"
+            
+            for loc in LocationManager.shared.locationArray {
+                newLog.accuracyHorizontal.append(loc.horizontalAccuracy)
+                newLog.accuracyVertical.append(loc.verticalAccuracy)
+                newLog.accuracySpeed.append(loc.speedAccuracy)
+                newLog.longitude.append(loc.coordinate.longitude)
+                newLog.latitude.append(loc.coordinate.latitude)
+                newLog.speedHorizontal.append(loc.speed)
+                newLog.altitudeGPS.append(loc.altitude)
+                newLog.course.append(loc.course)
+                newLog.timestamps.append(dateFormatter.string(from: loc.timestamp))
+            }
+            newLog.altitudeBarometer = LocationManager.shared.altitudeArray
             newLog.speedVertical = LocationManager.shared.speedVerticalArray
+            newLog.date = LocationManager.shared.locationArray.last!.timestamp
+            newLog.flightTime = duration
             do {
                 try context.save()
             } catch{
                 debugPrint("Error Saving to persistence")
             }
-            debugPrint("Saved Log with \(newLog.altitude.count) entries.")
+            debugPrint("Saved Log with \(newLog.accuracyHorizontal.count) entries.")
             LocationManager.shared.resetArrays()
         }
     }
     
-    func removeLog(log: Log) {
+    func deleteLog(log: Log) {
         debugPrint("Deleting single Log")
         context.delete(log)
     }
     
+    
+    /// For conversion from optional `String` type to optional `Int` type
+    ///
+    /// - Parameters:
+    ///     - UserSettings: Glider and Pilot Name
+    ///     - userinfo: dictionary received from Apple Watch Companion App
+    ///
     func receiveFromWatch(userInfo: [String : Any]) {
+        let dateFormatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
+            return formatter
+        }()
+        
+        var timestamps: [Date] {
+            var timestamps: [Date] = []
+            for t in userInfo["timestamps"] as! [String] {
+                timestamps.append(dateFormatter.date(from: t)!)
+            }
+            return timestamps
+        }
+        
         let newLog = Log(context: context)
         
-        LocationManager.shared.geocodedLocation = "Unknown"
-        
         debugPrint("Saving New Log from Watch.")
-        newLog.date = userInfo["date"] as! Date
+        newLog.id = UUID()
+        newLog.fromWatch = true
         newLog.glider = UserSettings.shared.glider
         newLog.pilot = UserSettings.shared.pilot
-        newLog.distance = userInfo["distance"] as! Double
-        newLog.flightTime = userInfo["duration"] as! Double
-        newLog.latitude = userInfo["latitude"] as! [Double]
-        newLog.longitude = userInfo["longitude"] as! [Double]
-        newLog.altitude = userInfo["altitude"] as! [Double]
-        newLog.speedHorizontal = userInfo["speedHorizontal"] as! [Double]
-        newLog.glideRatio = userInfo["glideRatio"] as! [Double]
-        newLog.accuracy = userInfo["accuracy"] as! [Double]
+        newLog.altitudeBarometer = userInfo["altitudeBarometer"] as! [Double]
+        newLog.altitudeGPS = userInfo["altitudeGPS"] as! [Double]
         newLog.speedVertical = userInfo["speedVertical"] as! [Double]
+        newLog.accuracyHorizontal = userInfo["accuracyHorizontal"] as! [Double]
+        newLog.accuracyVertical = userInfo["accuracyVertical"] as! [Double]
+        newLog.accuracySpeed = userInfo["accuracySpeed"] as! [Double]
+        newLog.longitude = userInfo["longitude"] as! [Double]
+        newLog.latitude = userInfo["latitude"] as! [Double]
+        newLog.timestamps = userInfo["timestamps"] as! [String]
+        newLog.speedHorizontal = userInfo["speedHorizontal"] as! [Double]
+        newLog.date = dateFormatter.date(from: newLog.timestamps[0])!
+        newLog.flightTime = userInfo["duration"] as! Double
+        newLog.course = userInfo["course"] as! [Double]
         
-        geocode(location: CLLocation(latitude: newLog.latitude[0], longitude: newLog.longitude[0]))
+        LocationManager.shared.geocodedLocation = "Unknown"
+        LocationManager.shared.geocode(location: CLLocation(
+                                        latitude: newLog.latitude[0],
+                                        longitude: newLog.longitude[0]
+        ))
         
         let timer = Date()
         while true {
             if LocationManager.shared.geocodedLocation != "Unknown" {
                 newLog.takeOff = LocationManager.shared.geocodedLocation
+                LocationManager.shared.geocodedLocation = "Unknown"
                 do {
                     try context.save()
-                    debugPrint("Saved Log with \(newLog.altitude.count) entries.")
+                    debugPrint("Saved Log with \(newLog.accuracyHorizontal.count) entries.")
                 } catch {
                     debugPrint("Error Saving to persistence")
                 }

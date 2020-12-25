@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct OverViewLine: View {
+    @ObservedObject private var userSettings = UserSettings.shared
+    
     var name: String
     var value: Double
     var decimals: Int
@@ -19,12 +21,17 @@ struct OverViewLine: View {
             Spacer()
             Text("\(value, specifier: "%.\(decimals)f")")
                 .font(.system(size: 20))
-                .foregroundColor(UserSettings.shared.colors[UserSettings.shared.colorSelection])
+                .foregroundColor(userSettings.colors[userSettings.colorSelection])
         }
     }
 }
 
 struct OverView: View {
+    @ObservedObject private var userSettings = UserSettings.shared
+    
+    @ObservedObject private var altimeter = Altimeter.shared
+    @ObservedObject private var locationManager = LocationManager.shared
+    
     @State private var toggleAlti = false
     @State private var toggleLoc = false
     
@@ -33,11 +40,11 @@ struct OverView: View {
             HStack {
                 Text("Barometer")
                     .font(.system(size: 15))
-                if Altimeter.shared.isAltimeterStarted {
+                if altimeter.isAltimeterStarted {
                     Image(systemName: "circle.fill")
                         .imageScale(.small)
                         .scaleEffect(0.5)
-                        .foregroundColor(.red)
+                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
                         .opacity(toggleAlti ? 0 : 1)
                         .onAppear(perform: {toggleAlti.toggle()})
                         .animation(Animation.easeInOut(duration: 1).repeatForever(autoreverses: true).speed(1))
@@ -48,9 +55,9 @@ struct OverView: View {
                         .foregroundColor(.gray)
                 }
             }
-            OverViewLine(name: "Pressure [hPa]", value: Altimeter.shared.pressure, decimals: 2)
-            OverViewLine(name: "Elevation [m]", value: Altimeter.shared.barometricAltitude, decimals: 0)
-            OverViewLine(name: "Vertical Speed [m/s]", value: Altimeter.shared.speedVertical, decimals: 1)
+            OverViewLine(name: "Pressure [hPa]", value: altimeter.pressure, decimals: 2)
+            OverViewLine(name: "Altitude MSL [m]", value: altimeter.barometricAltitude, decimals: 0)
+            OverViewLine(name: "Vertical Speed [m/s]", value: altimeter.speedVertical, decimals: 1)
             Divider()
             HStack {
                 Text("GPS")
@@ -59,7 +66,7 @@ struct OverView: View {
                     Image(systemName: "circle.fill")
                         .imageScale(.small)
                         .scaleEffect(0.5)
-                        .foregroundColor(.red)
+                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
                         .opacity(toggleLoc ? 0 : 1)
                         .onAppear(perform: {toggleLoc.toggle()})
                         .animation(Animation.easeInOut(duration: 1).repeatForever(autoreverses: true).speed(1))
@@ -70,14 +77,8 @@ struct OverView: View {
                         .foregroundColor(.gray)
                 }
             }
-            OverViewLine(name: "Horizontal Accuracy [m]", value: LocationManager.shared.lastLocation?.horizontalAccuracy ?? 0.0, decimals: 0)
-            OverViewLine(name: "Vertical Accuracy [m]", value: LocationManager.shared.lastLocation?.verticalAccuracy ?? 0.0, decimals: 0)
+            OverViewLine(name: "Horizontal Accuracy [m]", value: LocationManager.shared.lastLocation?.horizontalAccuracy ?? 0, decimals: 0)
+            OverViewLine(name: "Vertical Accuracy [m]", value: LocationManager.shared.lastLocation?.verticalAccuracy ?? 0, decimals: 0)
         }
-    }
-}
-
-struct OverView_Previews: PreviewProvider {
-    static var previews: some View {
-        OverView()
     }
 }
