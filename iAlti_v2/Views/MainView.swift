@@ -34,6 +34,9 @@ struct MainView: View {
         )
     )
     
+    private let mainTextSize: CGFloat = 80
+    private let secondaryTextSize: CGFloat = 15
+    
     var body: some View {
         VStack {
             HStack {
@@ -42,37 +45,36 @@ struct MainView: View {
                 VStack {
                     if (altimeter.relativeAltitude + userSettings.offset) > 999 || (altimeter.relativeAltitude + userSettings.offset) < -999 {
                         Text("\((altimeter.relativeAltitude + userSettings.offset) / 1000, specifier: "%.2f")")
-                            .font(.system(size: 100))
+                            .font(.system(size: mainTextSize))
                             .fontWeight(.bold)
                             .foregroundColor(userSettings.colors[userSettings.colorSelection])
                             .transition(.opacity)
                         Text("Altitude [km]")
-                            .font(.system(size: 15))
+                            .font(.system(size: secondaryTextSize))
                     } else {
                         Text("\(altimeter.relativeAltitude + userSettings.offset, specifier: "%.0f")")
-                            .font(.system(size: 100))
+                            .font(.system(size: mainTextSize))
                             .fontWeight(.bold)
                             .foregroundColor(userSettings.colors[userSettings.colorSelection])
                             .transition(.opacity)
                         Text("Altitude [m]")
-                            .font(.system(size: 15))
+                            .font(.system(size: secondaryTextSize))
                     }
                 }
                 Spacer(minLength: 50)
                 // MARK: Compass Display
                 VStack {
-                    Text("N")
+                    Text("N").font(.system(size: secondaryTextSize))
                     HStack {
-                        Text("W")
-                        VStack {
-                            Image(systemName: "arrow.up")
-                                .font(.system(size: 50))
-                                .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                                .rotationEffect(Angle(degrees: LocationManager.shared.lastLocation?.course ?? 0))
-                        }.frame(width: 80, height: 80, alignment: .center)
-                        Text("E")
+                        Text("W").font(.system(size: secondaryTextSize))
+                        Image(systemName: "arrow.up")
+                            .font(.system(size: mainTextSize / 1.5 ))
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                            .rotationEffect(Angle(degrees: LocationManager.shared.lastLocation?.course ?? 0))
+                            .frame(width: mainTextSize, height: mainTextSize, alignment: .center)
+                        Text("E").font(.system(size: secondaryTextSize))
                     }
-                    Text("S")
+                    Text("S").font(.system(size: secondaryTextSize))
                 }.padding(.top)
                 Spacer()
             }
@@ -81,36 +83,36 @@ struct MainView: View {
                 // MARK: Speed Display
                 VStack {
                     Text("\(speedKMH, specifier: "%.0f")")
-                        .font(.system(size: 100))
+                        .font(.system(size: mainTextSize))
                         .fontWeight(.bold)
                         .foregroundColor(userSettings.colors[userSettings.colorSelection])
                         .transition(.opacity)
                     Text("Speed [km/h]")
-                        .font(.system(size: 15))
+                        .font(.system(size: secondaryTextSize))
                 }
                 Spacer()
                 // MARK: Glide Ratio Display
                 VStack {
                     if altimeter.glideRatio > 99 || altimeter.glideRatio < 0 {
                         Image(systemName: "face.smiling")
-                            .font(.system(size: 100))
+                            .font(.system(size: mainTextSize))
                             .foregroundColor(userSettings.colors[userSettings.colorSelection])
                             .transition(.opacity)
                     } else if altimeter.glideRatio.isNaN || altimeter.glideRatio == 0 {
                         Text("--")
-                            .font(.system(size: 100))
+                            .font(.system(size: mainTextSize))
                             .fontWeight(.bold)
                             .foregroundColor(userSettings.colors[userSettings.colorSelection])
                             .transition(.opacity)
                     } else {
                         Text("\(altimeter.glideRatio, specifier: "%.1f")")
-                            .font(.system(size: 100))
+                            .font(.system(size: mainTextSize))
                             .fontWeight(.bold)
                             .foregroundColor(userSettings.colors[userSettings.colorSelection])
                             .transition(.opacity)
                     }
                     Text("Glide Ratio")
-                        .font(.system(size: 15))
+                        .font(.system(size: secondaryTextSize))
                 }
                 Spacer()
             }

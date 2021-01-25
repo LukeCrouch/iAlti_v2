@@ -14,37 +14,37 @@ final class Altimeter: CMAltimeter, ObservableObject {
     
     
     @Published var relativeAltitude: Double = 0 {
-        willSet {
+        didSet {
             objectWillChange.send()
         }
     }
     
     @Published var isAltimeterStarted = false {
-        willSet {
+        didSet {
             objectWillChange.send()
         }
     }
     
     @Published var speedVertical: Double = 0 {
-        willSet {
+        didSet {
             objectWillChange.send()
         }
     }
     
     @Published var barometricAltitude: Double = 0 {
-        willSet {
+        didSet {
             objectWillChange.send()
         }
     }
     
     @Published var pressure: Double = 0 {
-        willSet {
+        didSet {
             objectWillChange.send()
         }
     }
     
     @Published var glideRatio: Double = 0 {
-        willSet {
+        didSet {
             objectWillChange.send()
         }
     }

@@ -9,9 +9,13 @@ import SwiftUI
 import CoreGPX
 import CoreLocation.CLLocation
 
-class FileExporter: NSObject {
+class FileExporter: NSObject, ObservableObject {
     
-    class var FilesFolderURL: URL {
+    static let shared = FileExporter()
+    
+    @Published var isSharing = false
+    
+    var FilesFolderURL: URL {
         let documentsUrl =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0] as URL
         return documentsUrl
     }
@@ -25,13 +29,15 @@ class FileExporter: NSObject {
     /// - Returns:
     ///     A `Bool`
     ///
-    @discardableResult
-    class func share(log: Log, fileType: String, excludedActivityTypes: [UIActivity.ActivityType]? = nil
-    ) -> Bool {
+    func share(log: Log, fileType: String, excludedActivityTypes: [UIActivity.ActivityType]? = nil
+    ) {
         guard let source = UIApplication.shared.windows.last?.rootViewController else {
-            return false
+            return
         }
         
+        DispatchQueue.main.async {
+            self.isSharing = true
+        }
         let dateFormatterShort: DateFormatter = {
             let formatter = DateFormatter()
             formatter.dateStyle = .short
@@ -47,24 +53,27 @@ class FileExporter: NSObject {
         let filename = dateFormatterShort.string(from: log.date) + "_\(log.takeOff)"
         let exportURL = save(filename, fileContents: fileContents, fileType: fileType)
         
-        let vc = UIActivityViewController(
-            activityItems: [exportURL],
-            applicationActivities: nil
-        )
-        vc.excludedActivityTypes = excludedActivityTypes
-        vc.popoverPresentationController?.sourceView = source.view
-        source.present(vc, animated: true)
-        return true
+        DispatchQueue.main.async {
+            let vc = UIActivityViewController(
+                activityItems: [exportURL],
+                applicationActivities: nil
+            )
+            vc.excludedActivityTypes = excludedActivityTypes
+            vc.popoverPresentationController?.sourceView = source.view
+            source.present(vc, animated: true)
+            self.isSharing = false
+        }
+        return
     }
     
-    class func save(_ filename: String, fileContents: String, fileType: String) -> URL {
+    func save(_ filename: String, fileContents: String, fileType: String) -> URL {
         //check if name exists
         let fileURL: URL = URLForFilename(filename, fileType: fileType)
         saveToURL(fileURL, fileContents: fileContents)
         return fileURL
     }
     
-    class func URLForFilename(_ filename: String, fileType: String) -> URL {
+    func URLForFilename(_ filename: String, fileType: String) -> URL {
         var fullURL = FilesFolderURL.appendingPathComponent(filename)
         fullURL = fullURL.appendingPathExtension(fileType)
         return fullURL
@@ -77,7 +86,7 @@ class FileExporter: NSObject {
     /// - Returns:
     ///     A `String` that can be saved to a file.
     ///
-    class func writeCSV(log: Log) -> String {
+    func writeCSV(log: Log) -> String {
         var csv: String = "time,lat,lon,hMSL,velN,velE,velD,hAcc,vAcc,sAcc,gpsFix,numSV\n,(deg),(deg),(m),(m/s),(m/s),(m/s),(m),(m),(m/s),,,"
         
         var i = 0
@@ -99,8 +108,9 @@ class FileExporter: NSObject {
         }()
         
         for _ in log.accuracyHorizontal {
-            let velN = cos(log.course[i]) * log.accuracyHorizontal[i]
-            let velE = sin(log.course[i]) * log.accuracyHorizontal[i]
+            let velN = cos(log.course[i]) * log.speedHorizontal[i]
+            let velE = sin(log.course[i]) * log.speedHorizontal[i]
+            
             let timestampString = dateFormatter.string(from: dateFormatterFromLog.date(from: log.timestamps[i])!)
             
             csv.append("\n" + timestampString + "," + String(format: "%.7f", log.latitude[i]) + ",")
@@ -122,7 +132,7 @@ class FileExporter: NSObject {
     /// - Returns:
     ///     A `String` that can be saved to a file.
     ///
-    class func writeXML(log: Log) -> String {
+    func writeXML(log: Log) -> String {
         let root = GPXRoot(creator: "iAlti")
         let metadata = GPXMetadata()
         metadata.name = log.pilot
@@ -160,13 +170,12 @@ class FileExporter: NSObject {
         return root.gpx()
     }
     
-    class func saveToURL(_ fileURL: URL, fileContents: String) {
+    func saveToURL(_ fileURL: URL, fileContents: String) {
         do {
             try fileContents.write(toFile: fileURL.path, atomically: true, encoding: String.Encoding.utf8)
             debugPrint("Saved file to: \(fileURL)")
         } catch let error as NSError {
             debugPrint("Error saving file to URL: \(error.localizedDescription)")
         }
-        
     }
 }

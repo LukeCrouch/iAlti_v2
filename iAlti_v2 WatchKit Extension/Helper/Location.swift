@@ -25,22 +25,24 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     let objectWillChange = PassthroughSubject<Void, Never>()
     
     @Published var isLocationStarted = false {
-        willSet {
+        didSet {
             objectWillChange.send()
         }
     }
     
     @Published var locationStatus: CLAuthorizationStatus? {
-        willSet {
+        didSet {
             objectWillChange.send()
         }
     }
     
     @Published var lastLocation: CLLocation? {
-        willSet {
+        didSet {
             objectWillChange.send()
         }
     }
+    
+    @Published var didTakeOff = false
     
     private var statusString: String {
         guard let status = locationStatus else {
@@ -57,6 +59,7 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
         }
     }
     
+    // MARK: Arrays
     @Published var locationArray: [CLLocation] = []
     @Published var altitudeArray: [Double] = []
     @Published var speedVerticalArray: [Double] = []
@@ -76,12 +79,30 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
+        
         self.lastLocation = location
         
         if location.horizontalAccuracy < 15 {
-            locationArray.append(location)
-            altitudeArray.append(Altimeter.shared.barometricAltitude)
-            speedVerticalArray.append(Altimeter.shared.speedVertical)
+            if location.course > 0 {
+                
+                if !didTakeOff {
+                    if location.speed > 3 || Altimeter.shared.speedVertical > 3 {
+                        didTakeOff = true
+                        debugPrint("Take Off detected. Deleting \(locationArray.count - 10) previously saved locations.")
+                        if locationArray.count > 10 {
+                            for _ in 11...locationArray.count {
+                                locationArray.remove(at: 0)
+                                altitudeArray.remove(at: 0)
+                                speedVerticalArray.remove(at: 0)
+                            }
+                        }
+                    }
+                }
+                
+                locationArray.append(location)
+                altitudeArray.append(Altimeter.shared.barometricAltitude)
+                speedVerticalArray.append(Altimeter.shared.speedVertical)
+            } else { debugPrint("Dropped location because course information was not available.") }
         } else { debugPrint("Dropped location because accuracy was over 15m.") }
     }
     
@@ -92,6 +113,7 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     }
     
     func start() {
+        didTakeOff = false
         switch locationStatus {
         case .notDetermined:
             debugPrint("CL: Awaiting user prompt...")
@@ -144,6 +166,7 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
                         UserSettings.shared.qnh = decodedResponse.main?.pressure ?? 0
                         debugPrint("Calibrated with a pulled pressure of", decodedResponse.main?.pressure ?? 0)
                         Altimeter.shared.setOffset()
+                        WKInterfaceDevice().play(.success)
                     }
                     return
                 }

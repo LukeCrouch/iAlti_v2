@@ -12,7 +12,7 @@ struct SettingsView: View {
     @State private var selectionColorPicker: Int = 0
     @State private var selectionDisplayPicker: Int = 0
     
-    private let displays = ["None", "Glide Ratio", "Speed Hor.", "Speed Vert."]
+    private let displays = ["None", "Glide", "v hor.", "v vert."]
     private let colors = ["Green", "White", "Red", "Blue", "Orange", "Yellow", "Pink", "Purple"]
     
     var body: some View {

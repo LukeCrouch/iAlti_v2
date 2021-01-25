@@ -14,7 +14,8 @@ struct LogView: View {
     
     @State private var selectKeeper = Set<UUID>()
     @State private var editMode = EditMode.inactive
-    @State private var show_modal: Bool = false
+    @State private var showModal: Bool = false
+    @ObservedObject var logDetailOverViewModel = LogDetailOverViewModel()
     
     @FetchRequest(entity: Log.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Log.date, ascending: true)]) private var logs: FetchedResults<Log>
     
@@ -23,7 +24,7 @@ struct LogView: View {
         formatter.dateStyle = .short
         return formatter
     }()
-
+    
     private var deleteButton: some View {
         if editMode == .inactive {
             return Button(action: {}) {
@@ -33,7 +34,13 @@ struct LogView: View {
             }
         } else {
             return Button(action: {
-                deleteLogs()
+                for id in selectKeeper {
+                    debugPrint("Delete Log with ID: ", id)
+                    if let index = logs.lastIndex(where: { $0.id == id })  {
+                        deleteLog(at: IndexSet(integer: index))
+                    }
+                }
+                selectKeeper = Set<UUID>()
                 editMode = EditMode.inactive
             }) {
                 Image(systemName: "trash")
@@ -52,21 +59,11 @@ struct LogView: View {
         }
     }
     
-    private func deleteLogs() {
-        for id in selectKeeper {
-            debugPrint("Delete Log with ID: ", id)
-            if let index = logs.lastIndex(where: { $0.id == id })  {
-                deleteLog(at: IndexSet(integer: index))
-            }
-        }
-        selectKeeper = Set<UUID>()
-    }
-    
     //MARK: View
     var body: some View {
         List(selection: $selectKeeper){
             ForEach(logs, id: \.id){ log in
-                Button(action: { show_modal = true }) {
+                Button(action: { showModal = true }) {
                     HStack {
                         Text("\(log.date, formatter: dateFormatterShort)")
                         Text(log.takeOff).fontWeight(.bold)
@@ -78,26 +75,24 @@ struct LogView: View {
                             Image(systemName: "iphone")
                         }
                     }}
-                    .sheet(isPresented: self.$show_modal) {
-                        LogDetailView(log: log)
-                            .onAppear(perform: {
-                                AppDelegate.orientationLock = UIInterfaceOrientationMask.landscape
-                                UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation")
-                                UINavigationController.attemptRotationToDeviceOrientation()
-                            })
-                            .onDisappear(perform: {
-                                DispatchQueue.main.async {
-                                    AppDelegate.orientationLock = UIInterfaceOrientationMask.portrait
-                                    UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
-                                    UINavigationController.attemptRotationToDeviceOrientation()
+                    .sheet(isPresented: self.$showModal) {
+                        if !logDetailOverViewModel.loaded {
+                            ProgressView("Loading...")
+                                .onAppear() {
+                                    DispatchQueue.main.async {
+                                        AppDelegate.orientationLock = UIInterfaceOrientationMask.landscape
+                                        UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation")
+                                        UINavigationController.attemptRotationToDeviceOrientation()
+                                        logDetailOverViewModel.load(log: log)
+                                    }
                                 }
-                            })
+                        } else {
+                            LogDetailView(log: log, logDetailOverViewModel: logDetailOverViewModel)
+                        }
                     }
-            }
-            .onDelete(perform: deleteLog)
+            }.onDelete(perform: deleteLog)
         }
-        .navigationBarItems(leading: deleteButton,trailing: EditButton())
-        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+        .navigationBarItems(leading: deleteButton, trailing: EditButton())
         .environment(\.editMode, self.$editMode)
     }
 }

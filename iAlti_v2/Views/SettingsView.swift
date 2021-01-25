@@ -13,14 +13,18 @@ import Combine
 struct SettingsView: View {
     // MARK: Variables
     @Environment(\.managedObjectContext) var context
+    @EnvironmentObject var viewSelection: ViewSelection
+    
     @ObservedObject private var userSettings = UserSettings.shared
     @ObservedObject private var altimeter = Altimeter.shared
     @ObservedObject private var locationManager = LocationManager.shared
     
     let connectivityProvider = WatchConnectivityProvider()
     
-    @Binding var view: Int
     @State private var showAlert = false
+    @State private var alertMessage = ""
+    @State private var alertTitle = ""
+    
     @State private var selection: Int = 0
     
     @State private var toggleAlti = false
@@ -33,7 +37,7 @@ struct SettingsView: View {
     private func startButton() {
         debugPrint("Start Button pressed.")
         startDate = Date()
-        view = 0
+        viewSelection.view = 0
         altimeter.start()
         locationManager.start()
         
@@ -42,9 +46,9 @@ struct SettingsView: View {
     }
     
     // MARK: Functions
-    private func stopButton() {
+    func stopButton() {
         debugPrint("Stop Button pressed")
-        view = 1
+        viewSelection.view = 1
         duration = DateInterval(start: startDate, end: Date()).duration
         altimeter.stop()
         locationManager.stop()
@@ -162,6 +166,8 @@ struct SettingsView: View {
                         debugPrint("Auto Calibration started")
                         locationManager.autoCalib()
                     } else {
+                        alertTitle = "Warning"
+                        alertMessage = "Start GPS services before calibrating."
                         showAlert = true
                     }
                 }, label: {
@@ -171,9 +177,6 @@ struct SettingsView: View {
                     }
                     .foregroundColor(userSettings.colors[userSettings.colorSelection])
                 })
-                .alert(isPresented: $showAlert) {
-                    Alert(title: Text("Warning"), message: Text("Start GPS services before calibrating."), dismissButton: .default(Text("OK")))
-                }
             }
             // MARK: Customize
             Section(header: Text("Altimeter")) {
@@ -211,6 +214,16 @@ struct SettingsView: View {
                     }.foregroundColor(userSettings.colors[userSettings.colorSelection])
                 }
             }
-        }.onChange(of: userSettings.qnh, perform: {_ in Altimeter.shared.setOffset()})
+        }
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+        }
+        .onChange(of: userSettings.qnh, perform: {_ in Altimeter.shared.setOffset() })
+        .onChange(of: locationManager.didLand, perform: {_ in
+            alertTitle = "Landing!"
+            alertMessage = "Landing detected: Finished logging and saving file. Flight Time: \(duration)"
+            showAlert = true
+            stopButton()
+        })
     }
 }

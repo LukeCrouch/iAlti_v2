@@ -7,9 +7,14 @@
 
 import SwiftUI
 
+class ViewSelection: ObservableObject {
+    @Published var view: Int = 2
+}
+
 @main
 struct iAlti_v2App: App {
     let persistence = PersistenceManager()
+    var viewSelection = ViewSelection()
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     

@@ -42,6 +42,11 @@ class PersistenceManager {
         }
     }
     
+    func deleteLog(log: Log) {
+        debugPrint("Deleting single Log")
+        context.delete(log)
+    }
+    
     /// Save a new Log to persistent storage with CoreData
     ///
     /// - Parameters:
@@ -95,12 +100,6 @@ class PersistenceManager {
         }
     }
     
-    func deleteLog(log: Log) {
-        debugPrint("Deleting single Log")
-        context.delete(log)
-    }
-    
-    
     /// For conversion from optional `String` type to optional `Int` type
     ///
     /// - Parameters:
@@ -146,10 +145,7 @@ class PersistenceManager {
         newLog.course = userInfo["course"] as! [Double]
         
         LocationManager.shared.geocodedLocation = "Unknown"
-        LocationManager.shared.geocode(location: CLLocation(
-                                        latitude: newLog.latitude[0],
-                                        longitude: newLog.longitude[0]
-        ))
+        LocationManager.shared.geocode(location: CLLocation(latitude: newLog.latitude[0], longitude: newLog.longitude[0]))
         
         let timer = Date()
         while true {

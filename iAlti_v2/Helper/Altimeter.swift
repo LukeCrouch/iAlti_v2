@@ -47,8 +47,6 @@ class Altimeter: CMAltimeter, ObservableObject {
             }
             self.startRelativeAltitudeUpdates(to: OperationQueue.main) { data, error in
                 if let trueData = data {
-                    //debugPrint(#function, trueData)
-                    
                     self.pressure = trueData.pressure.doubleValue * 10
                     self.barometricAltitude =  8400 * (UserSettings.shared.qnh - Altimeter.shared.pressure) / UserSettings.shared.qnh
                     self.speedVertical = (trueData.relativeAltitude.doubleValue - Altimeter.shared.relativeAltitude) / (trueData.timestamp - timestamp)

@@ -10,6 +10,7 @@ import Combine
 import SwiftUI
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+    @EnvironmentObject var viewSelection: ViewSelection
     
     private let locationManager = CLLocationManager()
     static let shared = LocationManager()
@@ -26,22 +27,31 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var geocodedLocation = "Unknown"
     
     @Published var isLocationStarted = false {
-        willSet {
+        didSet {
             objectWillChange.send()
         }
     }
     
     @Published var locationStatus: CLAuthorizationStatus? {
-        willSet {
+        didSet {
             objectWillChange.send()
         }
     }
     
     @Published var lastLocation: CLLocation? {
-        willSet {
+        didSet {
             objectWillChange.send()
         }
     }
+    
+    @Published var didTakeOff = false
+    @Published var didLand = false {
+        didSet {
+            viewSelection.view = 2
+            objectWillChange.send()
+        }
+    }
+    
     // MARK: Arrays
     @Published var locationArray: [CLLocation] = []
     @Published var speedVerticalArray: [Double] = []
@@ -116,12 +126,35 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
+        
         self.lastLocation = location
         
         if location.horizontalAccuracy < 15 {
-            locationArray.append(location)
-            altitudeArray.append(Altimeter.shared.barometricAltitude)
-            speedVerticalArray.append(Altimeter.shared.speedVertical)
+            if location.course > 0 {
+                
+                if !didTakeOff {
+                    if location.speed > 3 || Altimeter.shared.speedVertical > 3 {
+                        didTakeOff = true
+                        debugPrint("Take Off detected! Deleting \(locationArray.count - 10) previously saved locations.")
+                        if locationArray.count > 10 {
+                            for _ in 11...locationArray.count {
+                                locationArray.remove(at: 0)
+                                altitudeArray.remove(at: 0)
+                                speedVerticalArray.remove(at: 0)
+                            }
+                        }
+                    }
+                } else {
+                    if location.speed < 1 && Altimeter.shared.speedVertical < 1 {
+                        didLand = true
+                        debugPrint("Landing detected! Logging stopped.")
+                    }
+                }
+                
+                locationArray.append(location)
+                altitudeArray.append(Altimeter.shared.barometricAltitude)
+                speedVerticalArray.append(Altimeter.shared.speedVertical)
+            } else { debugPrint("Dropped location because course information was not available.") }
         } else { debugPrint("Dropped location because accuracy was over 15m.") }
     }
     
@@ -137,6 +170,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func start() {
+        didTakeOff = false
         switch LocationManager.shared.locationStatus {
         case .notDetermined:
             debugPrint("CL: Awaiting user prompt...")

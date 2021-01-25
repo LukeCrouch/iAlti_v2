@@ -8,17 +8,20 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var view = 2
+    @EnvironmentObject var viewSelection: ViewSelection
     
     var body: some View {
-        TabView(selection: $view) {
+        TabView(selection: $viewSelection.view) {
             MainView()
                 .tabItem {Image(systemName: "location")}
                 .tag(0)
-            NavigationView { LogView().navigationTitle("Logs") }
-                .tabItem {Image(systemName: "list.dash")}
-                .tag(1)
-            NavigationView { SettingsView(view: $view).navigationTitle("Settings") }
+            NavigationView { LogView()
+                .toolbar(content: { ToolbarItem(placement: .principal, content: { Text("Logs") } ) } ) }
+            .tabItem {Image(systemName: "list.dash")}
+            .tag(1)
+            NavigationView { SettingsView()
+                .toolbar(content: {
+                            ToolbarItem(placement: .principal, content: { Text("Settings") } ) } ) }
                 .tabItem {Image(systemName: "gearshape")}
                 .tag(2)
         }

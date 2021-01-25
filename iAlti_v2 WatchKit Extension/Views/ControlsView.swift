@@ -28,6 +28,7 @@ struct ControlsView: View {
                     if locationManager.isLocationStarted {
                         Button(action: {
                             debugPrint("Stop Logging Button pressed")
+                            WKInterfaceDevice().play(.stop)
                             duration = DateInterval(start: startDate, end: Date()).duration
                             locationManager.stop()
                             altimeter.stop()
@@ -41,6 +42,7 @@ struct ControlsView: View {
                     } else {
                         Button(action: {
                             debugPrint("Start Logging Button pressed")
+                            WKInterfaceDevice().play(.start)
                             startDate = Date()
                             altimeter.start()
                             locationManager.start()
@@ -58,6 +60,7 @@ struct ControlsView: View {
                         if altimeter.isAltimeterStarted {
                             Button(action: {
                                 debugPrint("Altimeter Stop Button pressed")
+                                WKInterfaceDevice().play(.stop)
                                 altimeter.stop()
                             }, label: {
                                 Image(systemName: "stop.fill")
@@ -67,6 +70,7 @@ struct ControlsView: View {
                         } else {
                             Button(action: {
                                 debugPrint("Altimeter Start Button pressed")
+                                WKInterfaceDevice().play(.start)
                                 altimeter.start()
                                 view = (view + 1) % 1
                             }, label: {
@@ -121,6 +125,6 @@ struct ControlsView: View {
                     Text("Calibration")
                 }
             }
-        }.navigationBarTitle("iAlti")
+        }
     }
 }
