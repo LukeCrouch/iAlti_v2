@@ -25,7 +25,7 @@ class FileExporter: NSObject, ObservableObject {
     /// - Parameters:
     ///     - log: CoreData Entitiy Log that contains all details about one saved flight.
     ///     - fileContents: The content of the file to be exported.
-    ///     - fileType: GPX or CSV.
+    ///     - fileType: GPX, CSV or RAW.
     /// - Returns:
     ///     A `Bool`
     ///
@@ -34,6 +34,8 @@ class FileExporter: NSObject, ObservableObject {
         guard let source = UIApplication.shared.windows.last?.rootViewController else {
             return
         }
+        
+        var fileExt = ""
         
         DispatchQueue.main.async {
             self.isSharing = true
@@ -47,11 +49,17 @@ class FileExporter: NSObject, ObservableObject {
         var fileContents = ""
         if fileType == "gpx" {
             fileContents = writeXML(log: log)
-        } else {
+            fileExt = "gpx"
+        } else if fileType == "flysight" {
             fileContents = writeCSV(log: log)
+            fileExt = "csv"
+        } else {
+            fileContents = writeRaw(log: log)
+            fileExt = "csv"
         }
+        
         let filename = dateFormatterShort.string(from: log.date) + "_\(log.takeOff)"
-        let exportURL = save(filename, fileContents: fileContents, fileType: fileType)
+        let exportURL = save(filename, fileContents: fileContents, fileExt: fileExt)
         
         DispatchQueue.main.async {
             let vc = UIActivityViewController(
@@ -66,16 +74,16 @@ class FileExporter: NSObject, ObservableObject {
         return
     }
     
-    func save(_ filename: String, fileContents: String, fileType: String) -> URL {
+    func save(_ filename: String, fileContents: String, fileExt: String) -> URL {
         //check if name exists
-        let fileURL: URL = URLForFilename(filename, fileType: fileType)
+        let fileURL: URL = URLForFilename(filename, fileExt: fileExt)
         saveToURL(fileURL, fileContents: fileContents)
         return fileURL
     }
     
-    func URLForFilename(_ filename: String, fileType: String) -> URL {
+    func URLForFilename(_ filename: String, fileExt: String) -> URL {
         var fullURL = FilesFolderURL.appendingPathComponent(filename)
-        fullURL = fullURL.appendingPathExtension(fileType)
+        fullURL = fullURL.appendingPathExtension(fileExt)
         return fullURL
     }
     
@@ -118,6 +126,40 @@ class FileExporter: NSObject, ObservableObject {
             csv.append("," + String(format: "%.2f", velN) + "," + String(format: "%.2f", velE) + ",")
             csv.append(String(format: "%.2f", log.speedVertical[i]) + ",\(log.accuracyHorizontal[i]),\(log.accuracyVertical[i])")
             csv.append(",0,3,1")
+            i += 1
+        }
+        
+        debugPrint("Writing CSV file with \(i) entries.")
+        return csv
+    }
+    
+    /// Write a CSV string
+    ///
+    /// - Parameters:
+    ///     - log: CoreData Entitiy Log that contains all details about one saved flight.
+    /// - Returns:
+    ///     A `String` that can be saved to a file.
+    ///
+    func writeRaw(log: Log) -> String {
+        var deviceType = ""
+        if log.fromWatch { deviceType = "Apple Watch" } else { deviceType = "Apple iPhone" }
+        
+        var csv: String = """
+Date:,\(log.date)
+Pilot:,\(log.pilot)
+Wing:,\(log.glider)
+Take Off:,\(log.takeOff)
+Flight Time:,\(log.flightTime)
+Recorded on:,\(deviceType)
+ID:,\(log.id)
+,
+timestamp,longitude,latitude,altitudeGPS,altitudeBarometer,speedVertical,speedHorizontal,course,accuracyHorizontal,accuracyVertical,accuracySpeed
+"""
+        
+        var i = 0
+        
+        for _ in log.accuracyHorizontal {
+            csv.append("\n" + log.timestamps[i] + ",\(log.longitude[i]),\(log.latitude[i]),\(log.altitudeGPS[i]),\(log.altitudeBarometer[i]),\(log.speedVertical[i]),\(log.speedHorizontal[i]),\(log.course[i]),\(log.accuracyHorizontal[i]),\(log.accuracyVertical[i]),\(log.accuracySpeed[i])")
             i += 1
         }
         

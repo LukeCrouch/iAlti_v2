@@ -14,7 +14,7 @@ class ViewSelection: ObservableObject {
 @main
 struct iAlti_v2App: App {
     let persistence = PersistenceManager()
-    var viewSelection = ViewSelection()
+    @StateObject var viewSelection = ViewSelection()
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
@@ -22,6 +22,7 @@ struct iAlti_v2App: App {
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, persistence.context)
+                .environmentObject(viewSelection)
         }
     }
 }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		19474844462F2EC60A4349E1 /* Pods_iAlti_v2_iAlti_v2UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8425317B8F37A44964D2541 /* Pods_iAlti_v2_iAlti_v2UITests.framework */; };
+		330031E78E68F6A102D5401D /* Pods_iAlti_v2Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39C6CA1201BE51B976416D6 /* Pods_iAlti_v2Tests.framework */; };
 		6024AE7C25817EAB0092BEEF /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6024AE7B25817EAB0092BEEF /* Extensions.swift */; };
 		604D5538255C190A00B50268 /* iAlti_v2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D5537255C190A00B50268 /* iAlti_v2App.swift */; };
 		604D553A255C190A00B50268 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604D5539255C190A00B50268 /* ContentView.swift */; };
@@ -31,7 +33,7 @@
 		606034AF2563160C007170EB /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606034AE2563160C007170EB /* UserSettings.swift */; };
 		6060352D25642862007170EB /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6060352C25642862007170EB /* UserSettings.swift */; };
 		6060353925643279007170EB /* LogDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6060353825643279007170EB /* LogDetailView.swift */; };
-		60788C59258D4C0F00BBBC5E /* CoreGPX in Frameworks */ = {isa = PBXBuildFile; productRef = 60788C58258D4C0F00BBBC5E /* CoreGPX */; };
+		60788C59258D4C0F00BBBC5E /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 60788C58258D4C0F00BBBC5E /* SwiftPackageProductDependency */; };
 		6083817A2564776E00D1F204 /* Log+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608381782564776E00D1F204 /* Log+CoreDataClass.swift */; };
 		6083817B2564776E00D1F204 /* Log+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608381792564776E00D1F204 /* Log+CoreDataProperties.swift */; };
 		6098479525949EA70018AD18 /* FileExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6098479425949EA70018AD18 /* FileExporter.swift */; };
@@ -47,7 +49,13 @@
 		60D77D3F2588092F00A3C979 /* Altimeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D77D3E2588092F00A3C979 /* Altimeter.swift */; };
 		60D77D4B2588098300A3C979 /* Altimeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D77D4A2588098300A3C979 /* Altimeter.swift */; };
 		60ED09722562AAC30062045D /* Logs.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 60ED09702562AAC30062045D /* Logs.xcdatamodeld */; };
+		60F21A24260387110086EA8A /* Speech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F21A23260387110086EA8A /* Speech.swift */; };
+		60F21A352603EC050086EA8A /* Variometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F21A342603EC040086EA8A /* Variometer.swift */; };
+		60F21A3F2604122A0086EA8A /* LogDetailChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F21A3E2604122A0086EA8A /* LogDetailChartView.swift */; };
 		60F2CCC825681A12003E1285 /* LogDetailOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F2CCC725681A12003E1285 /* LogDetailOverView.swift */; };
+		98828981DE74560CEED52F34 /* libPods-iAlti_v2 WatchKit App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AEFA5123BDEC2306B02F24 /* libPods-iAlti_v2 WatchKit App.a */; };
+		BFEB51EB99EE73BBBFB05B0A /* Pods_iAlti_v2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7863911C5B8B45FAC5CABFD /* Pods_iAlti_v2.framework */; };
+		E54788EDEF2E3ECC9E2E69C4 /* libPods-iAlti_v2 WatchKit Extension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CDB102E2C74F02F9146447 /* libPods-iAlti_v2 WatchKit Extension.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +115,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0AC196FF9469A40F131F5AE7 /* Pods-iAlti_v2 WatchKit Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlti_v2 WatchKit Extension.release.xcconfig"; path = "Target Support Files/Pods-iAlti_v2 WatchKit Extension/Pods-iAlti_v2 WatchKit Extension.release.xcconfig"; sourceTree = "<group>"; };
+		11BDB51CEB15846D9649008C /* Pods-iAlti_v2-iAlti_v2UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlti_v2-iAlti_v2UITests.release.xcconfig"; path = "Target Support Files/Pods-iAlti_v2-iAlti_v2UITests/Pods-iAlti_v2-iAlti_v2UITests.release.xcconfig"; sourceTree = "<group>"; };
+		4AADD54B4BB52B51A6EDC4DC /* Pods-iAlti_v2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlti_v2.release.xcconfig"; path = "Target Support Files/Pods-iAlti_v2/Pods-iAlti_v2.release.xcconfig"; sourceTree = "<group>"; };
 		6024AE7B25817EAB0092BEEF /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		604D5534255C190A00B50268 /* iAlti_v2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iAlti_v2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		604D5537255C190A00B50268 /* iAlti_v2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iAlti_v2App.swift; sourceTree = "<group>"; };
@@ -155,15 +166,39 @@
 		60D77D3E2588092F00A3C979 /* Altimeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Altimeter.swift; sourceTree = "<group>"; };
 		60D77D4A2588098300A3C979 /* Altimeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Altimeter.swift; sourceTree = "<group>"; };
 		60ED09712562AAC30062045D /* Logs.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Logs.xcdatamodel; sourceTree = "<group>"; };
+		60F21A23260387110086EA8A /* Speech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speech.swift; sourceTree = "<group>"; };
+		60F21A342603EC040086EA8A /* Variometer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variometer.swift; sourceTree = "<group>"; };
+		60F21A3E2604122A0086EA8A /* LogDetailChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDetailChartView.swift; sourceTree = "<group>"; };
 		60F2CCC725681A12003E1285 /* LogDetailOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDetailOverView.swift; sourceTree = "<group>"; };
+		9198A8A4525D112A95A6994C /* Pods-iAlti_v2Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlti_v2Tests.debug.xcconfig"; path = "Target Support Files/Pods-iAlti_v2Tests/Pods-iAlti_v2Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		91AEFA5123BDEC2306B02F24 /* libPods-iAlti_v2 WatchKit App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iAlti_v2 WatchKit App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		91CDB102E2C74F02F9146447 /* libPods-iAlti_v2 WatchKit Extension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iAlti_v2 WatchKit Extension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B6012800442CF5A39C71E4D /* Pods-iAlti_v2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlti_v2.debug.xcconfig"; path = "Target Support Files/Pods-iAlti_v2/Pods-iAlti_v2.debug.xcconfig"; sourceTree = "<group>"; };
+		A7863911C5B8B45FAC5CABFD /* Pods_iAlti_v2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iAlti_v2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFC32399FC20E33B7F4F9449 /* Pods-iAlti_v2 WatchKit App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlti_v2 WatchKit App.debug.xcconfig"; path = "Target Support Files/Pods-iAlti_v2 WatchKit App/Pods-iAlti_v2 WatchKit App.debug.xcconfig"; sourceTree = "<group>"; };
+		BD1AC7BF9E63678F6FFB9245 /* Pods-iAlti_v2 WatchKit App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlti_v2 WatchKit App.release.xcconfig"; path = "Target Support Files/Pods-iAlti_v2 WatchKit App/Pods-iAlti_v2 WatchKit App.release.xcconfig"; sourceTree = "<group>"; };
+		C39C6CA1201BE51B976416D6 /* Pods_iAlti_v2Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iAlti_v2Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC6E163DA83F5F82A4708489 /* Pods-iAlti_v2 WatchKit Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlti_v2 WatchKit Extension.debug.xcconfig"; path = "Target Support Files/Pods-iAlti_v2 WatchKit Extension/Pods-iAlti_v2 WatchKit Extension.debug.xcconfig"; sourceTree = "<group>"; };
+		D0BF602EC83B7291FC3AF98E /* Pods-iAlti_v2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlti_v2Tests.release.xcconfig"; path = "Target Support Files/Pods-iAlti_v2Tests/Pods-iAlti_v2Tests.release.xcconfig"; sourceTree = "<group>"; };
+		F352CA07C2DA656B9775C6FD /* Pods-iAlti_v2-iAlti_v2UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlti_v2-iAlti_v2UITests.debug.xcconfig"; path = "Target Support Files/Pods-iAlti_v2-iAlti_v2UITests/Pods-iAlti_v2-iAlti_v2UITests.debug.xcconfig"; sourceTree = "<group>"; };
+		F8425317B8F37A44964D2541 /* Pods_iAlti_v2_iAlti_v2UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iAlti_v2_iAlti_v2UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		47CDF3A4A02F1041C63A5889 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98828981DE74560CEED52F34 /* libPods-iAlti_v2 WatchKit App.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		604D5531255C190A00B50268 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60788C59258D4C0F00BBBC5E /* CoreGPX in Frameworks */,
+				60788C59258D4C0F00BBBC5E /* BuildFile in Frameworks */,
+				BFEB51EB99EE73BBBFB05B0A /* Pods_iAlti_v2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,6 +206,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				330031E78E68F6A102D5401D /* Pods_iAlti_v2Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,6 +214,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19474844462F2EC60A4349E1 /* Pods_iAlti_v2_iAlti_v2UITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,6 +222,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E54788EDEF2E3ECC9E2E69C4 /* libPods-iAlti_v2 WatchKit Extension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,6 +238,8 @@
 				604D555D255C190E00B50268 /* iAlti_v2 WatchKit App */,
 				604D5569255C191200B50268 /* iAlti_v2 WatchKit Extension */,
 				604D5535255C190A00B50268 /* Products */,
+				7629FE661163B78A98A2A848 /* Pods */,
+				FE2C28222F17DCB987419F2D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -317,6 +357,8 @@
 				60C5766D2562C249001E6D17 /* Location.swift */,
 				6024AE7B25817EAB0092BEEF /* Extensions.swift */,
 				606034AE2563160C007170EB /* UserSettings.swift */,
+				60F21A23260387110086EA8A /* Speech.swift */,
+				60F21A342603EC040086EA8A /* Variometer.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -342,6 +384,7 @@
 				6060353825643279007170EB /* LogDetailView.swift */,
 				60F2CCC725681A12003E1285 /* LogDetailOverView.swift */,
 				609847C22599E5160018AD18 /* LogDetailOverViewModel.swift */,
+				60F21A3E2604122A0086EA8A /* LogDetailChartView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -358,6 +401,36 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
+		7629FE661163B78A98A2A848 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9B6012800442CF5A39C71E4D /* Pods-iAlti_v2.debug.xcconfig */,
+				4AADD54B4BB52B51A6EDC4DC /* Pods-iAlti_v2.release.xcconfig */,
+				AFC32399FC20E33B7F4F9449 /* Pods-iAlti_v2 WatchKit App.debug.xcconfig */,
+				BD1AC7BF9E63678F6FFB9245 /* Pods-iAlti_v2 WatchKit App.release.xcconfig */,
+				CC6E163DA83F5F82A4708489 /* Pods-iAlti_v2 WatchKit Extension.debug.xcconfig */,
+				0AC196FF9469A40F131F5AE7 /* Pods-iAlti_v2 WatchKit Extension.release.xcconfig */,
+				F352CA07C2DA656B9775C6FD /* Pods-iAlti_v2-iAlti_v2UITests.debug.xcconfig */,
+				11BDB51CEB15846D9649008C /* Pods-iAlti_v2-iAlti_v2UITests.release.xcconfig */,
+				9198A8A4525D112A95A6994C /* Pods-iAlti_v2Tests.debug.xcconfig */,
+				D0BF602EC83B7291FC3AF98E /* Pods-iAlti_v2Tests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		FE2C28222F17DCB987419F2D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A7863911C5B8B45FAC5CABFD /* Pods_iAlti_v2.framework */,
+				F8425317B8F37A44964D2541 /* Pods_iAlti_v2_iAlti_v2UITests.framework */,
+				C39C6CA1201BE51B976416D6 /* Pods_iAlti_v2Tests.framework */,
+				91AEFA5123BDEC2306B02F24 /* libPods-iAlti_v2 WatchKit App.a */,
+				91CDB102E2C74F02F9146447 /* libPods-iAlti_v2 WatchKit Extension.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -365,10 +438,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 604D5585255C191600B50268 /* Build configuration list for PBXNativeTarget "iAlti_v2" */;
 			buildPhases = (
+				6B45DB12FAFAC829BBA5545D /* [CP] Check Pods Manifest.lock */,
 				604D5530255C190A00B50268 /* Sources */,
 				604D5531255C190A00B50268 /* Frameworks */,
 				604D5532255C190A00B50268 /* Resources */,
 				604D5584255C191600B50268 /* Embed Watch Content */,
+				F8D4D8F02905499FB1CB990A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -377,7 +452,7 @@
 			);
 			name = iAlti_v2;
 			packageProductDependencies = (
-				60788C58258D4C0F00BBBC5E /* CoreGPX */,
+				60788C58258D4C0F00BBBC5E /* SwiftPackageProductDependency */,
 			);
 			productName = iAlti_v2;
 			productReference = 604D5534255C190A00B50268 /* iAlti_v2.app */;
@@ -387,6 +462,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 604D5588255C191600B50268 /* Build configuration list for PBXNativeTarget "iAlti_v2Tests" */;
 			buildPhases = (
+				1BE8859AC86D9224777F0D1D /* [CP] Check Pods Manifest.lock */,
 				604D5541255C190E00B50268 /* Sources */,
 				604D5542255C190E00B50268 /* Frameworks */,
 				604D5543255C190E00B50268 /* Resources */,
@@ -405,9 +481,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 604D558B255C191600B50268 /* Build configuration list for PBXNativeTarget "iAlti_v2UITests" */;
 			buildPhases = (
+				B1EA8D7BADA0182799B237B7 /* [CP] Check Pods Manifest.lock */,
 				604D554C255C190E00B50268 /* Sources */,
 				604D554D255C190E00B50268 /* Frameworks */,
 				604D554E255C190E00B50268 /* Resources */,
+				2E9DD97986540707A41AFFD3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -423,8 +501,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 604D5581255C191600B50268 /* Build configuration list for PBXNativeTarget "iAlti_v2 WatchKit App" */;
 			buildPhases = (
+				E0245DAF9D792E53F7CFC021 /* [CP] Check Pods Manifest.lock */,
 				604D5557255C190E00B50268 /* Resources */,
 				604D5580255C191600B50268 /* Embed App Extensions */,
+				47CDF3A4A02F1041C63A5889 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -440,6 +520,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 604D557D255C191600B50268 /* Build configuration list for PBXNativeTarget "iAlti_v2 WatchKit Extension" */;
 			buildPhases = (
+				7D487926D76C4440AB99A74C /* [CP] Check Pods Manifest.lock */,
 				604D5561255C191200B50268 /* Sources */,
 				604D5562255C191200B50268 /* Frameworks */,
 				604D5563255C191200B50268 /* Resources */,
@@ -492,9 +573,7 @@
 			);
 			mainGroup = 604D552B255C190A00B50268;
 			packageReferences = (
-				60D55575258BFE9E00E16089 /* XCRemoteSwiftPackageReference "ChartView" */,
-				60788C4B258D4A0E00BBBC5E /* XCRemoteSwiftPackageReference "Charts" */,
-				60788C57258D4C0F00BBBC5E /* XCRemoteSwiftPackageReference "CoreGPX" */,
+				60788C57258D4C0F00BBBC5E /* RemoteSwiftPackageReference */,
 			);
 			productRefGroup = 604D5535255C190A00B50268 /* Products */;
 			projectDirPath = "";
@@ -552,6 +631,153 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1BE8859AC86D9224777F0D1D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iAlti_v2Tests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2E9DD97986540707A41AFFD3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iAlti_v2-iAlti_v2UITests/Pods-iAlti_v2-iAlti_v2UITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iAlti_v2-iAlti_v2UITests/Pods-iAlti_v2-iAlti_v2UITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iAlti_v2-iAlti_v2UITests/Pods-iAlti_v2-iAlti_v2UITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6B45DB12FAFAC829BBA5545D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iAlti_v2-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7D487926D76C4440AB99A74C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iAlti_v2 WatchKit Extension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B1EA8D7BADA0182799B237B7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iAlti_v2-iAlti_v2UITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E0245DAF9D792E53F7CFC021 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iAlti_v2 WatchKit App-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F8D4D8F02905499FB1CB990A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iAlti_v2/Pods-iAlti_v2-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iAlti_v2/Pods-iAlti_v2-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iAlti_v2/Pods-iAlti_v2-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		604D5530255C190A00B50268 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -566,13 +792,16 @@
 				609C3284255F29BE00B2A06F /* LogView.swift in Sources */,
 				604D5538255C190A00B50268 /* iAlti_v2App.swift in Sources */,
 				60B4B146256804F7000690CE /* WatchConnectivityProvider.swift in Sources */,
+				60F21A3F2604122A0086EA8A /* LogDetailChartView.swift in Sources */,
 				6060353925643279007170EB /* LogDetailView.swift in Sources */,
 				6083817A2564776E00D1F204 /* Log+CoreDataClass.swift in Sources */,
 				6098479525949EA70018AD18 /* FileExporter.swift in Sources */,
 				60C576AF2562D20D001E6D17 /* MainView.swift in Sources */,
 				60C576672562C1FA001E6D17 /* Persistence.swift in Sources */,
+				60F21A24260387110086EA8A /* Speech.swift in Sources */,
 				60ED09722562AAC30062045D /* Logs.xcdatamodeld in Sources */,
 				60C5766E2562C249001E6D17 /* Location.swift in Sources */,
+				60F21A352603EC050086EA8A /* Variometer.swift in Sources */,
 				60D77D4B2588098300A3C979 /* Altimeter.swift in Sources */,
 				60C576C02562D37B001E6D17 /* SettingsView.swift in Sources */,
 			);
@@ -753,6 +982,7 @@
 		};
 		604D557E255C191600B50268 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CC6E163DA83F5F82A4708489 /* Pods-iAlti_v2 WatchKit Extension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
@@ -777,6 +1007,7 @@
 		};
 		604D557F255C191600B50268 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0AC196FF9469A40F131F5AE7 /* Pods-iAlti_v2 WatchKit Extension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
@@ -802,6 +1033,7 @@
 		};
 		604D5582255C191600B50268 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AFC32399FC20E33B7F4F9449 /* Pods-iAlti_v2 WatchKit App.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -829,6 +1061,7 @@
 		};
 		604D5583255C191600B50268 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BD1AC7BF9E63678F6FFB9245 /* Pods-iAlti_v2 WatchKit App.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -856,6 +1089,7 @@
 		};
 		604D5586255C191600B50268 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9B6012800442CF5A39C71E4D /* Pods-iAlti_v2.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -879,6 +1113,7 @@
 		};
 		604D5587255C191600B50268 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4AADD54B4BB52B51A6EDC4DC /* Pods-iAlti_v2.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -903,6 +1138,7 @@
 		};
 		604D5589255C191600B50268 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9198A8A4525D112A95A6994C /* Pods-iAlti_v2Tests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -926,6 +1162,7 @@
 		};
 		604D558A255C191600B50268 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D0BF602EC83B7291FC3AF98E /* Pods-iAlti_v2Tests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -950,6 +1187,7 @@
 		};
 		604D558C255C191600B50268 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F352CA07C2DA656B9775C6FD /* Pods-iAlti_v2-iAlti_v2UITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -972,6 +1210,7 @@
 		};
 		604D558D255C191600B50268 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 11BDB51CEB15846D9649008C /* Pods-iAlti_v2-iAlti_v2UITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1053,15 +1292,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		60788C4B258D4A0E00BBBC5E /* XCRemoteSwiftPackageReference "Charts" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/danielgindi/Charts.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
-			};
-		};
-		60788C57258D4C0F00BBBC5E /* XCRemoteSwiftPackageReference "CoreGPX" */ = {
+		60788C57258D4C0F00BBBC5E /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/vincentneo/CoreGPX.git";
 			requirement = {
@@ -1069,20 +1300,12 @@
 				minimumVersion = 0.8.2;
 			};
 		};
-		60D55575258BFE9E00E16089 /* XCRemoteSwiftPackageReference "ChartView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/AppPear/ChartView";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.5.4;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		60788C58258D4C0F00BBBC5E /* CoreGPX */ = {
+		60788C58258D4C0F00BBBC5E /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 60788C57258D4C0F00BBBC5E /* XCRemoteSwiftPackageReference "CoreGPX" */;
+			package = 60788C57258D4C0F00BBBC5E /* RemoteSwiftPackageReference */;
 			productName = CoreGPX;
 		};
 /* End XCSwiftPackageProductDependency section */

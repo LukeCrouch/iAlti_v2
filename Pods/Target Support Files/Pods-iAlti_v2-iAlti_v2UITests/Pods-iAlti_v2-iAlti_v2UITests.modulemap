@@ -1,0 +1,6 @@
+framework module Pods_iAlti_v2_iAlti_v2UITests {
+  umbrella header "Pods-iAlti_v2-iAlti_v2UITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

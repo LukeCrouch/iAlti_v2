@@ -124,6 +124,16 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         debugPrint(#function, status)
     }
     
+    func playAudio() {
+        if UserSettings.shared.voiceOutputSelection == 0 {
+            return
+        } else if UserSettings.shared.voiceOutputSelection == 5 {
+            playVario()
+        } else {
+            voiceOutput()
+        }
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         

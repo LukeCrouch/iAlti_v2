@@ -48,6 +48,8 @@ struct LogDetailOverView: View {
     @ObservedObject private var userSettings = UserSettings.shared
     @ObservedObject var log: Log
     
+    @Binding var glideRatio: [Double]
+    
     @ObservedObject var viewModel: LogDetailOverViewModel
     
     let dateFormatter: DateFormatter = {
@@ -110,6 +112,8 @@ struct LogDetailOverView: View {
                     Spacer(minLength: 30)
                 }
             }
-        }
+        }.onAppear(perform: {
+            glideRatio = viewModel.glideRatio
+        })
     }
 }

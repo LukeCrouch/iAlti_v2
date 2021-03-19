@@ -30,6 +30,7 @@ struct SettingsView: View {
     @State private var toggleAlti = false
     @State private var toggleLoc = false
     private let colors = ["Green", "White", "Red", "Blue", "Orange", "Yellow", "Pink", "Purple", "Black"]
+    private let voiceOutputs = ["Off", "Glide Ratio", "Speed vertical", "Speed horizontal", "Altitude", "Variometer"]
     
     @State var startDate = Date()
     @State var duration: Double = 0
@@ -63,6 +64,26 @@ struct SettingsView: View {
             // MARK: Dashboard
             Section(header: Text("Dashboard")) {
                 HStack {
+                    if locationManager.didTakeOff {
+                        Text("True")
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                    } else {
+                        Text("False")
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                    }
+                    Text("Did TakeOff")
+                }
+                HStack {
+                    if locationManager.didLand {
+                        Text("True")
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                    } else {
+                        Text("False")
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                    }
+                    Text("Did Land")
+                }
+                HStack {
                     if altimeter.isAltimeterStarted {
                         Image(systemName: "circle.fill")
                             .imageScale(.small)
@@ -88,6 +109,11 @@ struct SettingsView: View {
                     Text("\(altimeter.barometricAltitude, specifier: "%.2f")")
                         .foregroundColor(userSettings.colors[userSettings.colorSelection])
                     Text("Altitude MSL [m]")
+                }
+                HStack {
+                    Text("\(altimeter.speedVertical, specifier: "%.2f")")
+                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                    Text("Vertical Speed [m/s]")
                 }
                 HStack {
                     if locationManager.isLocationStarted {
@@ -213,14 +239,63 @@ struct SettingsView: View {
                         Text(self.colors[$0]).foregroundColor(userSettings.colors[$0])
                     }.foregroundColor(userSettings.colors[userSettings.colorSelection])
                 }
+                Picker(selection: $userSettings.voiceOutputSelection, label: Text("Voice Output")) {
+                    ForEach(0 ..< self.voiceOutputs.count) {
+                        Text(voiceOutputs[$0]).foregroundColor(userSettings.colors[userSettings.colorSelection])
+                    }
+                }
+                Picker(selection: $userSettings.voiceLanguageSelection, label: Text("Voice Language")) {
+                    ForEach(0 ..< userSettings.voiceLanguages.count) {
+                        let text = (userSettings.voiceLanguages[$0]["languageName"] ?? "Unknown") + " " + (userSettings.voiceLanguages[$0]["voiceName"] ?? "")
+                        Text(text).foregroundColor(userSettings.colors[userSettings.colorSelection])
+                    }
+                }
+                Button(action: {
+                    let cachedSelection = userSettings.voiceOutputSelection
+                    userSettings.voiceOutputSelection = 1
+                    voiceOutput()
+                    userSettings.voiceOutputSelection = cachedSelection
+                },
+                label: {
+                    HStack {
+                        Image(systemName: "speaker.wave.3")
+                        Text("Test voice ouput")}
+                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                })
+            }
+            // MARK: Support
+            Section(header: Text("Support")) {
+                Button(action: {
+                    let supportEmail = "lukaswheldon@yahoo.de"
+                    if let emailURL = URL(string: "mailto:\(supportEmail)"), UIApplication.shared.canOpenURL(emailURL)
+                    {
+                        UIApplication.shared.open(emailURL, options: [:], completionHandler: nil)
+                    }
+                },
+                label: {
+                    HStack {
+                        Image(systemName: "envelope")
+                        Text("Questions or problems?")}
+                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                })
+                Button(action: {
+                    playVario()
+                },
+                label: {
+                    HStack {
+                        Image(systemName: "speaker.wave.3")
+                        Text("Test Vario")}
+                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                })
             }
         }
         .alert(isPresented: $showAlert) {
             Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
         }
+        .onAppear(perform: { prepareVoiceList() })
         .onChange(of: userSettings.qnh, perform: {_ in Altimeter.shared.setOffset() })
         .onChange(of: locationManager.didLand, perform: {_ in
-            alertTitle = "Landing!"
+            alertTitle = "Landed!"
             alertMessage = "Landing detected: Finished logging and saving file. Flight Time: \(duration)"
             showAlert = true
             stopButton()

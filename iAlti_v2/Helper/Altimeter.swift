@@ -30,12 +30,11 @@ class Altimeter: CMAltimeter, ObservableObject {
     
     func start() {
         var timestamp = 0.0
-        
         if Altimeter.isRelativeAltitudeAvailable() {
             switch Altimeter.authorizationStatus() {
             case .notDetermined: // Handle state before user prompt
                 debugPrint("CM: Awaiting user prompt...")
-                //fatalError("Awaiting CM user prompt...")
+            //fatalError("Awaiting CM user prompt...")
             case .restricted: // Handle system-wide restriction
                 fatalError("CM Authorization restricted!")
             case .denied: // Handle user denied state

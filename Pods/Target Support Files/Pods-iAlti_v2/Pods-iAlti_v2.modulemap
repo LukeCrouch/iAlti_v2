@@ -1,0 +1,6 @@
+framework module Pods_iAlti_v2 {
+  umbrella header "Pods-iAlti_v2-umbrella.h"
+
+  export *
+  module * { export * }
+}

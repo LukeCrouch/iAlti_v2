@@ -117,11 +117,25 @@ struct MainView: View {
                 Spacer()
             }
             // MARK: Map Display
-            Map( coordinateRegion: $region,
-                 interactionModes: MapInteractionModes.zoom,
-                 showsUserLocation: true,
-                 userTrackingMode: $userTrackingMode)
-                .mapStyle(.satellite)
+            MapViewUIKit(region: region, mapType: MKMapType.satellite)
         }
+    }
+}
+
+struct MapViewUIKit: UIViewRepresentable {
+    let region: MKCoordinateRegion
+    let mapType : MKMapType
+    
+    func makeUIView(context: Context) -> MKMapView {
+        let mapView = MKMapView()
+        mapView.setRegion(region, animated: false)
+        mapView.mapType = mapType
+        mapView.userTrackingMode = MKUserTrackingMode.follow
+        mapView.isScrollEnabled = false
+        return mapView
+    }
+    
+    func updateUIView(_ mapView: MKMapView, context: Context) {
+        mapView.mapType = mapType
     }
 }

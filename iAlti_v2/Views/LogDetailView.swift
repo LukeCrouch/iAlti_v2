@@ -19,6 +19,8 @@ struct LogDetailView: View {
     @State private var sheetTitle = ""
     @State private var sheetButtons: [ActionSheet.Button] = []
     
+    @State var glideRatio: [Double] = []
+    
     var body: some View {
         if fileExporter.isSharing {
             ProgressView("Converting...")
@@ -42,7 +44,12 @@ struct LogDetailView: View {
                                     },
                                     .default(Text("CSV (FlySight Viewer)")) {
                                         DispatchQueue.global(qos: .userInteractive).async {
-                                            fileExporter.share(log: log, fileType: "csv")
+                                            fileExporter.share(log: log, fileType: "flysight")
+                                        }
+                                    },
+                                    .default(Text("CSV (Raw)")) {
+                                        DispatchQueue.global(qos: .userInteractive).async {
+                                            fileExporter.share(log: log, fileType: "raw")
                                         }
                                     },
                                     .cancel()
@@ -69,10 +76,10 @@ struct LogDetailView: View {
                     }
                     .padding([.horizontal, .top])
                     TabView {
-                        LogDetailOverView(log: log, viewModel: logDetailOverViewModel)
-                            .tabItem {}
+                        LogDetailOverView(log: log, glideRatio: $glideRatio, viewModel: logDetailOverViewModel)
+                        .tabItem {}
                             .tag(0)
-                        LogDetailOverView(log: log, viewModel: logDetailOverViewModel)
+                        LogDetailChartView(log: log, glideRatio: glideRatio)
                             .tabItem {}
                             .tag(1)
                     }

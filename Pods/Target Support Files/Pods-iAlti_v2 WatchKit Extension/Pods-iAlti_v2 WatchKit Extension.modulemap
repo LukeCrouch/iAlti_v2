@@ -1,0 +1,6 @@
+framework module Pods_iAlti_v2_WatchKit_Extension {
+  umbrella header "Pods-iAlti_v2 WatchKit Extension-umbrella.h"
+
+  export *
+  module * { export * }
+}
