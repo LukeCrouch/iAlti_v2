@@ -10,41 +10,63 @@ import SwiftUI
 final class UserSettings: ObservableObject {
     static var shared = UserSettings()
     
+    let userDefaults = UserDefaults.standard
+    
+    @Published var voiceOutputSelection: Int {
+        didSet { userDefaults.set(voiceOutputSelection, forKey: "voiceOutputSelection") }
+    }
+    
+    @Published var voiceLanguageSelection: Int {
+        didSet { userDefaults.set(voiceLanguageSelection, forKey: "voiceLanguageSelection") }
+    }
+    
+    @Published var voiceLanguages: [Dictionary<String, String>] {
+        didSet { userDefaults.set(voiceLanguages, forKey: "voiceLanguages") }
+    }
+    
     @Published var colorSelection: Int {
-        didSet { UserDefaults.standard.set(colorSelection, forKey: "colorSelection") }
+        didSet { userDefaults.set(colorSelection, forKey: "colorSelection") }
+    }
+
+    @Published var audioSelection: Int {
+        didSet { userDefaults.set(audioSelection, forKey: "audioSelection") }
     }
     
     @Published var qnh: Double {
-        didSet { UserDefaults.standard.set(qnh, forKey: "qnh") }
+        didSet { userDefaults.set(qnh, forKey: "qnh") }
     }
     
     @Published var offset: Double {
-        didSet { UserDefaults.standard.set(offset, forKey: "offset") }
+        didSet { userDefaults.set(offset, forKey: "offset") }
     }
     
     @Published var colors: Array<Color> {
-        didSet { UserDefaults.standard.set(colors, forKey: "colors") }
+        didSet { userDefaults.set(colors, forKey: "colors") }
     }
     
     @Published var pilot: String {
-        didSet { UserDefaults.standard.set(pilot, forKey: "pilot") }
+        didSet { userDefaults.set(pilot, forKey: "pilot") }
     }
     
     @Published var glider: String {
-        didSet { UserDefaults.standard.set(glider, forKey: "glider") }
+        didSet { userDefaults.set(glider, forKey: "glider") }
     }
     
     @Published var displaySelection: Int {
-        didSet { UserDefaults.standard.set(displaySelection, forKey: "displaySelection") }
+        didSet { userDefaults.set(displaySelection, forKey: "displaySelection") }
     }
     
     init() {
-        self.colorSelection = UserDefaults.standard.object(forKey: "colorSelection") as? Int ?? 3
-        self.qnh = UserDefaults.standard.object(forKey: "qnh") as? Double ?? 1013.25
-        self.offset = UserDefaults.standard.object(forKey: "offset") as? Double ?? 0
-        self.colors = UserDefaults.standard.object(forKey: "colors") as? Array ?? [Color.green, Color.white, Color.red, Color.blue, Color.orange, Color.yellow, Color.pink, Color.purple, Color.black]
-        self.pilot = UserDefaults.standard.object(forKey: "pilot") as? String ?? "Jerry"
-        self.glider = UserDefaults.standard.object(forKey: "glider") as? String ?? ""
-        self.displaySelection = UserDefaults.standard.object(forKey: "displaySelection") as? Int ?? 1
+        self.colorSelection = userDefaults.object(forKey: "colorSelection") as? Int ?? 3
+        self.qnh = userDefaults.object(forKey: "qnh") as? Double ?? 1013.25
+        self.offset = userDefaults.object(forKey: "offset") as? Double ?? 0
+        self.colors = userDefaults.object(forKey: "colors") as? Array ?? [Color.green, Color.white, Color.red, Color.blue, Color.orange, Color.yellow, Color.pink, Color.purple, Color.black]
+        self.pilot = userDefaults.object(forKey: "pilot") as? String ?? "Jerry"
+        self.glider = userDefaults.object(forKey: "glider") as? String ?? ""
+        self.displaySelection = userDefaults.object(forKey: "displaySelection") as? Int ?? 1
+        self.audioSelection = userDefaults.object(forKey: "audioSelection") as? Int ?? 0
+        self.voiceLanguageSelection = userDefaults.object(forKey: "voiceLanguageSelection") as? Int ?? 10
+        self.voiceOutputSelection = userDefaults.object(forKey: "voiceOutputSelection") as? Int ?? 0
+        self.voiceLanguages = userDefaults.object(forKey: "voiceLanguages") as? [Dictionary<String, String>] ?? []
     }
 }

@@ -25,24 +25,20 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     let objectWillChange = PassthroughSubject<Void, Never>()
     
     @Published var isLocationStarted = false {
-        didSet {
-            objectWillChange.send()
-        }
+        didSet { objectWillChange.send() }
     }
     
     @Published var locationStatus: CLAuthorizationStatus? {
-        didSet {
-            objectWillChange.send()
-        }
+        didSet { objectWillChange.send() }
     }
     
     @Published var lastLocation: CLLocation? {
-        didSet {
-            objectWillChange.send()
-        }
+        didSet { objectWillChange.send() }
     }
     
     @Published var didTakeOff = false
+    
+    @Published var didLand = false
     
     private var statusString: String {
         guard let status = locationStatus else {
@@ -88,6 +84,7 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
                 if !didTakeOff {
                     if location.speed > 3 || Altimeter.shared.speedVertical > 3 {
                         didTakeOff = true
+                        playAudio()
                         debugPrint("Take Off detected. Deleting \(locationArray.count - 10) previously saved locations.")
                         if locationArray.count > 10 {
                             for _ in 11...locationArray.count {
@@ -96,6 +93,11 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
                                 speedVerticalArray.remove(at: 0)
                             }
                         }
+                    }
+                } else {
+                    if location.speed < 1 && Altimeter.shared.speedVertical < 1 {
+                        didLand = true
+                        debugPrint("Landing detected!")
                     }
                 }
                 

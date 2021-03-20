@@ -33,7 +33,7 @@
 		606034AF2563160C007170EB /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606034AE2563160C007170EB /* UserSettings.swift */; };
 		6060352D25642862007170EB /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6060352C25642862007170EB /* UserSettings.swift */; };
 		6060353925643279007170EB /* LogDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6060353825643279007170EB /* LogDetailView.swift */; };
-		60788C59258D4C0F00BBBC5E /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 60788C58258D4C0F00BBBC5E /* SwiftPackageProductDependency */; };
+		60788C59258D4C0F00BBBC5E /* CoreGPX in Frameworks */ = {isa = PBXBuildFile; productRef = 60788C58258D4C0F00BBBC5E /* CoreGPX */; };
 		6083817A2564776E00D1F204 /* Log+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608381782564776E00D1F204 /* Log+CoreDataClass.swift */; };
 		6083817B2564776E00D1F204 /* Log+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608381792564776E00D1F204 /* Log+CoreDataProperties.swift */; };
 		6098479525949EA70018AD18 /* FileExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6098479425949EA70018AD18 /* FileExporter.swift */; };
@@ -53,6 +53,8 @@
 		60F21A352603EC050086EA8A /* Variometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F21A342603EC040086EA8A /* Variometer.swift */; };
 		60F21A3F2604122A0086EA8A /* LogDetailChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F21A3E2604122A0086EA8A /* LogDetailChartView.swift */; };
 		60F2CCC825681A12003E1285 /* LogDetailOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F2CCC725681A12003E1285 /* LogDetailOverView.swift */; };
+		60F8C0462606138E00C5DFDF /* Speech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F8C0452606138E00C5DFDF /* Speech.swift */; };
+		60F8C04D2606139900C5DFDF /* Variometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F8C04C2606139900C5DFDF /* Variometer.swift */; };
 		98828981DE74560CEED52F34 /* libPods-iAlti_v2 WatchKit App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AEFA5123BDEC2306B02F24 /* libPods-iAlti_v2 WatchKit App.a */; };
 		BFEB51EB99EE73BBBFB05B0A /* Pods_iAlti_v2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7863911C5B8B45FAC5CABFD /* Pods_iAlti_v2.framework */; };
 		E54788EDEF2E3ECC9E2E69C4 /* libPods-iAlti_v2 WatchKit Extension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CDB102E2C74F02F9146447 /* libPods-iAlti_v2 WatchKit Extension.a */; };
@@ -170,6 +172,8 @@
 		60F21A342603EC040086EA8A /* Variometer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variometer.swift; sourceTree = "<group>"; };
 		60F21A3E2604122A0086EA8A /* LogDetailChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDetailChartView.swift; sourceTree = "<group>"; };
 		60F2CCC725681A12003E1285 /* LogDetailOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDetailOverView.swift; sourceTree = "<group>"; };
+		60F8C0452606138E00C5DFDF /* Speech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speech.swift; sourceTree = "<group>"; };
+		60F8C04C2606139900C5DFDF /* Variometer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variometer.swift; sourceTree = "<group>"; };
 		9198A8A4525D112A95A6994C /* Pods-iAlti_v2Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlti_v2Tests.debug.xcconfig"; path = "Target Support Files/Pods-iAlti_v2Tests/Pods-iAlti_v2Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		91AEFA5123BDEC2306B02F24 /* libPods-iAlti_v2 WatchKit App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iAlti_v2 WatchKit App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		91CDB102E2C74F02F9146447 /* libPods-iAlti_v2 WatchKit Extension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iAlti_v2 WatchKit Extension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -197,7 +201,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60788C59258D4C0F00BBBC5E /* BuildFile in Frameworks */,
+				60788C59258D4C0F00BBBC5E /* CoreGPX in Frameworks */,
 				BFEB51EB99EE73BBBFB05B0A /* Pods_iAlti_v2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -370,6 +374,8 @@
 				60C576742562C3D5001E6D17 /* Location.swift */,
 				60D77D3E2588092F00A3C979 /* Altimeter.swift */,
 				6060352C25642862007170EB /* UserSettings.swift */,
+				60F8C0452606138E00C5DFDF /* Speech.swift */,
+				60F8C04C2606139900C5DFDF /* Variometer.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -415,7 +421,6 @@
 				9198A8A4525D112A95A6994C /* Pods-iAlti_v2Tests.debug.xcconfig */,
 				D0BF602EC83B7291FC3AF98E /* Pods-iAlti_v2Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -452,7 +457,7 @@
 			);
 			name = iAlti_v2;
 			packageProductDependencies = (
-				60788C58258D4C0F00BBBC5E /* SwiftPackageProductDependency */,
+				60788C58258D4C0F00BBBC5E /* CoreGPX */,
 			);
 			productName = iAlti_v2;
 			productReference = 604D5534255C190A00B50268 /* iAlti_v2.app */;
@@ -573,7 +578,7 @@
 			);
 			mainGroup = 604D552B255C190A00B50268;
 			packageReferences = (
-				60788C57258D4C0F00BBBC5E /* RemoteSwiftPackageReference */,
+				60788C57258D4C0F00BBBC5E /* XCRemoteSwiftPackageReference "CoreGPX" */,
 			);
 			productRefGroup = 604D5535255C190A00B50268 /* Products */;
 			projectDirPath = "";
@@ -829,7 +834,9 @@
 			files = (
 				604D55A2255C1AE600B50268 /* OverView.swift in Sources */,
 				604D556F255C191200B50268 /* NotificationController.swift in Sources */,
+				60F8C04D2606139900C5DFDF /* Variometer.swift in Sources */,
 				60C576752562C3D5001E6D17 /* Location.swift in Sources */,
+				60F8C0462606138E00C5DFDF /* Speech.swift in Sources */,
 				604D55A1255C1AE600B50268 /* MainView.swift in Sources */,
 				604D55A3255C1AE600B50268 /* SettingsView.swift in Sources */,
 				604D556D255C191200B50268 /* ContentView.swift in Sources */,
@@ -1292,7 +1299,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		60788C57258D4C0F00BBBC5E /* RemoteSwiftPackageReference */ = {
+		60788C57258D4C0F00BBBC5E /* XCRemoteSwiftPackageReference "CoreGPX" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/vincentneo/CoreGPX.git";
 			requirement = {
@@ -1303,9 +1310,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		60788C58258D4C0F00BBBC5E /* SwiftPackageProductDependency */ = {
+		60788C58258D4C0F00BBBC5E /* CoreGPX */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 60788C57258D4C0F00BBBC5E /* RemoteSwiftPackageReference */;
+			package = 60788C57258D4C0F00BBBC5E /* XCRemoteSwiftPackageReference "CoreGPX" */;
 			productName = CoreGPX;
 		};
 /* End XCSwiftPackageProductDependency section */

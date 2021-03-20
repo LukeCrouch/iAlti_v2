@@ -27,21 +27,15 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var geocodedLocation = "Unknown"
     
     @Published var isLocationStarted = false {
-        didSet {
-            objectWillChange.send()
-        }
+        didSet { objectWillChange.send() }
     }
     
     @Published var locationStatus: CLAuthorizationStatus? {
-        didSet {
-            objectWillChange.send()
-        }
+        didSet { objectWillChange.send() }
     }
     
     @Published var lastLocation: CLLocation? {
-        didSet {
-            objectWillChange.send()
-        }
+        didSet { objectWillChange.send() }
     }
     
     @Published var didTakeOff = false
@@ -124,16 +118,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         debugPrint(#function, status)
     }
     
-    func playAudio() {
-        if UserSettings.shared.voiceOutputSelection == 0 {
-            return
-        } else if UserSettings.shared.voiceOutputSelection == 5 {
-            playVario()
-        } else {
-            voiceOutput()
-        }
-    }
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         
@@ -145,6 +129,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
                 if !didTakeOff {
                     if location.speed > 3 || Altimeter.shared.speedVertical > 3 {
                         didTakeOff = true
+                        playAudio()
                         debugPrint("Take Off detected! Deleting \(locationArray.count - 10) previously saved locations.")
                         if locationArray.count > 10 {
                             for _ in 11...locationArray.count {
@@ -157,7 +142,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
                 } else {
                     if location.speed < 1 && Altimeter.shared.speedVertical < 1 {
                         didLand = true
-                        debugPrint("Landing detected! Logging stopped.")
+                        debugPrint("Landing detected!")
                     }
                 }
                 

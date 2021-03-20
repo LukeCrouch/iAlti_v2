@@ -7,6 +7,16 @@
 
 import Foundation
 
+public func playAudio() {
+    if UserSettings.shared.voiceOutputSelection == 0 {
+        return
+    } else if UserSettings.shared.voiceOutputSelection == 5 {
+        playVario()
+    } else {
+        voiceOutput()
+    }
+}
+
 public extension String {
     var model: String? {
         guard let base64 = Data(base64Encoded: self) else { return nil }

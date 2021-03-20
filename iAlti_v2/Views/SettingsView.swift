@@ -239,7 +239,7 @@ struct SettingsView: View {
                         Text(self.colors[$0]).foregroundColor(userSettings.colors[$0])
                     }.foregroundColor(userSettings.colors[userSettings.colorSelection])
                 }
-                Picker(selection: $userSettings.voiceOutputSelection, label: Text("Voice Output")) {
+                Picker(selection: $userSettings.voiceOutputSelection, label: Text("Audio Output")) {
                     ForEach(0 ..< self.voiceOutputs.count) {
                         Text(voiceOutputs[$0]).foregroundColor(userSettings.colors[userSettings.colorSelection])
                     }
@@ -276,15 +276,6 @@ struct SettingsView: View {
                     HStack {
                         Image(systemName: "envelope")
                         Text("Questions or problems?")}
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                })
-                Button(action: {
-                    playVario()
-                },
-                label: {
-                    HStack {
-                        Image(systemName: "speaker.wave.3")
-                        Text("Test Vario")}
                         .foregroundColor(userSettings.colors[userSettings.colorSelection])
                 })
             }

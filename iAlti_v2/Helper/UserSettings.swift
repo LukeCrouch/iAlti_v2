@@ -13,57 +13,39 @@ final class UserSettings: ObservableObject {
     let userDefaults = UserDefaults.standard
     
     @Published var colorSelection: Int {
-        didSet {
-            userDefaults.set(colorSelection, forKey: "colorSelection")
-        }
+        didSet { userDefaults.set(colorSelection, forKey: "colorSelection") }
     }
     
     @Published var colors: Array<Color> {
-        didSet {
-            userDefaults.set(colors, forKey: "colors")
-        }
+        didSet { userDefaults.set(colors, forKey: "colors") }
     }
     
     @Published var voiceOutputSelection: Int {
-        didSet {
-            userDefaults.set(voiceOutputSelection, forKey: "voiceOutputSelection")
-        }
+        didSet { userDefaults.set(voiceOutputSelection, forKey: "voiceOutputSelection") }
     }
     
     @Published var voiceLanguageSelection: Int {
-        didSet {
-            userDefaults.set(voiceLanguageSelection, forKey: "voiceLanguageSelection")
-        }
+        didSet { userDefaults.set(voiceLanguageSelection, forKey: "voiceLanguageSelection") }
     }
     
     @Published var voiceLanguages: [Dictionary<String, String>] {
-        didSet {
-            userDefaults.set(voiceLanguages, forKey: "voiceLanguages")
-        }
+        didSet { userDefaults.set(voiceLanguages, forKey: "voiceLanguages") }
     }
     
     @Published var qnh: Double {
-        didSet {
-            userDefaults.set(qnh, forKey: "qnh")
-        }
+        didSet { userDefaults.set(qnh, forKey: "qnh") }
     }
     
     @Published var offset: Double {
-        didSet {
-            userDefaults.set(offset, forKey: "offset")
-        }
+        didSet { userDefaults.set(offset, forKey: "offset") }
     }
     
     @Published var pilot: String {
-        didSet {
-            userDefaults.set(pilot, forKey: "pilot")
-        }
+        didSet { userDefaults.set(pilot, forKey: "pilot") }
     }
     
     @Published var glider: String {
-        didSet {
-            userDefaults.set(glider, forKey: "glider")
-        }
+        didSet { userDefaults.set(glider, forKey: "glider") }
     }
     // MARK: Init
     init() {

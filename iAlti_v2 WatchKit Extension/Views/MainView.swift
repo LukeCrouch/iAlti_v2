@@ -11,6 +11,12 @@ struct MainView: View {
     @ObservedObject private var userSettings = UserSettings.shared
     @ObservedObject private var altimeter = Altimeter.shared
     
+    let locationManager = LocationManager.shared
+    
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    @State private var alertTitle = ""
+    
     private var textSize: CGFloat {
         if userSettings.displaySelection == 0 { return 80 } else { return 55 }
     }
@@ -58,7 +64,7 @@ struct MainView: View {
                     .font(.system(size: 15))
             } else {
                 Divider()
-                Text("\(LocationManager.shared.lastLocation?.speed ?? 0, specifier: "%.1f")")
+                Text("\(locationManager.lastLocation?.speed ?? 0, specifier: "%.1f")")
                     .font(.system(size: textSize))
                     .fontWeight(.bold)
                     .foregroundColor(userSettings.colors[userSettings.colorSelection])
@@ -67,5 +73,17 @@ struct MainView: View {
                     .font(.system(size: 15))
             }
         }
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+        }
+        .onChange(of: locationManager.didLand, perform: {_ in
+            alertTitle = "Landed!"
+            alertMessage = "Landing detected: Finished logging and saving file. Flight Time: duration"
+            showAlert = true
+            //stopButton()
+        })
+        .onAppear(perform: {
+            prepareVoiceList()
+        })
     }
 }
