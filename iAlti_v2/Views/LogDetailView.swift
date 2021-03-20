@@ -77,9 +77,9 @@ struct LogDetailView: View {
                     .padding([.horizontal, .top])
                     TabView {
                         LogDetailOverView(log: log, glideRatio: $glideRatio, viewModel: logDetailOverViewModel)
-                        .tabItem {}
+                            .tabItem {}
                             .tag(0)
-                        LogDetailChartView(log: log, glideRatio: glideRatio)
+                        LogDetailChartView(glideRatio: glideRatio, log: log)
                             .tabItem {}
                             .tag(1)
                     }
