@@ -1,84 +1,151 @@
 //
 //  Variometer.swift
-//  iAlti_v2 WatchKit Extension
+//  iAlti_v2
 //
-//  Created by Lukas Wheldon on 20.03.21.
+//  Created by Lukas Wheldon on 18.03.21.
 //
 
 import Foundation
 import AVFoundation
 
-let ClimbToneOnThreshold = 0.1
-let ClimbToneOffThreshold = 0.05
-let SinkToneOnThreshold = -0.7
-let SinkToneOffThreshold = -0.6
-let frequency:Float = 500 + Float(Altimeter.shared.glideRatio) * 50
-let amplitude:Float = 1
-var duration:Float = 0.6 - 0.04 * Float(Altimeter.shared.glideRatio)
-
-let engine = AVAudioEngine()
-let mainMixer = engine.mainMixerNode
-let output = engine.outputNode
-let outputFormat = output.inputFormat(forBus: 0)
-let inputFormat = AVAudioFormat(commonFormat: outputFormat.commonFormat,
-                                sampleRate: outputFormat.sampleRate,
-                                channels: 1,
-                                interleaved: outputFormat.isInterleaved)
-let sampleRate = Float(outputFormat.sampleRate)
-let twoPi = 2 * Float.pi
-var currentPhase: Float = 0
-let phaseIncrement = (twoPi / sampleRate) * frequency
-
-let srcNode = AVAudioSourceNode { _, _, frameCount, audioBufferList -> OSStatus in
-    let ablPointer = UnsafeMutableAudioBufferListPointer(audioBufferList)
-    for frame in 0..<Int(frameCount) {
-        // Get signal value for this frame at time.
-        let value = currentPhase * amplitude
-        // Advance the phase for the next frame.
-        currentPhase += phaseIncrement
-        if currentPhase >= twoPi {
-            currentPhase -= twoPi
-        }
-        if currentPhase < 0.0 {
-            currentPhase += twoPi
-        }
-        // Set the same value on all channels (due to the inputFormat we have only 1 channel though).
-        for buffer in ablPointer {
-            let buf: UnsafeMutableBufferPointer<Float> = UnsafeMutableBufferPointer(buffer)
-            buf[frame] = value
-        }
-    }
-    return noErr
-}
-
-public func playVario() {
+class Synth {
     
-    engine.attach(srcNode)
-    engine.connect(srcNode, to: mainMixer, format: inputFormat)
-    engine.connect(mainMixer, to: output, format: outputFormat)
-    do {
-        repeat {
-            if Altimeter.shared.glideRatio > ClimbToneOnThreshold || Altimeter.shared.glideRatio < SinkToneOnThreshold {
-                mainMixer.outputVolume = 1
-            } else if Altimeter.shared.glideRatio < ClimbToneOffThreshold && Altimeter.shared.glideRatio > SinkToneOffThreshold {
-                mainMixer.outputVolume = 0
-            }
-            try engine.start()
-            CFRunLoopRunInMode(.defaultMode, CFTimeInterval(duration), false)
-            engine.stop()
-            sleep(UInt32(duration))
-        } while LocationManager.shared.didLand == false && LocationManager.shared.didTakeOff == true
-    } catch {
-        print("Could not start AVAudioEngine: \(error)")
+    typealias Signal = (_ frequency: Float, _ time: Float) -> Float
+    
+    static let sine: Signal = { frequency, time in
+        let amplitude:Float = 1
+        return amplitude * sin(2.0 * Float.pi * frequency * time)
     }
-}
-
-public func playAudio() {
-    if UserSettings.shared.voiceOutputSelection == 0 {
-        return
-    } else if UserSettings.shared.voiceOutputSelection == 5 {
-        playVario()
-    } else {
-        voiceOutput()
+    
+    // MARK: Properties
+    public static let shared = Synth()
+    
+    private var volume: Float {
+        set {
+            audioEngine.mainMixerNode.outputVolume = newValue
+        }
+        get {
+            audioEngine.mainMixerNode.outputVolume
+        }
+    }
+    
+    private var frequencyRampValue: Float = 0
+    
+    private var frequency: Float = 440 {
+        didSet {
+            if oldValue != 0 {
+                frequencyRampValue = frequency - oldValue
+            } else {
+                frequencyRampValue = 0
+            }
+        }
+    }
+    
+    private var audioEngine: AVAudioEngine
+    private lazy var sourceNode = AVAudioSourceNode { _, _, frameCount, audioBufferList in
+        let ablPointer = UnsafeMutableAudioBufferListPointer(audioBufferList)
+        
+        let localRampValue = self.frequencyRampValue
+        let localFrequency = self.frequency - localRampValue
+        
+        let period = 1 / localFrequency
+        
+        for frame in 0..<Int(frameCount) {
+            let percentComplete = self.time / period
+            let sampleVal = self.signal(localFrequency + localRampValue * percentComplete, self.time)
+            self.time += self.deltaTime
+            self.time = fmod(self.time, period)
+            
+            for buffer in ablPointer {
+                let buf: UnsafeMutableBufferPointer<Float> = UnsafeMutableBufferPointer(buffer)
+                buf[frame] = sampleVal
+            }
+        }
+        
+        self.frequencyRampValue = 0
+        
+        return noErr
+    }
+    
+    private var time: Float = 0
+    private let sampleRate: Double
+    private let deltaTime: Float
+    
+    private var signal: Signal
+    
+    // MARK: Init
+    init(signal: @escaping Signal = sine) {
+        audioEngine = AVAudioEngine()
+        
+        let mainMixer = audioEngine.mainMixerNode
+        let outputNode = audioEngine.outputNode
+        let format = outputNode.inputFormat(forBus: 0)
+        
+        sampleRate = format.sampleRate
+        deltaTime = 1 / Float(sampleRate)
+        
+        self.signal = signal
+        
+        let inputFormat = AVAudioFormat(commonFormat: format.commonFormat,
+                                        sampleRate: format.sampleRate,
+                                        channels: 1,
+                                        interleaved: format.isInterleaved)
+        
+        audioEngine.attach(sourceNode)
+        audioEngine.connect(sourceNode, to: mainMixer, format: inputFormat)
+        audioEngine.connect(mainMixer, to: outputNode, format: nil)
+        mainMixer.outputVolume = 1
+    }
+    
+    // MARK: Play
+    func playVario(testing: Bool) {
+        let ClimbToneOnThreshold = 0.1
+        let ClimbToneOffThreshold = 0.05
+        let SinkToneOnThreshold = -0.7
+        let SinkToneOffThreshold = -0.6
+        
+        do {
+            try audioEngine.start()
+        } catch {
+            print("Could not start engine: \(error.localizedDescription)")
+        }
+        
+        let serialQueue = DispatchQueue(label: "swiftVario.serial.queue")
+        serialQueue.async {
+            var loopSwitch = false
+            var timerVolume = 1.0
+            var threshholdVolume = 1.0
+            
+            repeat {
+                if loopSwitch {
+                    timerVolume = 0
+                } else {
+                    timerVolume = 1
+                }
+                
+                if Altimeter.shared.glideRatio > ClimbToneOnThreshold || Altimeter.shared.glideRatio < SinkToneOnThreshold {
+                    threshholdVolume = 1
+                } else if Altimeter.shared.glideRatio < ClimbToneOffThreshold && Altimeter.shared.glideRatio > SinkToneOffThreshold {
+                    threshholdVolume = 0
+                }
+                if testing {
+                    threshholdVolume = 1
+                }
+                
+                self.audioEngine.mainMixerNode.outputVolume = Float(timerVolume * threshholdVolume)
+                print("timerVolume: ", timerVolume, "threshholdVolume: ", threshholdVolume)
+                
+                let climbRate = abs(Altimeter.shared.speedVertical)
+                self.frequency = 500 + Float(climbRate) * 50
+                let waitSeconds = 0.6 - 0.04 * climbRate
+                print("climbRate: ", climbRate ,"waitSeconds: ", waitSeconds)
+                usleep(UInt32(waitSeconds * 1000000))
+                
+                loopSwitch.toggle()
+            } while LocationManager.shared.didLand == false && LocationManager.shared.didTakeOff == true
+            sleep(1)
+            self.audioEngine.stop()
+            
+        }
     }
 }

@@ -12,30 +12,17 @@ import Combine
 final class Altimeter: CMAltimeter, ObservableObject {
     static let shared = Altimeter()
     
+    @Published var relativeAltitude: Double = 0 { didSet { objectWillChange.send() } }
     
-    @Published var relativeAltitude: Double = 0 {
-        didSet { objectWillChange.send() }
-    }
+    @Published var isAltimeterStarted = false { didSet { objectWillChange.send() } }
     
-    @Published var isAltimeterStarted = false {
-        didSet { objectWillChange.send() }
-    }
+    @Published var speedVertical: Double = 0 { didSet { objectWillChange.send() } }
     
-    @Published var speedVertical: Double = 0 {
-        didSet { objectWillChange.send() }
-    }
+    @Published var barometricAltitude: Double = 0 { didSet { objectWillChange.send() } }
     
-    @Published var barometricAltitude: Double = 0 {
-        didSet { objectWillChange.send() }
-    }
+    @Published var pressure: Double = 0 { didSet { objectWillChange.send() } }
     
-    @Published var pressure: Double = 0 {
-        didSet { objectWillChange.send() }
-    }
-    
-    @Published var glideRatio: Double = 0 {
-        didSet { objectWillChange.send() }
-    }
+    @Published var glideRatio: Double = 0 { didSet { objectWillChange.send() } }
     
     func setOffset() {
         UserSettings.shared.offset = 8400 * (UserSettings.shared.qnh - Altimeter.shared.pressure) / UserSettings.shared.qnh

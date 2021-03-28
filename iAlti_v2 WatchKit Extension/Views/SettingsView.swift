@@ -12,13 +12,14 @@ struct SettingsView: View {
     @State private var selectionColorPicker: Int = 0
     @State private var selectionDisplayPicker: Int = 0
     @State private var selectionAudioPicker: Int = 0
+    @State private var selectionLanguagePicker: Int = 0
     
     private let displays = ["None", "Glide", "v hor.", "v vert."]
     private let audios = ["None", "Glide", "v hor.", "v vert.", "Altitude", "Variometer"]
     private let colors = ["Green", "White", "Red", "Blue", "Orange", "Yellow", "Pink", "Purple"]
     
     private let pickerWidth: CGFloat = 150
-    private let pickerHeight: CGFloat = 60
+    private let pickerHeight: CGFloat = 50
     
     var body: some View {
         ScrollView {
@@ -42,47 +43,65 @@ struct SettingsView: View {
             }
             Divider()
             VStack {
-                Text("Display 2nd value:")
                 Picker("", selection: $selectionDisplayPicker, content: {
                     ForEach(0 ..< displays.count) {index in Text(displays[index]).tag(index)}
                 })
                 .frame(width: pickerWidth, height: pickerHeight)
                 .foregroundColor(userSettings.colors[userSettings.colorSelection])
-            }.onAppear(perform: {selectionDisplayPicker = userSettings.displaySelection})
-            Divider()
-            VStack {
-                Text("Font Color:")
+                Text("Display 2nd value")
+                Divider()
                 Picker("", selection: $selectionColorPicker, content: {
                     ForEach(0 ..< colors.count) {index in Text(colors[index]).tag(index)}
                 })
                 .frame(width: pickerWidth, height: pickerHeight)
                 .foregroundColor(userSettings.colors[userSettings.colorSelection])
-            }.onAppear(perform: {selectionColorPicker = userSettings.colorSelection})
-            Divider()
+                Text("Font Color")
+                Divider()
+            }
             VStack {
-                Text("Audio Output:")
                 Picker("", selection: $selectionAudioPicker, content: {
                     ForEach(0 ..< audios.count) {index in Text(audios[index]).tag(index)}
                 })
                 .frame(width: pickerWidth, height: pickerHeight)
                 .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                Button(action: {
-                    let cachedSelection = userSettings.voiceOutputSelection
-                    userSettings.voiceOutputSelection = 1
-                    voiceOutput()
-                    userSettings.voiceOutputSelection = cachedSelection
-                },
-                label: {
-                    HStack {
-                        Image(systemName: "speaker.wave.3")
-                        Text("Test voice ouput")}
+                Text("Audio Output")
+                if userSettings.audioSelection != 0 {
+                    if userSettings.audioSelection != 5 {
+                        Picker("", selection: $selectionLanguagePicker, content: {
+                            ForEach(0 ..< userSettings.voiceLanguages.count) {
+                                let text = (userSettings.voiceLanguages[$0]["languageName"] ?? "Unknown") + " " + (userSettings.voiceLanguages[$0]["voiceName"] ?? "")
+                                Text(text).foregroundColor(userSettings.colors[userSettings.colorSelection])
+                            }
+                        })
+                        .frame(width: pickerWidth, height: pickerHeight)
                         .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                })
-            }.onAppear(perform: {selectionAudioPicker = userSettings.audioSelection})
+                        Text("Audio Language")
+                    }
+                    Button(action: {
+                        let cachedSelection = userSettings.audioSelection
+                        userSettings.audioSelection = 1
+                        voiceOutput()
+                        userSettings.audioSelection = cachedSelection
+                    },
+                    label: {
+                        HStack {
+                            Image(systemName: "speaker.wave.3")
+                            Text("Test voice ouput")}
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                    })
+                }
+            }
         }
-        .onChange(of: selectionColorPicker, perform: {_ in userSettings.colorSelection = selectionColorPicker })
-        .onChange(of: selectionDisplayPicker, perform: {_ in userSettings.displaySelection = selectionDisplayPicker })
-        .onChange(of: selectionAudioPicker, perform: {_ in userSettings.displaySelection = selectionDisplayPicker })
+        .onAppear(perform: {
+            selectionColorPicker = userSettings.colorSelection
+            selectionLanguagePicker = userSettings.voiceLanguageSelection
+            selectionDisplayPicker = userSettings.displaySelection
+            selectionAudioPicker = userSettings.audioSelection
+        })
+        .onChange(of: selectionColorPicker, perform: {sel in userSettings.colorSelection = sel })
+        .onChange(of: selectionDisplayPicker, perform: {sel in userSettings.displaySelection = sel })
+        .onChange(of: selectionAudioPicker, perform: {sel in userSettings.audioSelection = sel })
+        .onChange(of: selectionLanguagePicker, perform: {sel in userSettings.voiceLanguageSelection = sel })
         .onChange(of: userSettings.qnh, perform: {_ in Altimeter.shared.setOffset()})
     }
 }

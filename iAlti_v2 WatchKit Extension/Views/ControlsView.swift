@@ -39,7 +39,7 @@ struct ControlsView: View {
                                 .foregroundColor(.red)
                                 .font(.title)
                         })
-                        Text("Logging")
+                        Text("Stop Logging")
                     } else {
                         Button(action: {
                             debugPrint("Start Logging Button pressed")
@@ -53,7 +53,7 @@ struct ControlsView: View {
                                 .foregroundColor(.green)
                                 .font(.title)
                         })
-                        Text("Stop Logging")
+                        Text("Logging")
                     }
                 }
                 if !(locationManager.isLocationStarted) {

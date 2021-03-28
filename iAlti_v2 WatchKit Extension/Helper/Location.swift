@@ -9,6 +9,16 @@ import SwiftUI
 import CoreLocation
 import Combine
 
+public func playAudio(testing: Bool) {
+    if UserSettings.shared.audioSelection == 0 {
+        return
+    } else if UserSettings.shared.audioSelection == 5 {
+        Synth.shared.playVario(testing: true)
+    } else {
+        voiceOutput()
+    }
+}
+
 final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     override init() {
         super.init()
@@ -24,17 +34,11 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     static let shared = LocationManager()
     let objectWillChange = PassthroughSubject<Void, Never>()
     
-    @Published var isLocationStarted = false {
-        didSet { objectWillChange.send() }
-    }
+    @Published var isLocationStarted = false { didSet { objectWillChange.send() } }
     
-    @Published var locationStatus: CLAuthorizationStatus? {
-        didSet { objectWillChange.send() }
-    }
+    @Published var locationStatus: CLAuthorizationStatus? { didSet { objectWillChange.send() } }
     
-    @Published var lastLocation: CLLocation? {
-        didSet { objectWillChange.send() }
-    }
+    @Published var lastLocation: CLLocation? { didSet { objectWillChange.send() } }
     
     @Published var didTakeOff = false
     
@@ -84,7 +88,7 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
                 if !didTakeOff {
                     if location.speed > 3 || Altimeter.shared.speedVertical > 3 {
                         didTakeOff = true
-                        playAudio()
+                        playAudio(testing: false)
                         debugPrint("Take Off detected. Deleting \(locationArray.count - 10) previously saved locations.")
                         if locationArray.count > 10 {
                             for _ in 11...locationArray.count {

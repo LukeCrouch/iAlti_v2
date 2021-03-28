@@ -53,6 +53,7 @@ struct SettingsView: View {
         duration = DateInterval(start: startDate, end: Date()).duration
         altimeter.stop()
         locationManager.stop()
+        stopAudio()
         toggleLoc = false
         toggleAlti = false
         PersistenceManager.shared.saveLog(duration: duration)
@@ -204,8 +205,8 @@ struct SettingsView: View {
                     .foregroundColor(userSettings.colors[userSettings.colorSelection])
                 })
             }
-            // MARK: Customize
-            Section(header: Text("Altimeter")) {
+            // MARK: Settings
+            Section(header: Text("Barometer")) {
                 HStack {
                     Text("QNH")
                     Spacer()
@@ -233,35 +234,42 @@ struct SettingsView: View {
                         .foregroundColor(userSettings.colors[userSettings.colorSelection])
                 }
             }
+            Section(header: Text("Audio Settings")) {
+                Picker(selection: $userSettings.audioSelection, label: Text("Audio Output")) {
+                    ForEach(0 ..< self.voiceOutputs.count) {
+                        Text(voiceOutputs[$0]).foregroundColor(userSettings.colors[userSettings.colorSelection])
+                    }
+                }
+                if userSettings.audioSelection != 0 {
+                    if userSettings.audioSelection != 5 {
+                        Picker(selection: $userSettings.voiceLanguageSelection, label: Text("Voice Language")) {
+                            ForEach(0 ..< userSettings.voiceLanguages.count) {
+                                let text = (userSettings.voiceLanguages[$0]["languageName"] ?? "Unknown") + " " + (userSettings.voiceLanguages[$0]["voiceName"] ?? "")
+                                Text(text).foregroundColor(userSettings.colors[userSettings.colorSelection])
+                            }
+                        }
+                    }
+                    Button(action: {
+                        debugPrint("Testing audio output.")
+                        playAudio(testing: true)
+                    },
+                    label: {
+                        HStack {
+                            Image(systemName: "speaker.wave.3")
+                            Text("Test audio output.")}
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                    })
+                }
+            }
             Section(header: Text("Customize")) {
+                Toggle(isOn: $userSettings.mapTrackingMode){
+                    Text("Rotate map with heading:")
+                }
                 Picker(selection: $userSettings.colorSelection, label: Text("Font Color")) {
                     ForEach(0 ..< colors.count) {
                         Text(self.colors[$0]).foregroundColor(userSettings.colors[$0])
                     }.foregroundColor(userSettings.colors[userSettings.colorSelection])
                 }
-                Picker(selection: $userSettings.voiceOutputSelection, label: Text("Audio Output")) {
-                    ForEach(0 ..< self.voiceOutputs.count) {
-                        Text(voiceOutputs[$0]).foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    }
-                }
-                Picker(selection: $userSettings.voiceLanguageSelection, label: Text("Voice Language")) {
-                    ForEach(0 ..< userSettings.voiceLanguages.count) {
-                        let text = (userSettings.voiceLanguages[$0]["languageName"] ?? "Unknown") + " " + (userSettings.voiceLanguages[$0]["voiceName"] ?? "")
-                        Text(text).foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    }
-                }
-                Button(action: {
-                    let cachedSelection = userSettings.voiceOutputSelection
-                    userSettings.voiceOutputSelection = 1
-                    voiceOutput()
-                    userSettings.voiceOutputSelection = cachedSelection
-                },
-                label: {
-                    HStack {
-                        Image(systemName: "speaker.wave.3")
-                        Text("Test voice ouput")}
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                })
             }
             // MARK: Support
             Section(header: Text("Support")) {

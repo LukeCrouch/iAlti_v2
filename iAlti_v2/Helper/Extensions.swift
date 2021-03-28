@@ -7,14 +7,22 @@
 
 import Foundation
 
-public func playAudio() {
-    if UserSettings.shared.voiceOutputSelection == 0 {
+public var voiceTimer = Timer.scheduledTimer(withTimeInterval: 0, repeats: false, block: {_ in} )
+public var audioTimer = Timer.scheduledTimer(withTimeInterval: 0, repeats: false, block: {_ in} )
+
+public func playAudio(testing: Bool) {
+    if UserSettings.shared.audioSelection == 0 {
         return
-    } else if UserSettings.shared.voiceOutputSelection == 5 {
-        playVario()
+    } else if UserSettings.shared.audioSelection == 5 {
+        Synth.shared.playVario(testing: true)
     } else {
         voiceOutput()
     }
+}
+
+public func stopAudio() {
+    voiceTimer.invalidate()
+    audioTimer.invalidate()
 }
 
 public extension String {

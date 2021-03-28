@@ -20,19 +20,7 @@ struct MainView: View {
     @ObservedObject private var locationManager = LocationManager.shared
     @ObservedObject private var userSettings = UserSettings.shared
     
-    @State private var speedKMH:Double = (LocationManager.shared.lastLocation?.speed ?? 0) * 3.6
-    
     @State private var userTrackingMode: MapUserTrackingMode = .follow
-    @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(
-            latitude: LocationManager.shared.lastLocation?.coordinate.latitude ?? 0,
-            longitude: LocationManager.shared.lastLocation?.coordinate.longitude ?? 0
-        ),
-        span: MKCoordinateSpan(
-            latitudeDelta: 1,
-            longitudeDelta: 1
-        )
-    )
     
     private let mainTextSize: CGFloat = 80
     private let secondaryTextSize: CGFloat = 15
@@ -70,7 +58,7 @@ struct MainView: View {
                         Image(systemName: "arrow.up")
                             .font(.system(size: mainTextSize / 1.5 ))
                             .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                            .rotationEffect(Angle(degrees: LocationManager.shared.lastLocation?.course ?? 0))
+                            .rotationEffect(Angle(degrees: locationManager.lastLocation?.course ?? 0))
                             .frame(width: mainTextSize, height: mainTextSize, alignment: .center)
                         Text("E").font(.system(size: secondaryTextSize))
                     }
@@ -82,7 +70,7 @@ struct MainView: View {
                 Spacer()
                 // MARK: Speed Display
                 VStack {
-                    Text("\(speedKMH, specifier: "%.0f")")
+                    Text("\(((locationManager.lastLocation?.speed ?? 0) * 3.6    ), specifier: "%.0f")")
                         .font(.system(size: mainTextSize))
                         .fontWeight(.bold)
                         .foregroundColor(userSettings.colors[userSettings.colorSelection])
@@ -117,25 +105,46 @@ struct MainView: View {
                 Spacer()
             }
             // MARK: Map Display
-            MapViewUIKit(region: region, mapType: MKMapType.satellite)
+            MapViewUIKit(trackingMode: userSettings.mapTrackingMode)
         }
     }
 }
 
 struct MapViewUIKit: UIViewRepresentable {
-    let region: MKCoordinateRegion
-    let mapType : MKMapType
+    @State private var region = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(
+            latitude: LocationManager.shared.lastLocation?.coordinate.latitude ?? 0,
+            longitude: LocationManager.shared.lastLocation?.coordinate.longitude ?? 0
+        ),
+        span: MKCoordinateSpan(
+            latitudeDelta: 1,
+            longitudeDelta: 1
+        )
+    )
+    let trackingMode: Bool
     
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
-        mapView.setRegion(region, animated: false)
-        mapView.mapType = mapType
-        mapView.userTrackingMode = MKUserTrackingMode.follow
+        mapView.region = region
+        mapView.mapType = MKMapType.hybrid
         mapView.isScrollEnabled = false
+        mapView.isRotateEnabled = false
+        mapView.cameraZoomRange = MKMapView.CameraZoomRange(minCenterCoordinateDistance: CLLocationDistance(5000)) // min zoom radius in metres
+        if !trackingMode{
+            mapView.userTrackingMode = MKUserTrackingMode.follow
+        } else {
+            mapView.userTrackingMode = MKUserTrackingMode.followWithHeading
+        }
         return mapView
     }
     
     func updateUIView(_ mapView: MKMapView, context: Context) {
-        mapView.mapType = mapType
+        mapView.setRegion(region, animated: false)
+        if !trackingMode {
+            mapView.setUserTrackingMode(MKUserTrackingMode.none, animated: true)
+            mapView.setUserTrackingMode(MKUserTrackingMode.follow, animated: true)
+        } else {
+            mapView.setUserTrackingMode(MKUserTrackingMode.followWithHeading, animated: true)
+        }
     }
 }

@@ -11,50 +11,26 @@ final class UserSettings: ObservableObject {
     static var shared = UserSettings()
     
     let userDefaults = UserDefaults.standard
-    
-    @Published var voiceOutputSelection: Int {
-        didSet { userDefaults.set(voiceOutputSelection, forKey: "voiceOutputSelection") }
-    }
-    
-    @Published var voiceLanguageSelection: Int {
-        didSet { userDefaults.set(voiceLanguageSelection, forKey: "voiceLanguageSelection") }
-    }
-    
-    @Published var voiceLanguages: [Dictionary<String, String>] {
-        didSet { userDefaults.set(voiceLanguages, forKey: "voiceLanguages") }
-    }
-    
-    @Published var colorSelection: Int {
-        didSet { userDefaults.set(colorSelection, forKey: "colorSelection") }
-    }
 
-    @Published var audioSelection: Int {
-        didSet { userDefaults.set(audioSelection, forKey: "audioSelection") }
-    }
+    @Published var voiceLanguageSelection: Int { didSet { userDefaults.set(voiceLanguageSelection, forKey: "voiceLanguageSelection") } }
     
-    @Published var qnh: Double {
-        didSet { userDefaults.set(qnh, forKey: "qnh") }
-    }
+    @Published var voiceLanguages: [Dictionary<String, String>] { didSet { userDefaults.set(voiceLanguages, forKey: "voiceLanguages") } }
     
-    @Published var offset: Double {
-        didSet { userDefaults.set(offset, forKey: "offset") }
-    }
+    @Published var colorSelection: Int { didSet { userDefaults.set(colorSelection, forKey: "colorSelection") } }
+
+    @Published var audioSelection: Int { didSet { userDefaults.set(audioSelection, forKey: "audioSelection") } }
     
-    @Published var colors: Array<Color> {
-        didSet { userDefaults.set(colors, forKey: "colors") }
-    }
+    @Published var qnh: Double { didSet { userDefaults.set(qnh, forKey: "qnh") } }
     
-    @Published var pilot: String {
-        didSet { userDefaults.set(pilot, forKey: "pilot") }
-    }
+    @Published var offset: Double { didSet { userDefaults.set(offset, forKey: "offset") } }
     
-    @Published var glider: String {
-        didSet { userDefaults.set(glider, forKey: "glider") }
-    }
+    @Published var colors: Array<Color> { didSet { userDefaults.set(colors, forKey: "colors") } }
     
-    @Published var displaySelection: Int {
-        didSet { userDefaults.set(displaySelection, forKey: "displaySelection") }
-    }
+    @Published var pilot: String { didSet { userDefaults.set(pilot, forKey: "pilot") } }
+    
+    @Published var glider: String { didSet { userDefaults.set(glider, forKey: "glider") } }
+    
+    @Published var displaySelection: Int { didSet { userDefaults.set(displaySelection, forKey: "displaySelection") } }
     
     init() {
         self.colorSelection = userDefaults.object(forKey: "colorSelection") as? Int ?? 3
@@ -66,7 +42,6 @@ final class UserSettings: ObservableObject {
         self.displaySelection = userDefaults.object(forKey: "displaySelection") as? Int ?? 1
         self.audioSelection = userDefaults.object(forKey: "audioSelection") as? Int ?? 0
         self.voiceLanguageSelection = userDefaults.object(forKey: "voiceLanguageSelection") as? Int ?? 10
-        self.voiceOutputSelection = userDefaults.object(forKey: "voiceOutputSelection") as? Int ?? 0
         self.voiceLanguages = userDefaults.object(forKey: "voiceLanguages") as? [Dictionary<String, String>] ?? []
     }
 }

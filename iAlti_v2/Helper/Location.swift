@@ -26,25 +26,14 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     @Published var geocodedLocation = "Unknown"
     
-    @Published var isLocationStarted = false {
-        didSet { objectWillChange.send() }
-    }
+    @Published var isLocationStarted = false { didSet { objectWillChange.send() } }
     
-    @Published var locationStatus: CLAuthorizationStatus? {
-        didSet { objectWillChange.send() }
-    }
+    @Published var locationStatus: CLAuthorizationStatus? { didSet { objectWillChange.send() } }
     
-    @Published var lastLocation: CLLocation? {
-        didSet { objectWillChange.send() }
-    }
+    @Published var lastLocation: CLLocation? { didSet { objectWillChange.send() } }
     
     @Published var didTakeOff = false
-    @Published var didLand = false {
-        didSet {
-            viewSelection.view = 2
-            objectWillChange.send()
-        }
-    }
+    @Published var didLand = false
     
     // MARK: Arrays
     @Published var locationArray: [CLLocation] = []
@@ -129,7 +118,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
                 if !didTakeOff {
                     if location.speed > 3 || Altimeter.shared.speedVertical > 3 {
                         didTakeOff = true
-                        playAudio()
+                        playAudio(testing: false)
                         debugPrint("Take Off detected! Deleting \(locationArray.count - 10) previously saved locations.")
                         if locationArray.count > 10 {
                             for _ in 11...locationArray.count {
@@ -142,6 +131,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
                 } else {
                     if location.speed < 1 && Altimeter.shared.speedVertical < 1 {
                         didLand = true
+                        viewSelection.view = 2
                         debugPrint("Landing detected!")
                     }
                 }
