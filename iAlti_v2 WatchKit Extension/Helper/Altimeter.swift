@@ -1,6 +1,6 @@
 //
 //  Altimeter.swift
-//  iAlti_v2 WatchKit Extension
+//  iAlti_v2
 //
 //  Created by Lukas Wheldon on 14.12.20.
 //
@@ -9,34 +9,28 @@ import Foundation
 import CoreMotion
 import Combine
 
-final class Altimeter: CMAltimeter, ObservableObject {
+class Altimeter: CMAltimeter, ObservableObject {
     static let shared = Altimeter()
     
-    @Published var relativeAltitude: Double = 0 { didSet { objectWillChange.send() } }
-    
-    @Published var isAltimeterStarted = false { didSet { objectWillChange.send() } }
-    
-    @Published var speedVertical: Double = 0 { didSet { objectWillChange.send() } }
-    
-    @Published var barometricAltitude: Double = 0 { didSet { objectWillChange.send() } }
-    
-    @Published var pressure: Double = 0 { didSet { objectWillChange.send() } }
-    
-    @Published var glideRatio: Double = 0 { didSet { objectWillChange.send() } }
+    @Published var relativeAltitude: Double = 0
+    @Published var isAltimeterStarted = false
+    @Published var speedVertical: Double = 0
+    @Published var barometricAltitude: Double = 0
+    @Published var pressure: Double = 0
+    @Published var glideRatio: Double = 0
+    @Published var timestamp: Double = 0
     
     func setOffset() {
         UserSettings.shared.offset = 8400 * (UserSettings.shared.qnh - Altimeter.shared.pressure) / UserSettings.shared.qnh
     }
     
-    // MARK: Start & Stop
     func stop() {
         self.stopRelativeAltitudeUpdates()
-        isAltimeterStarted = false
+        self.isAltimeterStarted = false
     }
     
     func start() {
-        var timestamp = 0.0
-        
+        var lastTimestamp: Double = 0
         if Altimeter.isRelativeAltitudeAvailable() {
             switch Altimeter.authorizationStatus() {
             case .notDetermined: // Handle state before user prompt
@@ -53,19 +47,30 @@ final class Altimeter: CMAltimeter, ObservableObject {
             }
             self.startRelativeAltitudeUpdates(to: OperationQueue.main) { data, error in
                 if let trueData = data {
-                    //debugPrint(#function, trueData)
+                    self.timestamp = trueData.timestamp
                     self.pressure = trueData.pressure.doubleValue * 10
                     self.barometricAltitude =  8400 * (UserSettings.shared.qnh - Altimeter.shared.pressure) / UserSettings.shared.qnh
-                    self.speedVertical = (trueData.relativeAltitude.doubleValue - Altimeter.shared.relativeAltitude) / (trueData.timestamp - timestamp)
+                    self.speedVertical = (trueData.relativeAltitude.doubleValue - Altimeter.shared.relativeAltitude) / (trueData.timestamp - lastTimestamp)
                     self.glideRatio = (LocationManager.shared.lastLocation?.speed ?? 0) / (-1 * Altimeter.shared.speedVertical)
-                    timestamp = trueData.timestamp
                     self.relativeAltitude = trueData.relativeAltitude.doubleValue
+                    
+                    var text = ""
+                    if UserSettings.shared.audioSelection == 1 {
+                        text = String(format: "%.01f", self.glideRatio)
+                    } else if UserSettings.shared.audioSelection == 2 {
+                        text = String(format: "%.01f", self.speedVertical)
+                    } else if UserSettings.shared.audioSelection == 5 {
+                        
+                    }
+                    voiceOutput(text: text)
+                    
+                    lastTimestamp = trueData.timestamp
                 } else {
                     debugPrint("Error starting relative Altitude Updates: \(error?.localizedDescription ?? "Unknown Error")")
                 }
             }
         }
-        isAltimeterStarted = true
+        self.isAltimeterStarted = true
         UserSettings.shared.offset = 0
     }
 }

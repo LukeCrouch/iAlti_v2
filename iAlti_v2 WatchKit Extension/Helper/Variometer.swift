@@ -8,7 +8,7 @@
 import Foundation
 import AVFoundation
 
-class Synth {
+class Vario {
     
     typealias Signal = (_ frequency: Float, _ time: Float) -> Float
     
@@ -18,7 +18,7 @@ class Synth {
     }
     
     // MARK: Properties
-    public static let shared = Synth()
+    public static let shared = Vario()
     
     private var volume: Float {
         set {
@@ -97,7 +97,7 @@ class Synth {
         mainMixer.outputVolume = 1
     }
     
-    // MARK: Play
+    // MARK: Control
     func playVario(testing: Bool) {
         let ClimbToneOnThreshold = 0.1
         let ClimbToneOffThreshold = 0.05
@@ -110,8 +110,7 @@ class Synth {
             print("Could not start engine: \(error.localizedDescription)")
         }
         
-        let serialQueue = DispatchQueue(label: "swiftVario.serial.queue")
-        serialQueue.async {
+        DispatchQueue.main.async {
             var loopSwitch = false
             var timerVolume = 1.0
             var threshholdVolume = 1.0
@@ -122,30 +121,28 @@ class Synth {
                 } else {
                     timerVolume = 1
                 }
+                let climbRate = Altimeter.shared.speedVertical
                 
-                if Altimeter.shared.glideRatio > ClimbToneOnThreshold || Altimeter.shared.glideRatio < SinkToneOnThreshold {
-                    threshholdVolume = 1
-                } else if Altimeter.shared.glideRatio < ClimbToneOffThreshold && Altimeter.shared.glideRatio > SinkToneOffThreshold {
-                    threshholdVolume = 0
-                }
                 if testing {
                     threshholdVolume = 1
+                } else if climbRate > ClimbToneOnThreshold || climbRate < SinkToneOnThreshold {
+                    threshholdVolume = 1
+                } else if climbRate < ClimbToneOffThreshold && climbRate > SinkToneOffThreshold {
+                    threshholdVolume = 0
                 }
                 
                 self.audioEngine.mainMixerNode.outputVolume = Float(timerVolume * threshholdVolume)
-                print("timerVolume: ", timerVolume, "threshholdVolume: ", threshholdVolume)
                 
-                let climbRate = abs(Altimeter.shared.speedVertical)
                 self.frequency = 500 + Float(climbRate) * 50
-                let waitSeconds = 0.6 - 0.04 * climbRate
-                print("climbRate: ", climbRate ,"waitSeconds: ", waitSeconds)
+                let waitSeconds = 0.6 - 0.04 * abs(climbRate)
                 usleep(UInt32(waitSeconds * 1000000))
+                
+                print("Vario Timestamps: ", Date(), Altimeter.shared.timestamp)
                 
                 loopSwitch.toggle()
             } while LocationManager.shared.didLand == false && LocationManager.shared.didTakeOff == true
             sleep(1)
             self.audioEngine.stop()
-            
         }
     }
 }

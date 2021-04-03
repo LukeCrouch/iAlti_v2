@@ -8,31 +8,27 @@
 import Foundation
 import AVFoundation
 
-// voiceOutputs = ["Off", "Glide Ratio", "Speed vertical", "Speed horizontal", "Altitude", "Variometer"]
-public func voiceOutput() {
-    let synthesizer = AVSpeechSynthesizer()
-    var text = ""
-    
-    let serialQueue = DispatchQueue(label: "swiftVario.serial.queue")
-    serialQueue.async {
-        repeat {
-            if UserSettings.shared.audioSelection == 1 {
-                text = String(format: "%.01f", Altimeter.shared.glideRatio)
-            } else if UserSettings.shared.audioSelection == 2 {
-                text = String(format: "%.01f", Altimeter.shared.speedVertical)
-            } else if UserSettings.shared.audioSelection == 3 {
-                text = String(format: "%.01f", LocationManager.shared.lastLocation?.speed ?? 0)
-            } else if UserSettings.shared.audioSelection == 4 {
-                text = String(format: "%.01f", Altimeter.shared.barometricAltitude)
-            }
-            let utterance = AVSpeechUtterance(string: text)
-            utterance.voice = AVSpeechSynthesisVoice.init(identifier: UserSettings.shared.voiceLanguages[UserSettings.shared.voiceLanguageSelection]["identifier"] ?? NSLocale.current.identifier)
-            synthesizer.speak(utterance)
-            
-            let waitSeconds = 1
-            usleep(UInt32(waitSeconds * 1000000))
-        } while LocationManager.shared.didLand == false && LocationManager.shared.didTakeOff == true
+public func testAudio() {
+    if UserSettings.shared.audioSelection == 0 {
+        return
+    } else if UserSettings.shared.audioSelection == 5 {
+        Vario.shared.playVario(testing: true)
+    } else {
+        voiceOutput(text: "69")
     }
+}
+
+// voiceOutputs = ["Off", "Glide Ratio", "Speed vertical", "Speed horizontal", "Altitude", "Variometer"]
+public func voiceOutput(text: String) {
+    let synthesizer = AVSpeechSynthesizer()
+    let utterance = AVSpeechUtterance(string: text)
+    utterance.voice = AVSpeechSynthesisVoice.init(identifier: UserSettings.shared.voiceLanguages[UserSettings.shared.voiceLanguageSelection]["identifier"] ?? NSLocale.current.identifier)
+    synthesizer.speak(utterance)
+    
+    print("Voice Synth Timestamps: ", Date(), LocationManager.shared.lastLocation?.timestamp ?? 0)
+    
+    //let waitSeconds = 1
+    //usleep(UInt32(waitSeconds * 1000000))
 }
 
 public func prepareVoiceList() {

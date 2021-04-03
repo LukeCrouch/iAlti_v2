@@ -7,22 +7,14 @@
 
 import Foundation
 
-public var voiceTimer = Timer.scheduledTimer(withTimeInterval: 0, repeats: false, block: {_ in} )
-public var audioTimer = Timer.scheduledTimer(withTimeInterval: 0, repeats: false, block: {_ in} )
-
-public func playAudio(testing: Bool) {
+public func testAudio() {
     if UserSettings.shared.audioSelection == 0 {
         return
     } else if UserSettings.shared.audioSelection == 5 {
-        Synth.shared.playVario(testing: true)
+        Vario.shared.playVario(testing: true)
     } else {
-        voiceOutput()
+        voiceOutput(text: "69")
     }
-}
-
-public func stopAudio() {
-    voiceTimer.invalidate()
-    audioTimer.invalidate()
 }
 
 public extension String {
@@ -34,7 +26,7 @@ public extension String {
 }
 
 public extension Double {
-    func asString(style: DateComponentsFormatter.UnitsStyle) -> String {
+    func asDateString(style: DateComponentsFormatter.UnitsStyle) -> String {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.hour, .minute, .second]
         formatter.unitsStyle = style
@@ -45,9 +37,9 @@ public extension Double {
 }
 
 public func arithmeticMean(numbers: [Double]) -> Double {
-   var total: Double = 0
-   for number in numbers {
-       total += number
-   }
-   return total / Double(numbers.count)
+    var total: Double = 0
+    for number in numbers {
+        total += number
+    }
+    return total / Double(numbers.count)
 }

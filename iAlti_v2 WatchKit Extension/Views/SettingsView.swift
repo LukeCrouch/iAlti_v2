@@ -80,7 +80,7 @@ struct SettingsView: View {
                     Button(action: {
                         let cachedSelection = userSettings.audioSelection
                         userSettings.audioSelection = 1
-                        voiceOutput()
+                        testAudio()
                         userSettings.audioSelection = cachedSelection
                     },
                     label: {

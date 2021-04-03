@@ -9,16 +9,6 @@ import SwiftUI
 import CoreLocation
 import Combine
 
-public func playAudio(testing: Bool) {
-    if UserSettings.shared.audioSelection == 0 {
-        return
-    } else if UserSettings.shared.audioSelection == 5 {
-        Synth.shared.playVario(testing: true)
-    } else {
-        voiceOutput()
-    }
-}
-
 final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     override init() {
         super.init()
@@ -88,7 +78,7 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
                 if !didTakeOff {
                     if location.speed > 3 || Altimeter.shared.speedVertical > 3 {
                         didTakeOff = true
-                        playAudio(testing: false)
+                        Vario.shared.playVario(testing: false)
                         debugPrint("Take Off detected. Deleting \(locationArray.count - 10) previously saved locations.")
                         if locationArray.count > 10 {
                             for _ in 11...locationArray.count {
@@ -99,6 +89,14 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
                         }
                     }
                 } else {
+                    var text = ""
+                    if UserSettings.shared.audioSelection == 3 {
+                        text = String(format: "%.0f", (LocationManager.shared.lastLocation?.speed ?? 0) * 3.6)
+                    } else if UserSettings.shared.audioSelection == 4 {
+                        text = String(format: "%.01f", Altimeter.shared.barometricAltitude)
+                    }
+                    voiceOutput(text: text)
+                    
                     if location.speed < 1 && Altimeter.shared.speedVertical < 1 {
                         didLand = true
                         debugPrint("Landing detected!")

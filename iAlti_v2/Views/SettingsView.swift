@@ -49,11 +49,11 @@ struct SettingsView: View {
     // MARK: Functions
     func stopButton() {
         debugPrint("Stop Button pressed")
+        locationManager.didLand = true
         viewSelection.view = 1
         duration = DateInterval(start: startDate, end: Date()).duration
         altimeter.stop()
         locationManager.stop()
-        stopAudio()
         toggleLoc = false
         toggleAlti = false
         PersistenceManager.shared.saveLog(duration: duration)
@@ -251,7 +251,7 @@ struct SettingsView: View {
                     }
                     Button(action: {
                         debugPrint("Testing audio output.")
-                        playAudio(testing: true)
+                        testAudio()
                     },
                     label: {
                         HStack {
@@ -295,7 +295,7 @@ struct SettingsView: View {
         .onChange(of: userSettings.qnh, perform: {_ in Altimeter.shared.setOffset() })
         .onChange(of: locationManager.didLand, perform: {_ in
             alertTitle = "Landed!"
-            alertMessage = "Landing detected: Finished logging and saving file. Flight Time: \(duration)"
+            alertMessage = "Landing detected: Finished logging and saving file. Flight Time: \(duration.asDateString(style: .positional))"
             showAlert = true
             stopButton()
         })

@@ -67,7 +67,7 @@ struct LogView: View {
                     HStack {
                         Text("\(log.date, formatter: dateFormatterShort)")
                         Text(log.takeOff).fontWeight(.bold)
-                        Text(log.flightTime.asString(style: .positional))
+                        Text(log.flightTime.asDateString(style: .positional))
                         Spacer()
                         if log.fromWatch {
                             Image(systemName: "applewatch")
