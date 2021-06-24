@@ -31,6 +31,7 @@ class Altimeter: CMAltimeter, ObservableObject {
     
     func start() {
         var lastTimestamp: Double = 0
+        // TODO: Ask for permission
         if Altimeter.isRelativeAltitudeAvailable() {
             switch Altimeter.authorizationStatus() {
             case .notDetermined: // Handle state before user prompt
@@ -46,6 +47,7 @@ class Altimeter: CMAltimeter, ObservableObject {
                 fatalError("Unknown CM Authorization Status!")
             }
             self.startRelativeAltitudeUpdates(to: OperationQueue.main) { data, error in
+                print("start")
                 if let trueData = data {
                     self.timestamp = trueData.timestamp
                     self.pressure = trueData.pressure.doubleValue * 10
@@ -57,12 +59,14 @@ class Altimeter: CMAltimeter, ObservableObject {
                     var text = ""
                     if UserSettings.shared.audioSelection == 1 {
                         text = String(format: "%.01f", self.glideRatio)
+                        voiceOutput(text: text)
                     } else if UserSettings.shared.audioSelection == 2 {
                         text = String(format: "%.01f", self.speedVertical)
-                    } else if UserSettings.shared.audioSelection == 5 {
-                        
+                        voiceOutput(text: text)
+                    } else if UserSettings.shared.audioSelection == 4 {
+                        text = String(format: "%0.1f", self.relativeAltitude)
+                        voiceOutput(text: text)
                     }
-                    voiceOutput(text: text)
                     
                     lastTimestamp = trueData.timestamp
                 } else {

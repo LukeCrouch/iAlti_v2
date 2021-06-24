@@ -137,6 +137,7 @@ class Vario {
                 let waitSeconds = 0.6 - 0.04 * abs(climbRate)
                 usleep(UInt32(waitSeconds * 1000000))
                 
+                print("Climbrate: ", climbRate)
                 print("Vario Timestamps: ", Date(), Altimeter.shared.timestamp)
                 
                 loopSwitch.toggle()

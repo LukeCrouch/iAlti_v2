@@ -57,12 +57,14 @@ class Altimeter: CMAltimeter, ObservableObject {
                     var text = ""
                     if UserSettings.shared.audioSelection == 1 {
                         text = String(format: "%.01f", self.glideRatio)
+                        voiceOutput(text: text)
                     } else if UserSettings.shared.audioSelection == 2 {
                         text = String(format: "%.01f", self.speedVertical)
-                    } else if UserSettings.shared.audioSelection == 5 {
-                        
+                        voiceOutput(text: text)
+                    } else if UserSettings.shared.audioSelection == 4 {
+                        text = String(format: "%0.1f", self.relativeAltitude)
+                        voiceOutput(text: text)
                     }
-                    voiceOutput(text: text)
                     
                     lastTimestamp = trueData.timestamp
                 } else {

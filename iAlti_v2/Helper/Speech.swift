@@ -14,12 +14,8 @@ public func voiceOutput(text: String) {
     let utterance = AVSpeechUtterance(string: text)
     utterance.voice = AVSpeechSynthesisVoice.init(identifier: UserSettings.shared.voiceLanguages[UserSettings.shared.voiceLanguageSelection]["identifier"] ?? NSLocale.current.identifier)
     synthesizer.speak(utterance)
-    
-    print("Voice Synth Timestamps: ", Date(), LocationManager.shared.lastLocation?.timestamp ?? 0)
-    
-    //let waitSeconds = 1
-    //usleep(UInt32(waitSeconds * 1000000))
-}
+    // ToDo: abstand zwischen zwei outputs
+    }
 
 public func prepareVoiceList() {
     var list: [Dictionary<String, String>] = []
