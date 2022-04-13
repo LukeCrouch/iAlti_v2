@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import MapKit
 
 class PersistenceManager {
     static var shared = PersistenceManager()

@@ -12,14 +12,8 @@ final class UserSettings: ObservableObject {
     
     let userDefaults = UserDefaults.standard
 
-    @Published var voiceLanguageSelection: Int { didSet { userDefaults.set(voiceLanguageSelection, forKey: "voiceLanguageSelection") } }
-    
-    @Published var voiceLanguages: [Dictionary<String, String>] { didSet { userDefaults.set(voiceLanguages, forKey: "voiceLanguages") } }
-    
     @Published var colorSelection: Int { didSet { userDefaults.set(colorSelection, forKey: "colorSelection") } }
 
-    @Published var audioSelection: Int { didSet { userDefaults.set(audioSelection, forKey: "audioSelection") } }
-    
     @Published var qnh: Double { didSet { userDefaults.set(qnh, forKey: "qnh") } }
     
     @Published var offset: Double { didSet { userDefaults.set(offset, forKey: "offset") } }
@@ -40,8 +34,5 @@ final class UserSettings: ObservableObject {
         self.pilot = userDefaults.object(forKey: "pilot") as? String ?? "Jerry"
         self.glider = userDefaults.object(forKey: "glider") as? String ?? ""
         self.displaySelection = userDefaults.object(forKey: "displaySelection") as? Int ?? 1
-        self.audioSelection = userDefaults.object(forKey: "audioSelection") as? Int ?? 0
-        self.voiceLanguageSelection = userDefaults.object(forKey: "voiceLanguageSelection") as? Int ?? 10
-        self.voiceLanguages = userDefaults.object(forKey: "voiceLanguages") as? [Dictionary<String, String>] ?? []
     }
 }

@@ -118,9 +118,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
                 if !didTakeOff {
                     if location.speed > 3 || Altimeter.shared.speedVertical > 3 {
                         didTakeOff = true
-                        if UserSettings.shared.audioSelection == 5 {
-                            Vario.shared.playVario(testing: true)
-                        }
                         var count = 0
                         if locationArray.count > 10 {
                             for _ in 11...locationArray.count {
@@ -133,14 +130,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
                         debugPrint("Take Off detected! Deleted \(count) previously saved locations.")
                     }
                 } else {
-                    var text = ""
-                    if UserSettings.shared.audioSelection == 3 {
-                        text = String(format: "%.0f", (LocationManager.shared.lastLocation?.speed ?? 0) * 3.6)
-                        voiceOutput(text: text)
-                    } else if UserSettings.shared.audioSelection == 5 {
-                        let _ = true // TO DO
-                    }
-                    
                     if location.speed < 1 && Altimeter.shared.speedVertical < 1 {
                         didLand = true
                         viewSelection.view = 2

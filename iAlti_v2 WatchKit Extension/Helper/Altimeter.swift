@@ -54,18 +54,6 @@ class Altimeter: CMAltimeter, ObservableObject {
                     self.glideRatio = (LocationManager.shared.lastLocation?.speed ?? 0) / (-1 * Altimeter.shared.speedVertical)
                     self.relativeAltitude = trueData.relativeAltitude.doubleValue
                     
-                    var text = ""
-                    if UserSettings.shared.audioSelection == 1 {
-                        text = String(format: "%.01f", self.glideRatio)
-                        voiceOutput(text: text)
-                    } else if UserSettings.shared.audioSelection == 2 {
-                        text = String(format: "%.01f", self.speedVertical)
-                        voiceOutput(text: text)
-                    } else if UserSettings.shared.audioSelection == 4 {
-                        text = String(format: "%0.1f", self.relativeAltitude)
-                        voiceOutput(text: text)
-                    }
-                    
                     lastTimestamp = trueData.timestamp
                 } else {
                     debugPrint("Error starting relative Altitude Updates: \(error?.localizedDescription ?? "Unknown Error")")

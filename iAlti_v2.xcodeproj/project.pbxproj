@@ -49,12 +49,8 @@
 		60D77D3F2588092F00A3C979 /* Altimeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D77D3E2588092F00A3C979 /* Altimeter.swift */; };
 		60D77D4B2588098300A3C979 /* Altimeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D77D4A2588098300A3C979 /* Altimeter.swift */; };
 		60ED09722562AAC30062045D /* Logs.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 60ED09702562AAC30062045D /* Logs.xcdatamodeld */; };
-		60F21A24260387110086EA8A /* Speech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F21A23260387110086EA8A /* Speech.swift */; };
-		60F21A352603EC050086EA8A /* Variometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F21A342603EC040086EA8A /* Variometer.swift */; };
 		60F21A3F2604122A0086EA8A /* LogDetailChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F21A3E2604122A0086EA8A /* LogDetailChartView.swift */; };
 		60F2CCC825681A12003E1285 /* LogDetailOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F2CCC725681A12003E1285 /* LogDetailOverView.swift */; };
-		60F8C0462606138E00C5DFDF /* Speech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F8C0452606138E00C5DFDF /* Speech.swift */; };
-		60F8C04D2606139900C5DFDF /* Variometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F8C04C2606139900C5DFDF /* Variometer.swift */; };
 		98828981DE74560CEED52F34 /* libPods-iAlti_v2 WatchKit App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AEFA5123BDEC2306B02F24 /* libPods-iAlti_v2 WatchKit App.a */; };
 		BFEB51EB99EE73BBBFB05B0A /* Pods_iAlti_v2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7863911C5B8B45FAC5CABFD /* Pods_iAlti_v2.framework */; };
 		E54788EDEF2E3ECC9E2E69C4 /* libPods-iAlti_v2 WatchKit Extension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CDB102E2C74F02F9146447 /* libPods-iAlti_v2 WatchKit Extension.a */; };
@@ -168,12 +164,8 @@
 		60D77D3E2588092F00A3C979 /* Altimeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Altimeter.swift; sourceTree = "<group>"; };
 		60D77D4A2588098300A3C979 /* Altimeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Altimeter.swift; sourceTree = "<group>"; };
 		60ED09712562AAC30062045D /* Logs.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Logs.xcdatamodel; sourceTree = "<group>"; };
-		60F21A23260387110086EA8A /* Speech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speech.swift; sourceTree = "<group>"; };
-		60F21A342603EC040086EA8A /* Variometer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variometer.swift; sourceTree = "<group>"; };
 		60F21A3E2604122A0086EA8A /* LogDetailChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDetailChartView.swift; sourceTree = "<group>"; };
 		60F2CCC725681A12003E1285 /* LogDetailOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDetailOverView.swift; sourceTree = "<group>"; };
-		60F8C0452606138E00C5DFDF /* Speech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speech.swift; sourceTree = "<group>"; };
-		60F8C04C2606139900C5DFDF /* Variometer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variometer.swift; sourceTree = "<group>"; };
 		9198A8A4525D112A95A6994C /* Pods-iAlti_v2Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlti_v2Tests.debug.xcconfig"; path = "Target Support Files/Pods-iAlti_v2Tests/Pods-iAlti_v2Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		91AEFA5123BDEC2306B02F24 /* libPods-iAlti_v2 WatchKit App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iAlti_v2 WatchKit App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		91CDB102E2C74F02F9146447 /* libPods-iAlti_v2 WatchKit Extension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iAlti_v2 WatchKit Extension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -361,8 +353,6 @@
 				60C5766D2562C249001E6D17 /* Location.swift */,
 				6024AE7B25817EAB0092BEEF /* Extensions.swift */,
 				606034AE2563160C007170EB /* UserSettings.swift */,
-				60F21A23260387110086EA8A /* Speech.swift */,
-				60F21A342603EC040086EA8A /* Variometer.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -374,8 +364,6 @@
 				60C576742562C3D5001E6D17 /* Location.swift */,
 				60D77D3E2588092F00A3C979 /* Altimeter.swift */,
 				6060352C25642862007170EB /* UserSettings.swift */,
-				60F8C0452606138E00C5DFDF /* Speech.swift */,
-				60F8C04C2606139900C5DFDF /* Variometer.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -803,10 +791,8 @@
 				6098479525949EA70018AD18 /* FileExporter.swift in Sources */,
 				60C576AF2562D20D001E6D17 /* MainView.swift in Sources */,
 				60C576672562C1FA001E6D17 /* Persistence.swift in Sources */,
-				60F21A24260387110086EA8A /* Speech.swift in Sources */,
 				60ED09722562AAC30062045D /* Logs.xcdatamodeld in Sources */,
 				60C5766E2562C249001E6D17 /* Location.swift in Sources */,
-				60F21A352603EC050086EA8A /* Variometer.swift in Sources */,
 				60D77D4B2588098300A3C979 /* Altimeter.swift in Sources */,
 				60C576C02562D37B001E6D17 /* SettingsView.swift in Sources */,
 			);
@@ -834,9 +820,7 @@
 			files = (
 				604D55A2255C1AE600B50268 /* OverView.swift in Sources */,
 				604D556F255C191200B50268 /* NotificationController.swift in Sources */,
-				60F8C04D2606139900C5DFDF /* Variometer.swift in Sources */,
 				60C576752562C3D5001E6D17 /* Location.swift in Sources */,
-				60F8C0462606138E00C5DFDF /* Speech.swift in Sources */,
 				604D55A1255C1AE600B50268 /* MainView.swift in Sources */,
 				604D55A3255C1AE600B50268 /* SettingsView.swift in Sources */,
 				604D556D255C191200B50268 /* ContentView.swift in Sources */,

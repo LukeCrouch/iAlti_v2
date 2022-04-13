@@ -82,8 +82,5 @@ struct MainView: View {
             showAlert = true
             //stopButton()
         })
-        .onAppear(perform: {
-            prepareVoiceList()
-        })
     }
 }

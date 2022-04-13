@@ -9,7 +9,6 @@
 		<string>location</string>
 		<string>fetch</string>
 		<string>processing</string>
-		<string>audio</string>
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Loc</string>

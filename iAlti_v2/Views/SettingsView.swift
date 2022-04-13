@@ -30,7 +30,6 @@ struct SettingsView: View {
     @State private var toggleAlti = false
     @State private var toggleLoc = false
     private let colors = ["Green", "White", "Red", "Blue", "Orange", "Yellow", "Pink", "Purple", "Black"]
-    private let voiceOutputs = ["Off", "Glide Ratio", "Speed vertical", "Speed horizontal", "Altitude", "Variometer"]
     
     @State var startDate = Date()
     @State var duration: Double = 0
@@ -64,7 +63,7 @@ struct SettingsView: View {
         Form {
             // MARK: Dashboard
             Section(header: Text("Dashboard")) {
-                HStack {
+                /*HStack {
                     if locationManager.didTakeOff {
                         Text("True")
                             .foregroundColor(userSettings.colors[userSettings.colorSelection])
@@ -83,7 +82,7 @@ struct SettingsView: View {
                             .foregroundColor(userSettings.colors[userSettings.colorSelection])
                     }
                     Text("Did Land")
-                }
+                }*/
                 HStack {
                     if altimeter.isAltimeterStarted {
                         Image(systemName: "circle.fill")
@@ -183,7 +182,7 @@ struct SettingsView: View {
                                 altimeter.start()
                             }, label: {HStack {
                                 Image(systemName: "play")
-                                Text("Run Altimeter")}
+                                Text("Start Altimeter only")}
                                 .foregroundColor(userSettings.colors[userSettings.colorSelection])
                             })
                         }
@@ -200,7 +199,7 @@ struct SettingsView: View {
                 }, label: {
                     HStack {
                         Image(systemName: "icloud.and.arrow.down")
-                        Text("Auto Calibration")
+                        Text("Auto Calibrate")
                     }
                     .foregroundColor(userSettings.colors[userSettings.colorSelection])
                 })
@@ -220,7 +219,7 @@ struct SettingsView: View {
                         .foregroundColor(userSettings.colors[userSettings.colorSelection])
                 }
             }
-            Section(header: Text("Log Defaults")) {
+            Section(header: Text("Log File Defaults")) {
                 HStack {
                     Text("Pilot")
                     Spacer()
@@ -232,33 +231,6 @@ struct SettingsView: View {
                     Spacer()
                     TextField("", text: $userSettings.glider)
                         .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                }
-            }
-            Section(header: Text("Audio Settings")) {
-                Picker(selection: $userSettings.audioSelection, label: Text("Audio Output")) {
-                    ForEach(0 ..< self.voiceOutputs.count) {
-                        Text(voiceOutputs[$0]).foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    }
-                }
-                if userSettings.audioSelection != 0 {
-                    if userSettings.audioSelection != 5 {
-                        Picker(selection: $userSettings.voiceLanguageSelection, label: Text("Voice Language")) {
-                            ForEach(0 ..< userSettings.voiceLanguages.count) {
-                                let text = (userSettings.voiceLanguages[$0]["languageName"] ?? "Unknown") + " " + (userSettings.voiceLanguages[$0]["voiceName"] ?? "")
-                                Text(text).foregroundColor(userSettings.colors[userSettings.colorSelection])
-                            }
-                        }
-                    }
-                    Button(action: {
-                        debugPrint("Testing audio output.")
-                        testAudio()
-                    },
-                    label: {
-                        HStack {
-                            Image(systemName: "speaker.wave.3")
-                            Text("Test audio output.")}
-                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    })
                 }
             }
             Section(header: Text("Customize")) {
@@ -291,7 +263,6 @@ struct SettingsView: View {
         .alert(isPresented: $showAlert) {
             Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
         }
-        .onAppear(perform: { prepareVoiceList() })
         .onChange(of: userSettings.qnh, perform: {_ in Altimeter.shared.setOffset() })
         .onChange(of: locationManager.didLand, perform: {_ in
             alertTitle = "Landed!"

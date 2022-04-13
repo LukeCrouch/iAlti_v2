@@ -7,16 +7,6 @@
 
 import Foundation
 
-public func testAudio() {
-    if UserSettings.shared.audioSelection == 0 {
-        return
-    } else if UserSettings.shared.audioSelection == 5 {
-        Vario.shared.playVario(testing: true)
-    } else {
-        voiceOutput(text: "69")
-    }
-}
-
 public extension String {
     var model: String? {
         guard let base64 = Data(base64Encoded: self) else { return nil }
