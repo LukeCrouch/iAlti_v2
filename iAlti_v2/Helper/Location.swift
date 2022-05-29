@@ -34,6 +34,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     @Published var didTakeOff = false
     @Published var didLand = false
+    @Published var showPrivacyAlert = false
     
     // MARK: Arrays
     @Published var locationArray: [CLLocation] = []
@@ -71,6 +72,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     // MARK: Auto Calibration
     func autoCalib() {
+        debugPrint("Auto Calibration started")
         guard let location = lastLocation else { debugPrint("Did not calibrate because of missing location!"); return }
         let pressureCall = "ZmY1N2FmZThkOGY2N2U2MzIwNmVmZmQ2MTM3NmMzZDc="
         let pressureCallNew: String = pressureCall.model!
@@ -160,18 +162,24 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         switch LocationManager.shared.locationStatus {
         case .notDetermined:
             debugPrint("CL: Awaiting user prompt...")
+            showPrivacyAlert = true
         case .restricted:
-            fatalError("CL Authorization restricted!")
+            debugPrint("CM Authorization restricted!")
+            showPrivacyAlert = true
         case .denied:
-            fatalError("CL Authorization denied!")
+            debugPrint("CL Authorization denied!")
+            showPrivacyAlert = true
         case .authorizedAlways:
             debugPrint("CL Authorized!")
         case .authorizedWhenInUse:
             debugPrint("CL Authorized when in use!")
+            showPrivacyAlert = true
         case .none:
             debugPrint("CL Authorization None!")
+            showPrivacyAlert = true
         @unknown default:
-            fatalError("Unknown CL Authorization Status!")
+            debugPrint("Unknown CL Authorization Status!")
+            showPrivacyAlert = true
         }
         locationManager.startUpdatingLocation()
         locationManager.startUpdatingHeading()

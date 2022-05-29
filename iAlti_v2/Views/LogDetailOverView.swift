@@ -64,7 +64,7 @@ struct LogDetailOverView: View {
                 VStack {
                     HStack {
                         LogSummaryTitle(text: dateFormatter.string(from: log.date), details: "Date").padding(.horizontal)
-                        LogSummaryTitle(text: log.takeOff, details: "Take Off").padding(.horizontal)
+                        LogSummaryTitle(text: log.takeOff, details: "Location").padding(.horizontal)
                         LogSummaryTitle(text: (log.flightTime.asDateString(style: .positional)), details: "Flight Time").padding(.horizontal)
                     }
                     HStack {

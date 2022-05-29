@@ -19,6 +19,7 @@ class Altimeter: CMAltimeter, ObservableObject {
     @Published var pressure: Double = 0
     @Published var glideRatio: Double = 0
     @Published var timestamp: Double = 0
+    @Published var showPrivacyAlert = false
     
     func setOffset() {
         UserSettings.shared.offset = 8400 * (UserSettings.shared.qnh - Altimeter.shared.pressure) / UserSettings.shared.qnh
@@ -33,17 +34,20 @@ class Altimeter: CMAltimeter, ObservableObject {
         var lastTimestamp: Double = 0
         if Altimeter.isRelativeAltitudeAvailable() {
             switch Altimeter.authorizationStatus() {
-            case .notDetermined: // Handle state before user prompt
+            case .notDetermined:
                 debugPrint("CM: Awaiting user prompt...")
-            //fatalError("Awaiting CM user prompt...")
+                showPrivacyAlert = true
             case .restricted: // Handle system-wide restriction
-                fatalError("CM Authorization restricted!")
+                debugPrint("CM Authorization restricted!")
+                showPrivacyAlert = true
             case .denied: // Handle user denied state
-                fatalError("CM Authorization denied!")
+                debugPrint("CM Authorization denied!")
+                showPrivacyAlert = true
             case .authorized: // Ready to go!
                 debugPrint("CM Authorized!")
             @unknown default:
-                fatalError("Unknown CM Authorization Status!")
+                debugPrint("Unknown CM Authorization Status!")
+                showPrivacyAlert = true
             }
             self.startRelativeAltitudeUpdates(to: OperationQueue.main) { data, error in
                 if let trueData = data {

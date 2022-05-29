@@ -31,8 +31,8 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     @Published var lastLocation: CLLocation? { didSet { objectWillChange.send() } }
     
     @Published var didTakeOff = false
-    
     @Published var didLand = false
+    @Published var showPrivacyAlert = false
     
     private var statusString: String {
         guard let status = locationStatus else {
@@ -74,12 +74,13 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
         
         if location.horizontalAccuracy < 15 {
             if location.course > 0 {
-                
                 if !didTakeOff {
                     if location.speed > 3 || Altimeter.shared.speedVertical > 3 {
                         didTakeOff = true
-                        debugPrint("Take Off detected. Deleting \(locationArray.count - 10) previously saved locations.")
+                        debugPrint("Take Off detected.")
+                        WKInterfaceDevice().play(.start)
                         if locationArray.count > 10 {
+                            debugPrint("Take Off detected. Deleting \(locationArray.count - 10) previously saved locations.")
                             for _ in 11...locationArray.count {
                                 locationArray.remove(at: 0)
                                 altitudeArray.remove(at: 0)
@@ -91,6 +92,7 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
                     if location.speed < 1 && Altimeter.shared.speedVertical < 1 {
                         didLand = true
                         debugPrint("Landing detected!")
+                        WKInterfaceDevice().play(.stop)
                     }
                 }
                 
@@ -112,19 +114,24 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
         switch locationStatus {
         case .notDetermined:
             debugPrint("CL: Awaiting user prompt...")
-        //fatalError("Awaiting CL user prompt...")
+            showPrivacyAlert = true
         case .restricted:
-            fatalError("CL Authorization restricted!")
+            debugPrint("CL Authorization restricted!")
+            showPrivacyAlert = true
         case .denied:
-            fatalError("CL Authorization denied!")
+            debugPrint("CL Authorization denied!")
+            showPrivacyAlert = true
         case .authorizedAlways:
             debugPrint("CL Authorized!")
         case .authorizedWhenInUse:
             debugPrint("CL Authorized when in use!")
+            showPrivacyAlert = true
         case .none:
             debugPrint("CL Authorization None!")
+            showPrivacyAlert = true
         @unknown default:
-            fatalError("Unknown CL Authorization Status!")
+            debugPrint("Unknown CL Authorization Status!")
+            showPrivacyAlert = true
         }
         locationManager.startUpdatingLocation()
         isLocationStarted = true

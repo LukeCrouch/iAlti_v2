@@ -16,10 +16,22 @@ struct ControlsView: View {
     @State private var showingAlert = false
     @State private var showModal = false
     
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    @State private var alertTitle = ""
+    
     private let connectivityProvider = PhoneConnectivityProvider()
     
     @State var startDate = Date()
     @State var duration: Double = 0
+    
+    func stopButton() {
+        WKInterfaceDevice().play(.stop)
+        duration = DateInterval(start: startDate, end: Date()).duration
+        locationManager.stop()
+        altimeter.stop()
+        connectivityProvider.send(duration: duration)
+    }
     
     var body: some View {
         VStack {
@@ -28,11 +40,7 @@ struct ControlsView: View {
                     if locationManager.isLocationStarted {
                         Button(action: {
                             debugPrint("Stop Logging Button pressed")
-                            WKInterfaceDevice().play(.stop)
-                            duration = DateInterval(start: startDate, end: Date()).duration
-                            locationManager.stop()
-                            altimeter.stop()
-                            connectivityProvider.send(duration: duration)
+                            stopButton()
                         },
                         label: {
                             Image(systemName: "stop.fill")
@@ -127,5 +135,19 @@ struct ControlsView: View {
                 }
             }
         }
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+        }
+        .onChange(of: locationManager.showPrivacyAlert, perform: {_ in
+            alertTitle = "Location Usage not allowed!"
+            alertMessage = "Please got to Settings -> Privacy and allow this app to use location data (always and precise). Afterwards please restart the app."
+            showAlert = locationManager.showPrivacyAlert
+        })
+        .onChange(of: locationManager.didLand, perform: {_ in
+            alertTitle = "Landed!"
+            alertMessage = "Landing detected: Finished logging and saving file."
+            showAlert = true
+            stopButton()
+        })
     }
 }

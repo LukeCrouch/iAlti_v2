@@ -53,7 +53,6 @@
 		60F2CCC825681A12003E1285 /* LogDetailOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F2CCC725681A12003E1285 /* LogDetailOverView.swift */; };
 		98828981DE74560CEED52F34 /* libPods-iAlti_v2 WatchKit App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AEFA5123BDEC2306B02F24 /* libPods-iAlti_v2 WatchKit App.a */; };
 		BFEB51EB99EE73BBBFB05B0A /* Pods_iAlti_v2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7863911C5B8B45FAC5CABFD /* Pods_iAlti_v2.framework */; };
-		E54788EDEF2E3ECC9E2E69C4 /* libPods-iAlti_v2 WatchKit Extension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CDB102E2C74F02F9146447 /* libPods-iAlti_v2 WatchKit Extension.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -174,6 +173,11 @@
 		AFC32399FC20E33B7F4F9449 /* Pods-iAlti_v2 WatchKit App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlti_v2 WatchKit App.debug.xcconfig"; path = "Target Support Files/Pods-iAlti_v2 WatchKit App/Pods-iAlti_v2 WatchKit App.debug.xcconfig"; sourceTree = "<group>"; };
 		BD1AC7BF9E63678F6FFB9245 /* Pods-iAlti_v2 WatchKit App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlti_v2 WatchKit App.release.xcconfig"; path = "Target Support Files/Pods-iAlti_v2 WatchKit App/Pods-iAlti_v2 WatchKit App.release.xcconfig"; sourceTree = "<group>"; };
 		C39C6CA1201BE51B976416D6 /* Pods_iAlti_v2Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iAlti_v2Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C823DECE281EB1D10056C561 /* libPods-iAlti_v2 WatchKit Extension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-iAlti_v2 WatchKit Extension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8BF764A2811A9BC00A082FB /* iAlti_v2 WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "iAlti_v2 WatchKit Extension.entitlements"; sourceTree = "<group>"; };
+		C8BF764B2811A9BC00A082FB /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS8.5.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
+		C8BF764D2811A9D200A082FB /* iAlti_v2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iAlti_v2.entitlements; sourceTree = "<group>"; };
+		C8BF764E2811A9D200A082FB /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.4.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 		CC6E163DA83F5F82A4708489 /* Pods-iAlti_v2 WatchKit Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlti_v2 WatchKit Extension.debug.xcconfig"; path = "Target Support Files/Pods-iAlti_v2 WatchKit Extension/Pods-iAlti_v2 WatchKit Extension.debug.xcconfig"; sourceTree = "<group>"; };
 		D0BF602EC83B7291FC3AF98E /* Pods-iAlti_v2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlti_v2Tests.release.xcconfig"; path = "Target Support Files/Pods-iAlti_v2Tests/Pods-iAlti_v2Tests.release.xcconfig"; sourceTree = "<group>"; };
 		F352CA07C2DA656B9775C6FD /* Pods-iAlti_v2-iAlti_v2UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlti_v2-iAlti_v2UITests.debug.xcconfig"; path = "Target Support Files/Pods-iAlti_v2-iAlti_v2UITests/Pods-iAlti_v2-iAlti_v2UITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -218,7 +222,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E54788EDEF2E3ECC9E2E69C4 /* libPods-iAlti_v2 WatchKit Extension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,6 +257,7 @@
 		604D5536255C190A00B50268 /* iAlti_v2 */ = {
 			isa = PBXGroup;
 			children = (
+				C8BF764D2811A9D200A082FB /* iAlti_v2.entitlements */,
 				604D5537255C190A00B50268 /* iAlti_v2App.swift */,
 				604D5540255C190E00B50268 /* Info.plist */,
 				60D77D6D2588237B00A3C979 /* Helper */,
@@ -303,6 +307,7 @@
 		604D5569255C191200B50268 /* iAlti_v2 WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				C8BF764A2811A9BC00A082FB /* iAlti_v2 WatchKit Extension.entitlements */,
 				604D556A255C191200B50268 /* iAlti_v2App.swift */,
 				604D5579255C191500B50268 /* Info.plist */,
 				60B4B0FC2567D086000690CE /* Views */,
@@ -415,6 +420,9 @@
 		FE2C28222F17DCB987419F2D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C823DECE281EB1D10056C561 /* libPods-iAlti_v2 WatchKit Extension.a */,
+				C8BF764E2811A9D200A082FB /* HealthKit.framework */,
+				C8BF764B2811A9BC00A082FB /* HealthKit.framework */,
 				A7863911C5B8B45FAC5CABFD /* Pods_iAlti_v2.framework */,
 				F8425317B8F37A44964D2541 /* Pods_iAlti_v2_iAlti_v2UITests.framework */,
 				C39C6CA1201BE51B976416D6 /* Pods_iAlti_v2Tests.framework */,
@@ -976,16 +984,20 @@
 			baseConfigurationReference = CC6E163DA83F5F82A4708489 /* Pods-iAlti_v2 WatchKit Extension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_ENTITLEMENTS = "iAlti_v2 WatchKit Extension/iAlti_v2 WatchKit Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iAlti_v2 WatchKit Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = 6C8S93GQ4Z;
 				ENABLE_PREVIEWS = YES;
+				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = "iAlti_v2 WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "SausageBrothers-Airsports.iAlti-v2.watchkitapp.watchkitextension";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
@@ -1001,16 +1013,20 @@
 			baseConfigurationReference = 0AC196FF9469A40F131F5AE7 /* Pods-iAlti_v2 WatchKit Extension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_ENTITLEMENTS = "iAlti_v2 WatchKit Extension/iAlti_v2 WatchKit Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iAlti_v2 WatchKit Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = 6C8S93GQ4Z;
 				ENABLE_PREVIEWS = YES;
+				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = "iAlti_v2 WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "SausageBrothers-Airsports.iAlti-v2.watchkitapp.watchkitextension";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
@@ -1031,6 +1047,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6C8S93GQ4Z;
 				IBSC_MODULE = iAlti_v2_WatchKit_Extension;
 				INFOPLIST_FILE = "iAlti_v2 WatchKit App/Info.plist";
@@ -1039,6 +1056,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "SausageBrothers-Airsports.iAlti-v2.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1059,6 +1077,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6C8S93GQ4Z;
 				IBSC_MODULE = iAlti_v2_WatchKit_Extension;
 				INFOPLIST_FILE = "iAlti_v2 WatchKit App/Info.plist";
@@ -1067,6 +1086,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "SausageBrothers-Airsports.iAlti-v2.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1084,7 +1104,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = iAlti_v2/iAlti_v2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iAlti_v2/Preview Content\"";
 				DEVELOPMENT_TEAM = 6C8S93GQ4Z;
 				ENABLE_PREVIEWS = YES;
@@ -1094,11 +1116,12 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "SausageBrothers-Airsports.iAlti-v2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1108,7 +1131,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = iAlti_v2/iAlti_v2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iAlti_v2/Preview Content\"";
 				DEVELOPMENT_TEAM = 6C8S93GQ4Z;
 				ENABLE_PREVIEWS = YES;
@@ -1118,11 +1143,12 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "SausageBrothers-Airsports.iAlti-v2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

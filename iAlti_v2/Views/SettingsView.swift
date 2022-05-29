@@ -29,7 +29,7 @@ struct SettingsView: View {
     
     @State private var toggleAlti = false
     @State private var toggleLoc = false
-    private let colors = ["Green", "White", "Red", "Blue", "Orange", "Yellow", "Pink", "Purple", "Black"]
+    private let colors = ["Green", "White", "Red", "Blue", "Orange", "Yellow", "Pink", "Purple", "Black"] //If this is changed, also change the For Each Loops 
     
     @State var startDate = Date()
     @State var duration: Double = 0
@@ -61,28 +61,103 @@ struct SettingsView: View {
     // MARK: View
     var body: some View {
         Form {
-            // MARK: Dashboard
-            Section(header: Text("Dashboard")) {
-                /*HStack {
-                    if locationManager.didTakeOff {
-                        Text("True")
+            // MARK: Controls
+            Section(header: Text("Controls")) {
+                if locationManager.isLocationStarted {
+                    Button(action: {
+                        stopButton()
+                    }, label: {
+                        HStack {
+                            Image(systemName: "stop.fill")
+                            Text("Stop Variometer")}
                             .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                    })
+                } else {
+                    Button(action: {
+                        startButton()
+                        locationManager.autoCalib()
+                    }, label: {HStack {
+                        Image(systemName: "forward")
+                        Text("Start Variometer")}
+                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                    }) }
+                if !(locationManager.isLocationStarted) {
+                    if altimeter.isAltimeterStarted {
+                        Button(action: {
+                            debugPrint("Altimeter Stop Button pressed")
+                            altimeter.stop()
+                        }, label: {HStack {
+                            Image(systemName: "stop.fill")
+                            Text("Stop Altimeter")}
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        }) } else {
+                            Button(action: {
+                                debugPrint("Altimeter Start Button pressed")
+                                altimeter.start()
+                            }, label: {HStack {
+                                Image(systemName: "play")
+                                Text("Start Altimeter only")}
+                                .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                            })
+                        }
+                }
+                Button(action: {
+                    if locationManager.isLocationStarted {
+                        locationManager.autoCalib()
                     } else {
-                        Text("False")
-                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        alertTitle = "Warning"
+                        alertMessage = "Start Variometer before calibrating."
+                        showAlert = true
                     }
-                    Text("Did TakeOff")
+                }, label: {
+                    HStack {
+                        Image(systemName: "icloud.and.arrow.down")
+                        Text("Auto Calibrate Altimeter")
+                    }
+                    .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                })
+            }
+            // MARK: Settings
+            Section(header: Text("Barometer")) {
+                HStack {
+                    Text("QNH")
+                    Spacer()
+                    TextField("", value: $userSettings.qnh, formatter: NumberFormatter())
+                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
                 }
                 HStack {
-                    if locationManager.didLand {
-                        Text("True")
-                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    } else {
-                        Text("False")
-                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    }
-                    Text("Did Land")
-                }*/
+                    Text("Offset")
+                    Spacer()
+                    TextField("Offset", value: $userSettings.offset, formatter: NumberFormatter())
+                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                }
+            }
+            Section(header: Text("Log File Defaults")) {
+                HStack {
+                    Text("Pilot")
+                    Spacer()
+                    TextField("", text: $userSettings.pilot)
+                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                }
+                HStack {
+                    Text("Glider")
+                    Spacer()
+                    TextField("", text: $userSettings.glider)
+                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                }
+            }
+            Section(header: Text("Customize")) {
+                Toggle(isOn: $userSettings.mapTrackingMode){
+                    Text("Rotate map with heading:")
+                }
+                Picker(selection: $userSettings.colorSelection, label: Text("Font Color")) {
+                    ForEach(0 ..< 9) {
+                        Text(self.colors[$0]).foregroundColor(userSettings.colors[$0])
+                    }.foregroundColor(userSettings.colors[userSettings.colorSelection])
+                }
+            }
+            // MARK: Dashboard
+            Section(header: Text("Dashboard")) {
                 HStack {
                     if altimeter.isAltimeterStarted {
                         Image(systemName: "circle.fill")
@@ -147,100 +222,14 @@ struct SettingsView: View {
                         .foregroundColor(userSettings.colors[userSettings.colorSelection])
                     Text("Horizontal Accuracy [m]")
                 }
-            }
-            // MARK: Controls
-            Section(header: Text("Controls")) {
-                if locationManager.isLocationStarted {
-                    Button(action: {
-                        stopButton()
-                    }, label: {
-                        HStack {
-                            Image(systemName: "stop.fill")
-                            Text("Stop GPS and Barometer Logging")}
-                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    })
-                } else {
-                    Button(action: {
-                        startButton()
-                    }, label: {HStack {
-                        Image(systemName: "forward")
-                        Text("Start GPS and Barometer Logging")}
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    }) }
-                if !(locationManager.isLocationStarted) {
-                    if altimeter.isAltimeterStarted {
-                        Button(action: {
-                            debugPrint("Altimeter Stop Button pressed")
-                            altimeter.stop()
-                        }, label: {HStack {
-                            Image(systemName: "stop.fill")
-                            Text("Stop Altimeter")}
-                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                        }) } else {
-                            Button(action: {
-                                debugPrint("Altimeter Start Button pressed")
-                                altimeter.start()
-                            }, label: {HStack {
-                                Image(systemName: "play")
-                                Text("Start Altimeter only")}
+                HStack {
+                    if (locationManager.lastLocation?.course ?? 0) > 0 {
+                        Text("\(locationManager.lastLocation?.courseAccuracy ?? 0, specifier: "%.2f")")
                                 .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                            })
-                        }
-                }
-                Button(action: {
-                    if locationManager.isLocationStarted {
-                        debugPrint("Auto Calibration started")
-                        locationManager.autoCalib()
                     } else {
-                        alertTitle = "Warning"
-                        alertMessage = "Start GPS services before calibrating."
-                        showAlert = true
+                        Text("Unavailable").foregroundColor(userSettings.colors[userSettings.colorSelection])
                     }
-                }, label: {
-                    HStack {
-                        Image(systemName: "icloud.and.arrow.down")
-                        Text("Auto Calibrate")
-                    }
-                    .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                })
-            }
-            // MARK: Settings
-            Section(header: Text("Barometer")) {
-                HStack {
-                    Text("QNH")
-                    Spacer()
-                    TextField("", value: $userSettings.qnh, formatter: NumberFormatter())
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                }
-                HStack {
-                    Text("Offset")
-                    Spacer()
-                    TextField("Offset", value: $userSettings.offset, formatter: NumberFormatter())
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                }
-            }
-            Section(header: Text("Log File Defaults")) {
-                HStack {
-                    Text("Pilot")
-                    Spacer()
-                    TextField("", text: $userSettings.pilot)
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                }
-                HStack {
-                    Text("Glider")
-                    Spacer()
-                    TextField("", text: $userSettings.glider)
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                }
-            }
-            Section(header: Text("Customize")) {
-                Toggle(isOn: $userSettings.mapTrackingMode){
-                    Text("Rotate map with heading:")
-                }
-                Picker(selection: $userSettings.colorSelection, label: Text("Font Color")) {
-                    ForEach(0 ..< colors.count) {
-                        Text(self.colors[$0]).foregroundColor(userSettings.colors[$0])
-                    }.foregroundColor(userSettings.colors[userSettings.colorSelection])
+                    Text("Heading Accuracy [°]")
                 }
             }
             // MARK: Support
@@ -269,6 +258,11 @@ struct SettingsView: View {
             alertMessage = "Landing detected: Finished logging and saving file. Flight Time: \(duration.asDateString(style: .positional))"
             showAlert = true
             stopButton()
+        })
+        .onChange(of: locationManager.showPrivacyAlert, perform: {_ in
+            alertTitle = "Location Usage not allowed!"
+            alertMessage = "Please got to Settings -> Privacy and allow this app to use location data (always and precise). Afterwards please restart the app."
+            showAlert = locationManager.showPrivacyAlert
         })
     }
 }

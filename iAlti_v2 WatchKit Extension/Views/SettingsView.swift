@@ -12,11 +12,12 @@ struct SettingsView: View {
     @State private var selectionColorPicker: Int = 0
     @State private var selectionDisplayPicker: Int = 0
     
-    private let displays = ["None", "Glide", "Speed horiz.", "Speed vertical"]
+    private let displays = ["None", "Glide", "Speed horiz.", "Speed vertical"] //If this is changed, also change the For Each Loops
     private let colors = ["Green", "White", "Red", "Blue", "Orange", "Yellow", "Pink", "Purple"]
     
     private let pickerWidth: CGFloat = 150
     private let pickerHeight: CGFloat = 50
+    
     
     var body: some View {
         ScrollView {
@@ -41,14 +42,14 @@ struct SettingsView: View {
             Divider()
             VStack {
                 Picker("", selection: $selectionDisplayPicker, content: {
-                    ForEach(0 ..< displays.count) {index in Text(displays[index]).tag(index)}
+                    ForEach(0 ..< 4) {index in Text(displays[index]).tag(index)}
                 })
                 .frame(width: pickerWidth, height: pickerHeight)
                 .foregroundColor(userSettings.colors[userSettings.colorSelection])
                 Text("Display 2nd value")
                 Divider()
                 Picker("", selection: $selectionColorPicker, content: {
-                    ForEach(0 ..< colors.count) {index in Text(colors[index]).tag(index)}
+                    ForEach(0 ..< 4) {index in Text(colors[index]).tag(index)}
                 })
                 .frame(width: pickerWidth, height: pickerHeight)
                 .foregroundColor(userSettings.colors[userSettings.colorSelection])

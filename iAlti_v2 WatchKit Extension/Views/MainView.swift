@@ -62,9 +62,9 @@ struct MainView: View {
                 }
                 Text("Glide Ratio")
                     .font(.system(size: 15))
-            } else {
+            } else if userSettings.displaySelection == 2 {
                 Divider()
-                Text("\(locationManager.lastLocation?.speed ?? 0, specifier: "%.1f")")
+                Text("\((locationManager.lastLocation?.speed ?? 0) * 3.6, specifier: "%.1f")")
                     .font(.system(size: textSize))
                     .fontWeight(.bold)
                     .foregroundColor(userSettings.colors[userSettings.colorSelection])
@@ -72,15 +72,24 @@ struct MainView: View {
                 Text("Horizontal Speed [km/h]")
                     .font(.system(size: 15))
             }
+            else {
+                Divider()
+                Text("\(altimeter.speedVertical * 3.6, specifier: "%.1f")")
+                    .font(.system(size: textSize))
+                    .fontWeight(.bold)
+                    .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                    .transition(.opacity)
+                Text("Vertical Speed [km/h]")
+                    .font(.system(size: 15))
+            }
         }
         .alert(isPresented: $showAlert) {
             Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
         }
-        .onChange(of: locationManager.didLand, perform: {_ in
-            alertTitle = "Landed!"
-            alertMessage = "Landing detected: Finished logging and saving file. Flight Time: duration"
-            showAlert = true
-            //stopButton()
+        .onChange(of: locationManager.showPrivacyAlert, perform: {_ in
+            alertTitle = "Location Usage not allowed!"
+            alertMessage = "Please got to Settings -> Privacy and allow this app to use location data (always and precise). Afterwards please restart the app."
+            showAlert = locationManager.showPrivacyAlert
         })
     }
 }

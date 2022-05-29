@@ -2,32 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>loc</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>location</string>
-		<string>fetch</string>
-		<string>processing</string>
-	</array>
-	<key>WKBackgroundModes</key>
-	<array>
-		<string>workout-processing</string>
-	</array>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>loc</string>
-	<key>CFBundleGetInfoString</key>
-	<string></string>
-	<key>NSMotionUsageDescription</key>
-	<string>mot</string>
-	<key>LSApplicationCategoryType</key>
-	<string></string>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<string>de_DE</string>
 	<key>CFBundleDisplayName</key>
-	<string>iAlti_v2 WatchKit Extension</string>
+	<string>miniVario</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -37,11 +19,13 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>CLKComplicationPrincipalClass</key>
 	<string>$(PRODUCT_MODULE_NAME).ComplicationController</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.sports</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>
@@ -52,6 +36,18 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.watchkit</string>
 	</dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>GPS is used to display your location on a map and calculate your speed and heading. This will also be stored in your logbook for later analysis or export. No data is being sent to us or any third party.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>GPS is used to display your location on a map and calculate your speed and heading. This will also be stored in your logbook for later analysis or export. No data is being sent to us or any third party.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>The data is used to your altitude and speed. This will also be stored in your logbook for later analysis or export. No data is being sent to us or any third party.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
+	<key>WKBackgroundModes</key>
+	<array/>
 	<key>WKRunsIndependentlyOfCompanionApp</key>
 	<true/>
 </dict>

@@ -22,6 +22,10 @@ struct MainView: View {
     
     @State private var userTrackingMode: MapUserTrackingMode = .follow
     
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    @State private var alertTitle = ""
+    
     private let mainTextSize: CGFloat = 80
     private let secondaryTextSize: CGFloat = 15
     
@@ -70,7 +74,7 @@ struct MainView: View {
                 Spacer()
                 // MARK: Speed Display
                 VStack {
-                    Text("\(((locationManager.lastLocation?.speed ?? 0) * 3.6    ), specifier: "%.0f")")
+                    Text("\(((locationManager.lastLocation?.speed ?? 0) * 3.6), specifier: "%.0f")")
                         .font(.system(size: mainTextSize))
                         .fontWeight(.bold)
                         .foregroundColor(userSettings.colors[userSettings.colorSelection])
@@ -107,6 +111,14 @@ struct MainView: View {
             // MARK: Map Display
             MapViewUIKit(trackingMode: userSettings.mapTrackingMode)
         }
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+        }
+        .onChange(of: locationManager.showPrivacyAlert, perform: {_ in
+            alertTitle = "Location Usage not allowed!"
+            alertMessage = "Please got to Settings -> Privacy and allow this app to use location data (always and precise). Afterwards please restart the app."
+            showAlert = locationManager.showPrivacyAlert
+        })
     }
 }
 

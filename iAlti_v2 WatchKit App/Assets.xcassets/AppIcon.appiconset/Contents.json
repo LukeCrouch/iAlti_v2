@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "altimeter.48x48.jpg",
+      "filename" : "Icon-48.png",
       "idiom" : "watch",
       "role" : "notificationCenter",
       "scale" : "2x",
@@ -9,7 +9,7 @@
       "subtype" : "38mm"
     },
     {
-      "filename" : "altimeter.55x55.jpg",
+      "filename" : "Icon-55.png",
       "idiom" : "watch",
       "role" : "notificationCenter",
       "scale" : "2x",
@@ -17,18 +17,29 @@
       "subtype" : "42mm"
     },
     {
+      "filename" : "Icon-58.png",
       "idiom" : "watch",
       "role" : "companionSettings",
       "scale" : "2x",
       "size" : "29x29"
     },
     {
+      "filename" : "Icon-87.png",
       "idiom" : "watch",
       "role" : "companionSettings",
       "scale" : "3x",
       "size" : "29x29"
     },
     {
+      "filename" : "Icon-1024_6_66x66.png",
+      "idiom" : "watch",
+      "role" : "notificationCenter",
+      "scale" : "2x",
+      "size" : "33x33",
+      "subtype" : "45mm"
+    },
+    {
+      "filename" : "Icon-80.png",
       "idiom" : "watch",
       "role" : "appLauncher",
       "scale" : "2x",
@@ -36,7 +47,7 @@
       "subtype" : "38mm"
     },
     {
-      "filename" : "altimeter.88x88.jpg",
+      "filename" : "Icon-88.png",
       "idiom" : "watch",
       "role" : "appLauncher",
       "scale" : "2x",
@@ -44,7 +55,15 @@
       "subtype" : "40mm"
     },
     {
-      "filename" : "altimeter.100x100.jpg",
+      "filename" : "Icon-1024_1_92x92.png",
+      "idiom" : "watch",
+      "role" : "appLauncher",
+      "scale" : "2x",
+      "size" : "46x46",
+      "subtype" : "41mm"
+    },
+    {
+      "filename" : "Icon-100.png",
       "idiom" : "watch",
       "role" : "appLauncher",
       "scale" : "2x",
@@ -52,6 +71,15 @@
       "subtype" : "44mm"
     },
     {
+      "filename" : "Icon-1024_2_102x102.png",
+      "idiom" : "watch",
+      "role" : "appLauncher",
+      "scale" : "2x",
+      "size" : "51x51",
+      "subtype" : "45mm"
+    },
+    {
+      "filename" : "Icon-172.png",
       "idiom" : "watch",
       "role" : "quickLook",
       "scale" : "2x",
@@ -59,6 +87,7 @@
       "subtype" : "38mm"
     },
     {
+      "filename" : "Icon-196.png",
       "idiom" : "watch",
       "role" : "quickLook",
       "scale" : "2x",
@@ -66,6 +95,7 @@
       "subtype" : "42mm"
     },
     {
+      "filename" : "Icon-1024_3_216x216.png",
       "idiom" : "watch",
       "role" : "quickLook",
       "scale" : "2x",
@@ -73,7 +103,15 @@
       "subtype" : "44mm"
     },
     {
-      "filename" : "altimeter.1024x1024.jpg",
+      "filename" : "Icon-1024_4_234x234.png",
+      "idiom" : "watch",
+      "role" : "quickLook",
+      "scale" : "2x",
+      "size" : "117x117",
+      "subtype" : "45mm"
+    },
+    {
+      "filename" : "Icon-1024.png",
       "idiom" : "watch-marketing",
       "scale" : "1x",
       "size" : "1024x1024"
