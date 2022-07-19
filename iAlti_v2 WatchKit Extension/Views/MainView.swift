@@ -18,7 +18,12 @@ struct MainView: View {
     @State private var alertTitle = ""
     
     private var textSize: CGFloat {
-        if userSettings.displaySelection == 0 { return 80 } else { return 55 }
+        if WKInterfaceDevice.current().screenBounds.height < 230 {
+            if userSettings.displaySelection == 0 { return 80 } else { return 40 }
+        }
+        else {
+            if userSettings.displaySelection == 0 { return 80 } else { return 55 }
+        }
     }
     
     var body: some View {
