@@ -14,6 +14,8 @@ struct SettingsView: View {
     
     private let displays = ["None", "Glide", "Speed horiz.", "Speed vertical"] //If this is changed, also change the For Each Loops
     private let colors = ["Green", "White", "Red", "Blue", "Orange", "Yellow", "Pink", "Purple"]
+    private let unitSystems = ["Metric", "Imperial"]
+
     
     private let pickerWidth: CGFloat = 150
     private let pickerHeight: CGFloat = 50
@@ -23,20 +25,38 @@ struct SettingsView: View {
         ScrollView {
             HStack {
                 VStack {
-                    TextField("", value: $userSettings.qnh, formatter: NumberFormatter())
-                        .multilineTextAlignment(.center)
-                        .frame(width: 90, height: 50)
-                        .font(.system(size: 20))
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    Text("QNH [hPa]").font(.footnote)
+                    if userSettings.unitSelection == 0 { // metric
+                        TextField("", value: $userSettings.qnh, formatter: NumberFormatter())
+                            .multilineTextAlignment(.center)
+                            .frame(width: 90, height: 50)
+                            .font(.system(size: 20))
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        Text("QNH [hPa]").font(.footnote)
+                    } else { // imperial
+                        TextField("", value: $userSettings.qnhImperial, formatter: NumberFormatter())
+                            .multilineTextAlignment(.center)
+                            .frame(width: 90, height: 50)
+                            .font(.system(size: 20))
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        Text("QNH [psf]").font(.footnote)
+                    }
                 }
                 VStack {
-                    TextField("", value: $userSettings.offset, formatter: NumberFormatter())
-                        .multilineTextAlignment(.center)
-                        .frame(width: 90, height: 50)
-                        .font(.system(size: 20))
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    Text("Offset [m]").font(.footnote)
+                    if userSettings.unitSelection == 0 { // metric
+                        TextField("", value: $userSettings.offset, formatter: NumberFormatter())
+                            .multilineTextAlignment(.center)
+                            .frame(width: 90, height: 50)
+                            .font(.system(size: 20))
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        Text("Offset [m]").font(.footnote)
+                    } else { // imperial
+                        TextField("", value: $userSettings.offsetImperial, formatter: NumberFormatter())
+                            .multilineTextAlignment(.center)
+                            .frame(width: 90, height: 50)
+                            .font(.system(size: 20))
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        Text("Offset [feet]").font(.footnote)
+                    }
                 }
             }
             Divider()
@@ -55,6 +75,13 @@ struct SettingsView: View {
                 .foregroundColor(userSettings.colors[userSettings.colorSelection])
                 Text("Font Color")
                 Divider()
+                Picker("", selection: $userSettings.unitSelection, content: {
+                    ForEach(0 ..< 2) {index in Text(unitSystems[index]).tag(index)}
+                })
+                .frame(width: pickerWidth, height: pickerHeight)
+                .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                Text("Unit System")
+                Divider()
             }
         }
         .onAppear(perform: {
@@ -63,6 +90,15 @@ struct SettingsView: View {
         })
         .onChange(of: selectionColorPicker, perform: {sel in userSettings.colorSelection = sel })
         .onChange(of: selectionDisplayPicker, perform: {sel in userSettings.displaySelection = sel })
-        .onChange(of: userSettings.qnh, perform: {_ in Altimeter.shared.setOffset()})
+        .onChange(of: userSettings.qnh, perform: {_ in
+            userSettings.qnhImperial = userSettings.qnh * 2.0885434
+            Altimeter.shared.setOffset()
+        })
+        .onChange(of: userSettings.qnhImperial, perform : {_ in userSettings.qnh = userSettings.qnhImperial / 2.0885434})
+        .onChange(of: userSettings.offsetImperial, perform: {_ in userSettings.offset = userSettings.offsetImperial / 3.28084 })
+        .onChange(of: userSettings.offset, perform: {_ in userSettings.offsetImperial = userSettings.offset * 3.28084 })
     }
 }
+
+ 
+            

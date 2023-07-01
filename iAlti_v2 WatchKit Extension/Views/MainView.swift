@@ -28,21 +28,43 @@ struct MainView: View {
     
     var body: some View {
         VStack {
-            if (altimeter.relativeAltitude + userSettings.offset) > 999 || (altimeter.relativeAltitude + userSettings.offset) < -999 {
-                Text("\((altimeter.relativeAltitude + userSettings.offset) / 1000, specifier: "%.2f")")
-                    .font(.system(size: textSize))
-                    .fontWeight(.bold)
-                    .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    .transition(.opacity)
-            } else {
-                Text("\(altimeter.relativeAltitude + userSettings.offset, specifier: "%.0f")")
-                    .font(.system(size: textSize))
-                    .fontWeight(.bold)
-                    .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    .transition(.opacity)
+            if userSettings.unitSelection == 0 { // metric
+                if (altimeter.relativeAltitude + userSettings.offset) > 999 || (altimeter.relativeAltitude + userSettings.offset) < -999 {
+                    Text("\((altimeter.relativeAltitude + userSettings.offset) / 1000, specifier: "%.2f")")
+                        .font(.system(size: textSize))
+                        .fontWeight(.bold)
+                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        .transition(.opacity)
+                    Text("Altitude [km]")
+                        .font(.system(size: 15))
+                } else {
+                    Text("\(altimeter.relativeAltitude + userSettings.offset, specifier: "%.0f")")
+                        .font(.system(size: textSize))
+                        .fontWeight(.bold)
+                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        .transition(.opacity)
+                    Text("Altitude [m]")
+                        .font(.system(size: 15))
+                }
+            } else { //imperial
+                if ((altimeter.relativeAltitude + userSettings.offset) * 3.28084) > 999 || (altimeter.relativeAltitude + userSettings.offset) < -999 {
+                    Text("\((altimeter.relativeAltitude + userSettings.offset) * 3.28084 / 5280, specifier: "%.2f")")
+                        .font(.system(size: textSize))
+                        .fontWeight(.bold)
+                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        .transition(.opacity)
+                    Text("Altitude [miles]")
+                        .font(.system(size: 15))
+                } else {
+                    Text("\((altimeter.relativeAltitude + userSettings.offset)  * 3.28084, specifier: "%.0f")")
+                        .font(.system(size: textSize))
+                        .fontWeight(.bold)
+                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        .transition(.opacity)
+                    Text("Altitude [feet]")
+                        .font(.system(size: 15))
+                }
             }
-            Text("Altitude [m]")
-                .font(.system(size: 15))
             if userSettings.displaySelection == 0 {
                 Text("")
             } else if userSettings.displaySelection == 1 {
@@ -69,23 +91,44 @@ struct MainView: View {
                     .font(.system(size: 15))
             } else if userSettings.displaySelection == 2 {
                 Divider()
-                Text("\((locationManager.lastLocation?.speed ?? 0) * 3.6, specifier: "%.1f")")
-                    .font(.system(size: textSize))
-                    .fontWeight(.bold)
-                    .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    .transition(.opacity)
-                Text("Horizontal Speed [km/h]")
-                    .font(.system(size: 15))
+                if userSettings.unitSelection == 0 { // metric
+                    Text("\((locationManager.lastLocation?.speed ?? 0) * 3.6, specifier: "%.1f")")
+                        .font(.system(size: textSize))
+                        .fontWeight(.bold)
+                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        .transition(.opacity)
+                    Text("Horizontal Speed [km/h]")
+                        .font(.system(size: 15))
+                } else { // imperial
+                    Text("\((locationManager.lastLocation?.speed ?? 0) * 2.23694, specifier: "%.1f")")
+                        .font(.system(size: textSize))
+                        .fontWeight(.bold)
+                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        .transition(.opacity)
+                    Text("Horizontal Speed [mph]")
+                        .font(.system(size: 15))
+                }
             }
             else {
-                Divider()
-                Text("\(altimeter.speedVertical * 3.6, specifier: "%.1f")")
-                    .font(.system(size: textSize))
-                    .fontWeight(.bold)
-                    .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    .transition(.opacity)
-                Text("Vertical Speed [km/h]")
-                    .font(.system(size: 15))
+                if userSettings.unitSelection == 0 { // metric
+                    Divider()
+                    Text("\(altimeter.speedVertical * 3.6, specifier: "%.1f")")
+                        .font(.system(size: textSize))
+                        .fontWeight(.bold)
+                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        .transition(.opacity)
+                    Text("Vertical Speed [km/h]")
+                        .font(.system(size: 15))
+                } else { // imperial
+                    Divider()
+                    Text("\(altimeter.speedVertical * 2.23694, specifier: "%.1f")")
+                        .font(.system(size: textSize))
+                        .fontWeight(.bold)
+                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        .transition(.opacity)
+                    Text("Vertical Speed [mph]")
+                        .font(.system(size: 15))
+                }
             }
         }
         .alert(isPresented: $showAlert) {

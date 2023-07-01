@@ -29,7 +29,8 @@ struct SettingsView: View {
     
     @State private var toggleAlti = false
     @State private var toggleLoc = false
-    private let colors = ["Green", "White", "Red", "Blue", "Orange", "Yellow", "Pink", "Purple", "Black"] //If this is changed, also change the For Each Loops 
+    private let colors = ["Green", "White", "Red", "Blue", "Orange", "Yellow", "Pink", "Purple", "Black"] //If this is changed, also change the For Each Loops
+    private let unitSystems = ["Metric", "Imperial"]
     
     @State var startDate = Date()
     @State var duration: Double = 0
@@ -121,27 +122,51 @@ struct SettingsView: View {
             Section(header: Text("Barometer")) {
                 HStack {
                     Text("QNH")
+                        .frame(width: 200, alignment: .leading)
+                    if userSettings.unitSelection == 0 { // metric
+                        TextField("", value: $userSettings.qnh, formatter: NumberFormatter())
+                            .frame(alignment: .center)
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        Spacer()
+                        Text("hPa")
+                    } else { //imperial
+                        TextField("", value: $userSettings.qnhImperial, formatter: NumberFormatter())
+                            .frame(alignment: .center)
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        Spacer()
+                        Text("psf")
+                    }
                     Spacer()
-                    TextField("", value: $userSettings.qnh, formatter: NumberFormatter())
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
                 }
                 HStack {
                     Text("Offset")
+                        .frame(width: 200, alignment: .leading)
+                    if userSettings.unitSelection == 0 { // metric
+                        TextField("Offset", value: $userSettings.offset, formatter: NumberFormatter())
+                            .frame(alignment: .center)
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        Spacer()
+                        Text("m")
+                    } else { //imperial
+                        TextField("Offset", value: $userSettings.offsetImperial, formatter: NumberFormatter())
+                            .frame(alignment: .center)
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        Spacer()
+                        Text("feet")
+                    }
                     Spacer()
-                    TextField("Offset", value: $userSettings.offset, formatter: NumberFormatter())
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
                 }
             }
             Section(header: Text("Log File Defaults")) {
                 HStack {
                     Text("Pilot")
-                    Spacer()
+                        .frame(width: 100, alignment: .leading)
                     TextField("", text: $userSettings.pilot)
                         .foregroundColor(userSettings.colors[userSettings.colorSelection])
                 }
                 HStack {
                     Text("Glider")
-                    Spacer()
+                        .frame(width: 100, alignment: .leading)
                     TextField("", text: $userSettings.glider)
                         .foregroundColor(userSettings.colors[userSettings.colorSelection])
                 }
@@ -153,6 +178,11 @@ struct SettingsView: View {
                 Picker(selection: $userSettings.colorSelection, label: Text("Font Color")) {
                     ForEach(0 ..< 9) {
                         Text(self.colors[$0]).foregroundColor(userSettings.colors[$0])
+                    }.foregroundColor(userSettings.colors[userSettings.colorSelection])
+                }
+                Picker(selection: $userSettings.unitSelection, label: Text("Unit System")) {
+                    ForEach(0 ..< 2) {
+                        Text(self.unitSystems[$0])
                     }.foregroundColor(userSettings.colors[userSettings.colorSelection])
                 }
             }
@@ -173,22 +203,58 @@ struct SettingsView: View {
                             .scaleEffect(0.5)
                             .foregroundColor(.gray)
                     }
-                    Text("Barometer")
+                    Text("**Barometer**")
                 }
                 HStack {
-                    Text("\(altimeter.pressure, specifier: "%.2f")")
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    Text("Pressure [hPa]")
+                    Text("Pressure")
+                        .frame(width: 200, alignment: .leading)
+                    if userSettings.unitSelection == 0 { // metric
+                        Text("\(altimeter.pressure, specifier: "%.2f")")
+                            .frame(alignment: .leading)
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        Spacer()
+                        Text("hPa")
+                    } else { // imperial
+                        Text("\(altimeter.pressure * 2.0885434, specifier: "%.2f")")
+                            .frame(alignment: .leading)
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        Spacer()
+                        Text("psf")
+                    }
                 }
                 HStack {
-                    Text("\(altimeter.barometricAltitude, specifier: "%.2f")")
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    Text("Altitude MSL [m]")
+                    Text("Altitude MSL")
+                        .frame(width: 200, alignment: .leading)
+                    if userSettings.unitSelection == 0 { // metric
+                        Text("\(altimeter.barometricAltitude, specifier: "%.2f")")
+                            .frame(alignment: .leading)
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        Spacer()
+                        Text("m")
+                    } else { // imperial
+                        Text("\(altimeter.barometricAltitude * 3.28084, specifier: "%.2f")")
+                            .frame(alignment: .leading)
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        Spacer()
+                        Text("feet")
+                    }
                 }
                 HStack {
-                    Text("\(altimeter.speedVertical, specifier: "%.2f")")
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    Text("Vertical Speed [m/s]")
+                    Text("Vertical Speed")
+                        .frame(width: 200, alignment: .leading)
+                    if userSettings.unitSelection == 0 { // metric
+                        Text("\(altimeter.speedVertical, specifier: "%.2f")")
+                            .frame(alignment: .leading)
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        Spacer()
+                        Text("m/s")
+                    } else { // imperial
+                        Text("\(altimeter.speedVertical * 2.23694, specifier: "%.2f")")
+                            .frame(alignment: .leading)
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        Spacer()
+                        Text("mph")
+                    }
                 }
                 HStack {
                     if locationManager.isLocationStarted {
@@ -205,31 +271,72 @@ struct SettingsView: View {
                             .scaleEffect(0.5)
                             .foregroundColor(.gray)
                     }
-                    Text("GPS")
+                    Text("**GPS**")
+                        .frame(width: 60, alignment: .leading)
                 }
                 HStack {
-                    Text("\(locationManager.lastLocation?.altitude ?? 0, specifier: "%.2f")")
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    Text("Altitude MSL [m]")
+                    Text("Altitude MSL")
+                        .frame(width: 200, alignment: .leading)
+                    if userSettings.unitSelection == 0 { // metric
+                        Text("\(locationManager.lastLocation?.altitude ?? 0, specifier: "%.2f")")
+                            .frame(alignment: .leading)
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        Spacer()
+                        Text("m")
+                    } else { // imperial
+                        Text("\(locationManager.lastLocation?.altitude ?? 0 * 3.28084, specifier: "%.2f")")
+                            .frame(alignment: .leading)
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        Spacer()
+                        Text("feet")
+                    }
                 }
                 HStack {
-                    Text("\(locationManager.lastLocation?.verticalAccuracy ?? 0, specifier: "%.2f")")
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    Text("Vertical Accuracy [m]")
+                    Text("Vertical Accuracy")
+                        .frame(width: 200, alignment: .leading)
+                    if userSettings.unitSelection == 0 { // metric
+                        Text("\(locationManager.lastLocation?.verticalAccuracy ?? 0, specifier: "%.2f")")
+                            .frame(alignment: .leading)
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        Spacer()
+                        Text("m")
+                    } else { // imperial
+                        Text("\(locationManager.lastLocation?.verticalAccuracy ?? 0 * 3.28084, specifier: "%.2f")")
+                            .frame(alignment: .leading)
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        Spacer()
+                        Text("feet")
+                    }
                 }
                 HStack {
-                    Text("\(locationManager.lastLocation?.horizontalAccuracy ?? 0, specifier: "%.2f")")
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                    Text("Horizontal Accuracy [m]")
+                    Text("Horizontal Accuracy")
+                        .frame(width: 200, alignment: .leading)
+                    if userSettings.unitSelection == 0 { // metric
+                        Text("\(locationManager.lastLocation?.horizontalAccuracy ?? 0, specifier: "%.2f")")
+                            .frame(alignment: .leading)
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        Spacer()
+                        Text("m")
+                    } else { // imperial
+                        Text("\(locationManager.lastLocation?.horizontalAccuracy ?? 0 * 3.28084, specifier: "%.2f")")
+                            .frame(alignment: .leading)
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        Spacer()
+                        Text("feet")
+                    }
                 }
                 HStack {
+                    Text("Heading Accuracy")
+                        .frame(width: 200, alignment: .leading)
                     if (locationManager.lastLocation?.course ?? 0) > 0 {
                         Text("\(locationManager.lastLocation?.courseAccuracy ?? 0, specifier: "%.2f")")
-                                .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        Spacer()
+                        Text("°")
                     } else {
-                        Text("Unavailable").foregroundColor(userSettings.colors[userSettings.colorSelection])
+                        Text("Unavailable")
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
                     }
-                    Text("Heading Accuracy [°]")
                 }
             }
             // MARK: Support
@@ -252,7 +359,13 @@ struct SettingsView: View {
         .alert(isPresented: $showAlert) {
             Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
         }
-        .onChange(of: userSettings.qnh, perform: {_ in Altimeter.shared.setOffset() })
+        .onChange(of: userSettings.qnh, perform: {_ in
+            userSettings.qnhImperial = userSettings.qnh * 2.0885434
+            Altimeter.shared.setOffset()
+        })
+        .onChange(of: userSettings.qnhImperial, perform : {_ in userSettings.qnh = userSettings.qnhImperial / 2.0885434})
+        .onChange(of: userSettings.offsetImperial, perform: {_ in userSettings.offset = userSettings.offsetImperial / 3.28084 })
+        .onChange(of: userSettings.offset, perform: {_ in userSettings.offsetImperial = userSettings.offset * 3.28084 })
         .onChange(of: locationManager.didLand, perform: {_ in
             alertTitle = "Landed!"
             alertMessage = "Landing detected: Finished logging and saving file. Flight Time: \(duration.asDateString(style: .positional))"

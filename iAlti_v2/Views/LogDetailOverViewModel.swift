@@ -16,6 +16,7 @@ class LogDetailOverViewModel: ObservableObject {
     }
     
     @Published var distance = ""
+    @Published var distanceImperial = ""
     @Published var glideRatio: [Double] = []
     @Published var averageGlideRatio = 0.0
     @Published var averageSpeedHorizontal = 0.0
@@ -32,6 +33,7 @@ class LogDetailOverViewModel: ObservableObject {
             i += 1
         }
         distance = String(format: "%.2f", d / 1000)
+        distanceImperial = String(format: "%.2f", d * 0.000621371)
         
         var gr: [Double] = []
         i = 0

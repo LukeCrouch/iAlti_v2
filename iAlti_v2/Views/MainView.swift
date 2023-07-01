@@ -35,22 +35,42 @@ struct MainView: View {
                 Spacer()
                 // MARK: Altitude Display
                 VStack {
-                    if (altimeter.relativeAltitude + userSettings.offset) > 999 || (altimeter.relativeAltitude + userSettings.offset) < -999 {
-                        Text("\((altimeter.relativeAltitude + userSettings.offset) / 1000, specifier: "%.2f")")
-                            .font(.system(size: mainTextSize))
-                            .fontWeight(.bold)
-                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                            .transition(.opacity)
-                        Text("Altitude [km]")
-                            .font(.system(size: secondaryTextSize))
-                    } else {
-                        Text("\(altimeter.relativeAltitude + userSettings.offset, specifier: "%.0f")")
-                            .font(.system(size: mainTextSize))
-                            .fontWeight(.bold)
-                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                            .transition(.opacity)
-                        Text("Altitude [m]")
-                            .font(.system(size: secondaryTextSize))
+                    if userSettings.unitSelection == 0 { // metric
+                        if (altimeter.relativeAltitude + userSettings.offset) > 999 || (altimeter.relativeAltitude + userSettings.offset) < -999 {
+                            Text("\((altimeter.relativeAltitude + userSettings.offset) / 1000, specifier: "%.2f")")
+                                .font(.system(size: mainTextSize))
+                                .fontWeight(.bold)
+                                .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                                .transition(.opacity)
+                            Text("Altitude [km]")
+                                .font(.system(size: secondaryTextSize))
+                        } else {
+                            Text("\(altimeter.relativeAltitude + userSettings.offset, specifier: "%.0f")")
+                                .font(.system(size: mainTextSize))
+                                .fontWeight(.bold)
+                                .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                                .transition(.opacity)
+                            Text("Altitude [m]")
+                                .font(.system(size: secondaryTextSize))
+                        }
+                    } else { //imperial
+                        if ((altimeter.relativeAltitude + userSettings.offset) * 3.28084) > 999 || ((altimeter.relativeAltitude + userSettings.offset) * 3.28084) < -999 {
+                            Text("\((altimeter.relativeAltitude + userSettings.offset) * 3.28084 / 5280, specifier: "%.2f")")
+                                .font(.system(size: mainTextSize))
+                                .fontWeight(.bold)
+                                .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                                .transition(.opacity)
+                            Text("Altitude [miles]")
+                                .font(.system(size: secondaryTextSize))
+                        } else {
+                            Text("\(((altimeter.relativeAltitude + userSettings.offset) * 3.28084) , specifier: "%.0f")")
+                                .font(.system(size: mainTextSize))
+                                .fontWeight(.bold)
+                                .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                                .transition(.opacity)
+                            Text("Altitude [feet]")
+                                .font(.system(size: secondaryTextSize))
+                        }
                     }
                 }
                 Spacer(minLength: 50)
@@ -74,13 +94,23 @@ struct MainView: View {
                 Spacer()
                 // MARK: Speed Display
                 VStack {
-                    Text("\(((locationManager.lastLocation?.speed ?? 0) * 3.6), specifier: "%.0f")")
-                        .font(.system(size: mainTextSize))
-                        .fontWeight(.bold)
-                        .foregroundColor(userSettings.colors[userSettings.colorSelection])
-                        .transition(.opacity)
-                    Text("Speed [km/h]")
-                        .font(.system(size: secondaryTextSize))
+                    if userSettings.unitSelection == 0 { // metric
+                        Text("\(((locationManager.lastLocation?.speed ?? 0) * 3.6), specifier: "%.0f")")
+                            .font(.system(size: mainTextSize))
+                            .fontWeight(.bold)
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                            .transition(.opacity)
+                        Text("Speed [km/h]")
+                            .font(.system(size: secondaryTextSize))
+                    } else { //imperial
+                        Text("\(((locationManager.lastLocation?.speed ?? 0) * 2.23694), specifier: "%.0f")")
+                            .font(.system(size: mainTextSize))
+                            .fontWeight(.bold)
+                            .foregroundColor(userSettings.colors[userSettings.colorSelection])
+                            .transition(.opacity)
+                        Text("Speed [mph]")
+                            .font(.system(size: secondaryTextSize))
+                    }
                 }
                 Spacer()
                 // MARK: Glide Ratio Display

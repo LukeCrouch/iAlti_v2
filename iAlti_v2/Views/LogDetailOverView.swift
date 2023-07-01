@@ -88,9 +88,27 @@ struct LogDetailOverView: View {
                 HStack {
                     Spacer(minLength: 30)
                     VStack {
-                        LogSummaryText(text: viewModel.distance, details: "Distance [km]")
-                        LogSummaryText(text: "\(Int(log.altitudeBarometer.max() ?? 0))", details: "Max. barometric Altitude [m]")
-                        LogSummaryText(text: "\(Int(log.altitudeGPS.max() ?? 0))", details: "Max. GPS Altitude [m]")
+                        if userSettings.unitSelection == 0 { // metric
+                            LogSummaryText(text: viewModel.distance, details: "Distance [km]")
+                        } else { // imperial
+                            LogSummaryText(text: viewModel.distanceImperial, details: "Distance [miles]")
+                        }
+                        if userSettings.unitSelection == 0 { // metric
+                            LogSummaryText(text: "\(Int(log.altitudeBarometer.max() ?? 0))", details: "Max. barometric Altitude [m]")
+                        } else { // imperial
+                            LogSummaryText(
+                                text: "\(Int(log.altitudeBarometer.max() ?? 0 * 0.000621371))",
+                                details: "Max. barometric Altitude [miles]"
+                            )
+                        }
+                        if userSettings.unitSelection == 0 { // metric
+                            LogSummaryText(text: "\(Int(log.altitudeGPS.max() ?? 0))", details: "Max. GPS Altitude [m]")
+                        } else { // imperial
+                            LogSummaryText(
+                                text: "\(Int(log.altitudeGPS.max() ?? 0 * 0.000621371))",
+                                details: "Max. GPS Altitude [miles]"
+                            )
+                        }
                         if viewModel.averageGlideRatio > 100 {
                             LogSummaryText(text: "> 100", details: "Average Glide Ratio")
                         } else {
@@ -104,10 +122,17 @@ struct LogDetailOverView: View {
                     }
                     Spacer(minLength: 100)
                     VStack {
-                        LogSummaryText(text: "\(Int(viewModel.averageSpeedHorizontal * 3.6))", details: "Average horizontal Speed [km/h]")
-                        LogSummaryText(text: "\(Int((log.speedHorizontal.max() ?? 0) * 3.6))", details: "Max. horizontal Speed [km/h]")
-                        LogSummaryText(text: "\(Int(viewModel.averageSpedVertical * 3.6))", details: "Average vertical Speed [km/h]")
-                        LogSummaryText(text: "\(Int((log.speedVertical.max() ?? 0) * 3.6))", details: "Max. vertical Speed [km/h]")
+                        if userSettings.unitSelection == 0 { // metric
+                            LogSummaryText(text: "\(Int(viewModel.averageSpeedHorizontal * 3.6))", details: "Average horizontal Speed [km/h]")
+                            LogSummaryText(text: "\(Int((log.speedHorizontal.max() ?? 0) * 3.6))", details: "Max. horizontal Speed [km/h]")
+                            LogSummaryText(text: "\(Int(viewModel.averageSpedVertical * 3.6))", details: "Average vertical Speed [km/h]")
+                            LogSummaryText(text: "\(Int((log.speedVertical.max() ?? 0) * 3.6))", details: "Max. vertical Speed [km/h]")
+                        } else { // imperial
+                            LogSummaryText(text: "\(Int(viewModel.averageSpeedHorizontal * 2.23694))", details: "Average horizontal Speed [mph]")
+                            LogSummaryText(text: "\(Int((log.speedHorizontal.max() ?? 0) * 2.23694))", details: "Max. horizontal Speed [mph]")
+                            LogSummaryText(text: "\(Int(viewModel.averageSpedVertical * 2.23694))", details: "Average vertical Speed [mph]")
+                            LogSummaryText(text: "\(Int((log.speedVertical.max() ?? 0) * 2.23694))", details: "Max. vertical Speed [mph]")
+                        }
                     }
                     Spacer(minLength: 30)
                 }
