@@ -173,7 +173,6 @@
 		AFC32399FC20E33B7F4F9449 /* Pods-iAlti_v2 WatchKit App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlti_v2 WatchKit App.debug.xcconfig"; path = "Target Support Files/Pods-iAlti_v2 WatchKit App/Pods-iAlti_v2 WatchKit App.debug.xcconfig"; sourceTree = "<group>"; };
 		BD1AC7BF9E63678F6FFB9245 /* Pods-iAlti_v2 WatchKit App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAlti_v2 WatchKit App.release.xcconfig"; path = "Target Support Files/Pods-iAlti_v2 WatchKit App/Pods-iAlti_v2 WatchKit App.release.xcconfig"; sourceTree = "<group>"; };
 		C39C6CA1201BE51B976416D6 /* Pods_iAlti_v2Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iAlti_v2Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C81D54F12A5098B50063C739 /* SwiftCharts */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftCharts; path = ../SwiftCharts; sourceTree = "<group>"; };
 		C823DECE281EB1D10056C561 /* libPods-iAlti_v2 WatchKit Extension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-iAlti_v2 WatchKit Extension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8BF764A2811A9BC00A082FB /* iAlti_v2 WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "iAlti_v2 WatchKit Extension.entitlements"; sourceTree = "<group>"; };
 		C8BF764B2811A9BC00A082FB /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS8.5.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -232,7 +231,6 @@
 		604D552B255C190A00B50268 = {
 			isa = PBXGroup;
 			children = (
-				C81D54F02A5098B50063C739 /* Packages */,
 				604D5536255C190A00B50268 /* iAlti_v2 */,
 				604D5548255C190E00B50268 /* iAlti_v2Tests */,
 				604D5553255C190E00B50268 /* iAlti_v2UITests */,
@@ -417,14 +415,6 @@
 				D0BF602EC83B7291FC3AF98E /* Pods-iAlti_v2Tests.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		C81D54F02A5098B50063C739 /* Packages */ = {
-			isa = PBXGroup;
-			children = (
-				C81D54F12A5098B50063C739 /* SwiftCharts */,
-			);
-			name = Packages;
 			sourceTree = "<group>";
 		};
 		FE2C28222F17DCB987419F2D /* Frameworks */ = {
