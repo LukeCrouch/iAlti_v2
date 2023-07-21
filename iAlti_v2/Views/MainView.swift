@@ -8,13 +8,6 @@
 import SwiftUI
 import MapKit
 
-extension Map {
-    func mapStyle(_ mapType: MKMapType) -> some View {
-        MKMapView.appearance().mapType = mapType
-        return self
-    }
-}
-
 struct MainView: View {
     @ObservedObject private var altimeter = Altimeter.shared
     @ObservedObject private var locationManager = LocationManager.shared
@@ -153,25 +146,27 @@ struct MainView: View {
 }
 
 struct MapViewUIKit: UIViewRepresentable {
-    @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(
-            latitude: LocationManager.shared.lastLocation?.coordinate.latitude ?? 0,
-            longitude: LocationManager.shared.lastLocation?.coordinate.longitude ?? 0
-        ),
-        span: MKCoordinateSpan(
-            latitudeDelta: 1,
-            longitudeDelta: 1
-        )
-    )
     let trackingMode: Bool
     
     func makeUIView(context: Context) -> MKMapView {
+        let region = MKCoordinateRegion(
+            center: CLLocationCoordinate2D(
+                latitude: LocationManager.shared.lastLocation?.coordinate.latitude ?? 0,
+                longitude: LocationManager.shared.lastLocation?.coordinate.longitude ?? 0
+            ),
+            span: MKCoordinateSpan(
+                latitudeDelta: 1,
+                longitudeDelta: 1
+            )
+        )
+        
         let mapView = MKMapView()
         mapView.region = region
         mapView.mapType = MKMapType.hybrid
-        mapView.isScrollEnabled = false
-        mapView.isRotateEnabled = false
-        mapView.cameraZoomRange = MKMapView.CameraZoomRange(minCenterCoordinateDistance: CLLocationDistance(5000)) // min zoom radius in metres
+        mapView.isScrollEnabled = true
+        mapView.isRotateEnabled = true
+        mapView.showsCompass = false
+        //mapView.cameraZoomRange = MKMapView.CameraZoomRange(minCenterCoordinateDistance: CLLocationDistance(5000)) // min zoom radius in metres
         if !trackingMode{
             mapView.userTrackingMode = MKUserTrackingMode.follow
         } else {
@@ -181,12 +176,21 @@ struct MapViewUIKit: UIViewRepresentable {
     }
     
     func updateUIView(_ mapView: MKMapView, context: Context) {
+        let region = MKCoordinateRegion(
+            center: CLLocationCoordinate2D(
+                latitude: LocationManager.shared.lastLocation?.coordinate.latitude ?? 0,
+                longitude: LocationManager.shared.lastLocation?.coordinate.longitude ?? 0
+            ),
+            span: MKCoordinateSpan(
+                latitudeDelta: 1,
+                longitudeDelta: 1
+            )
+        )
         mapView.setRegion(region, animated: false)
-        if !trackingMode {
-            mapView.setUserTrackingMode(MKUserTrackingMode.none, animated: true)
-            mapView.setUserTrackingMode(MKUserTrackingMode.follow, animated: true)
+        if !trackingMode{
+            mapView.userTrackingMode = MKUserTrackingMode.follow
         } else {
-            mapView.setUserTrackingMode(MKUserTrackingMode.followWithHeading, animated: true)
+            mapView.userTrackingMode = MKUserTrackingMode.followWithHeading
         }
     }
 }
