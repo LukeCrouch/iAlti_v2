@@ -81,8 +81,8 @@ struct LogView: View {
                                 .onAppear() {
                                     DispatchQueue.main.async {
                                         AppDelegate.orientationLock = UIInterfaceOrientationMask.landscape
-                                        UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation")
-                                        UINavigationController.attemptRotationToDeviceOrientation()
+                                        //UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation")
+                                        //UINavigationController.attemptRotationToDeviceOrientation()
                                         logDetailOverViewModel.load(log: log)
                                     }
                                 }

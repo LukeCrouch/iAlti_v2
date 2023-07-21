@@ -95,7 +95,7 @@ struct LogDetailView: View {
                 if !fileExporter.isSharing {
                     AppDelegate.orientationLock = UIInterfaceOrientationMask.portrait
                     UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
-                    UINavigationController.attemptRotationToDeviceOrientation()
+                    //UINavigationController.attemptRotationToDeviceOrientation()
                     logDetailOverViewModel.loaded = false
                 }
             }

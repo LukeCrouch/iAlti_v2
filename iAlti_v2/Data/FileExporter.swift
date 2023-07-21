@@ -24,14 +24,13 @@ class FileExporter: NSObject, ObservableObject {
     ///
     /// - Parameters:
     ///     - log: CoreData Entitiy Log that contains all details about one saved flight.
-    ///     - fileContents: The content of the file to be exported.
     ///     - fileType: GPX, CSV or RAW.
     /// - Returns:
     ///     A `Bool`
     ///
     func share(log: Log, fileType: String, excludedActivityTypes: [UIActivity.ActivityType]? = nil
     ) {
-        guard let source = UIApplication.shared.windows.last?.rootViewController else {
+        guard let source = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController else {
             return
         }
         
@@ -60,7 +59,7 @@ class FileExporter: NSObject, ObservableObject {
         
         let filename = dateFormatterShort.string(from: log.date) + "_\(log.takeOff)"
         let exportURL = save(filename, fileContents: fileContents, fileExt: fileExt)
-        
+
         DispatchQueue.main.async {
             let vc = UIActivityViewController(
                 activityItems: [exportURL],
@@ -73,7 +72,7 @@ class FileExporter: NSObject, ObservableObject {
         }
         return
     }
-    
+
     func save(_ filename: String, fileContents: String, fileExt: String) -> URL {
         //check if name exists
         let fileURL: URL = URLForFilename(filename, fileExt: fileExt)
