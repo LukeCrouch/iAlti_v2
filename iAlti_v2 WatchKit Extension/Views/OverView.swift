@@ -47,7 +47,12 @@ struct OverView: View {
                         .foregroundColor(userSettings.colors[userSettings.colorSelection])
                         .opacity(toggleAlti ? 0 : 1)
                         .onAppear(perform: {toggleAlti.toggle()})
-                        .animation(Animation.easeInOut(duration: 1).repeatForever(autoreverses: true).speed(1))
+                        .animation(
+                            Animation
+                                .easeInOut(duration: 1)
+                                .repeatForever(autoreverses: true)
+                                .speed(1),
+                            value: toggleAlti)
                 } else {
                     Image(systemName: "circle.fill")
                         .imageScale(.small)
@@ -75,7 +80,12 @@ struct OverView: View {
                         .foregroundColor(userSettings.colors[userSettings.colorSelection])
                         .opacity(toggleLoc ? 0 : 1)
                         .onAppear(perform: {toggleLoc.toggle()})
-                        .animation(Animation.easeInOut(duration: 1).repeatForever(autoreverses: true).speed(1))
+                        .animation(
+                            Animation
+                                .easeInOut(duration: 1)
+                                .repeatForever(autoreverses: true)
+                                .speed(1),
+                            value: toggleLoc)
                 } else {
                     Image(systemName: "circle.fill")
                         .imageScale(.small)
