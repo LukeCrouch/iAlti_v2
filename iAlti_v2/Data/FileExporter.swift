@@ -10,41 +10,40 @@ import CoreGPX
 import CoreLocation.CLLocation
 
 class FileExporter: NSObject, ObservableObject {
-    
+
     static let shared = FileExporter()
-    
+
     @Published var isSharing = false
-    
+
     var FilesFolderURL: URL {
         let documentsUrl =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0] as URL
         return documentsUrl
     }
-    
+
     /// Export a Log to a chosen file type and share it via iOS ShareSheet
     ///
     /// - Parameters:
-    ///     - log: CoreData Entitiy Log that contains all details about one saved flight.
-    ///     - fileType: GPX, CSV or RAW.
-    /// - Returns:
-    ///     A `Bool`
+    ///     - log: CoreData Entity Log that contains all details about one saved flight.
+    ///     - fileType: GPX, CSV, or RAW.
     ///
-    func share(log: Log, fileType: String, excludedActivityTypes: [UIActivity.ActivityType]? = nil
-    ) {
-        guard let source = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController else {
+    func share(log: Log, fileType: String) {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let rootViewController = windowScene.windows.first?.rootViewController else {
             return
         }
-        
+
         var fileExt = ""
-        
+
         DispatchQueue.main.async {
             self.isSharing = true
         }
+
         let dateFormatterShort: DateFormatter = {
             let formatter = DateFormatter()
             formatter.dateStyle = .short
             return formatter
         }()
-        
+
         var fileContents = ""
         if fileType == "gpx" {
             fileContents = writeXML(log: log)
@@ -56,29 +55,41 @@ class FileExporter: NSObject, ObservableObject {
             fileContents = writeRaw(log: log)
             fileExt = "csv"
         }
-        
+
         let filename = dateFormatterShort.string(from: log.date) + "_\(log.takeOff)"
-        let exportURL = save(filename, fileContents: fileContents, fileExt: fileExt)
 
-        DispatchQueue.main.async {
-            let vc = UIActivityViewController(
-                activityItems: [exportURL],
-                applicationActivities: nil
-            )
-            vc.excludedActivityTypes = excludedActivityTypes
-            vc.popoverPresentationController?.sourceView = source.view
-            source.present(vc, animated: true)
-            self.isSharing = false
+        save(filename, fileContents: fileContents, fileExt: fileExt) { savedURL in
+            DispatchQueue.main.async {
+                if let presentingViewController = rootViewController.presentedViewController {
+                    presentingViewController.dismiss(animated: true, completion: nil)
+                }
+
+                let hostingController = UIHostingController(rootView: ShareLinkView(fileURL: savedURL!))
+                hostingController.modalPresentationStyle = .fullScreen
+                rootViewController.present(hostingController, animated: true, completion: nil)
+                self.isSharing = false
+            }
         }
-        return
     }
 
-    func save(_ filename: String, fileContents: String, fileExt: String) -> URL {
-        //check if name exists
-        let fileURL: URL = URLForFilename(filename, fileExt: fileExt)
-        saveToURL(fileURL, fileContents: fileContents)
-        return fileURL
+
+    
+    func save(_ filename: String, fileContents: String, fileExt: String, completion: @escaping (URL?) -> Void) {
+        let fileURL = self.URLForFilename(filename, fileExt: fileExt) // Use 'self' here
+        
+        DispatchQueue.main.async {
+            do {
+                try fileContents.write(to: fileURL, atomically: true, encoding: .utf8)
+                print("Saved file to: \(fileURL)")
+                print("File exists: \(FileManager.default.fileExists(atPath: fileURL.path))")
+                completion(fileURL)
+            } catch {
+                print("Error saving file to URL: \(error.localizedDescription)")
+                completion(nil)
+            }
+        }
     }
+
     
     func URLForFilename(_ filename: String, fileExt: String) -> URL {
         var fullURL = FilesFolderURL.appendingPathComponent(filename)
@@ -215,6 +226,7 @@ timestamp,longitude,latitude,altitudeGPS,altitudeBarometer,speedVertical,speedHo
         do {
             try fileContents.write(toFile: fileURL.path, atomically: true, encoding: String.Encoding.utf8)
             debugPrint("Saved file to: \(fileURL)")
+            debugPrint("File exists: \(FileManager.default.fileExists(atPath: fileURL.path))")
         } catch let error as NSError {
             debugPrint("Error saving file to URL: \(error.localizedDescription)")
         }

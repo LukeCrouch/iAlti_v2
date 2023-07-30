@@ -10,8 +10,8 @@ import SwiftUI
 struct LogDetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject private var userSettings = UserSettings.shared
-    @ObservedObject var fileExporter = FileExporter.shared
-    
+    @StateObject var fileExporter = FileExporter.shared
+
     @ObservedObject var log: Log
     @ObservedObject var logDetailOverViewModel: LogDetailOverViewModel
     
@@ -35,7 +35,7 @@ struct LogDetailView: View {
                         Spacer(minLength: 500)
                         Button(
                             action: {
-                                sheetTitle = "Which file format do you want to export to?"
+                                sheetTitle = "Which file format do you want to save to?"
                                 sheetButtons = [
                                     .default(Text("GPX")) {
                                         DispatchQueue.global(qos: .userInteractive).async {
